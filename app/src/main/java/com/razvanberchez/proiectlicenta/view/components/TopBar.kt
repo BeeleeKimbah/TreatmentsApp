@@ -1,4 +1,4 @@
-package com.razvanberchez.proiectlicenta.components
+package com.razvanberchez.proiectlicenta.view.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -15,14 +15,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.razvanberchez.proiectlicenta.resources.navItems
-import com.razvanberchez.proiectlicenta.screens.SessionsScreen
+import com.razvanberchez.proiectlicenta.view.screen.SessionsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TopBar(
-    modifier: Modifier, selectedNavItemIndex: Int,
+    modifier: Modifier, selectedItem: String,
     openDrawer: () -> Unit
 ) {
     Scaffold(
@@ -31,7 +30,7 @@ fun TopBar(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = navItems[selectedNavItemIndex].title)
+                    Text(text = selectedItem)
                 },
                 navigationIcon = {
                     IconButton(

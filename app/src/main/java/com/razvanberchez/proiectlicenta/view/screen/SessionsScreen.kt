@@ -1,4 +1,4 @@
-package com.razvanberchez.proiectlicenta.screens
+package com.razvanberchez.proiectlicenta.view.screen
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -21,9 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.razvanberchez.proiectlicenta.resources.sessionList
+import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.data.repository.getSessions
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -38,29 +40,32 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                 .background(Color(255, 252, 245)),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            sessionList.forEach { session ->
+            getSessions().forEach { session ->
                 item {
                     Column(
                         modifier = Modifier
                             .padding(16.dp)
                             .clickable {
-
+                            /* TODO */
                             }
                             .fillMaxWidth()
                     ) {
                         Text(
-                            text = "Medic: " + session.medicName,
+                            text = stringResource(R.string.session_list_Medic)
+                                    + ": " + session.medicName,
                             fontSize = 20.sp,
                             color = Color.Black
                         )
                         Text(
-                            text = "Primul consult: " + session.startDate.toString(),
+                            text = stringResource(R.string.session_list_StartDate)
+                                    + ": " + session.startDate.toString(),
                             fontSize = 20.sp,
                             color = Color.Black
                         )
                         if (session.diagnostic != null) {
                             Text(
-                                text = "Diagnostic: " + session.diagnostic,
+                                text = stringResource(R.string.session_list_Diagnostic)
+                                        + ": " + session.diagnostic,
                                 fontSize = 20.sp,
                                 color = Color.Black
                             )
@@ -82,7 +87,7 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
             )
         ) {
             Text(
-                text = "Sesiune noua",
+                text = stringResource(R.string.button_NewSession),
                 fontSize = 25.sp,
                 color = Color.White
             )
