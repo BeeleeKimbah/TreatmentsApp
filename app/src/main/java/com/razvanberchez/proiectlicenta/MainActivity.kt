@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.razvanberchez.proiectlicenta
 
 import android.os.Build
 import android.os.Bundle
@@ -6,8 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.Modifier
-import com.example.myapplication.components.NavMenu
-import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.razvanberchez.proiectlicenta.components.NavMenu
+import com.razvanberchez.proiectlicenta.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)

@@ -1,4 +1,4 @@
-package com.example.myapplication.components
+package com.razvanberchez.proiectlicenta.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -15,15 +15,17 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.myapplication.resources.navItems
-import com.example.myapplication.screens.SessionsScreen
+import com.razvanberchez.proiectlicenta.resources.navItems
+import com.razvanberchez.proiectlicenta.screens.SessionsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TopBar(modifier: Modifier, selectedNavItemIndex: Int,
-           openDrawer: () -> Unit) {
-    Scaffold (
+fun TopBar(
+    modifier: Modifier, selectedNavItemIndex: Int,
+    openDrawer: () -> Unit
+) {
+    Scaffold(
         modifier = modifier
             .fillMaxSize(),
         topBar = {
@@ -49,7 +51,7 @@ fun TopBar(modifier: Modifier, selectedNavItemIndex: Int,
                 )
             )
         }
-    ) {
-        values -> SessionsScreen(values, modifier)
+    ) { values ->
+        SessionsScreen(values, modifier)
     }
 }

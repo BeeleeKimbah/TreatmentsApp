@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:164844511177:android:1a7485014d469c6f915218",
+        "mobilesdk_app_id": "1:164844511177:android:cdb18b00a0e10f86915218",
         "android_client_info": {
-          "package_name": "com.example.myapplication"
+          "package_name": "com.razvanberchez.proiectlicenta"
         }
       },
       "oauth_client": [],

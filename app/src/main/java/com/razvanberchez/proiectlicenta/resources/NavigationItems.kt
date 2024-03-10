@@ -1,4 +1,4 @@
-package com.example.myapplication.resources
+package com.razvanberchez.proiectlicenta.resources
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp

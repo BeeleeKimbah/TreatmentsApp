@@ -1,4 +1,4 @@
-package com.example.myapplication.resources
+package com.razvanberchez.proiectlicenta.resources
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import java.time.LocalDate
@@ -9,7 +9,7 @@ data class NavigationItem(
     val unselectedIcon: ImageVector
 )
 
-data class Treatment (
+data class Treatment(
     val treatmentName: String,
     val startDate: LocalDate,
     val usages: Int,

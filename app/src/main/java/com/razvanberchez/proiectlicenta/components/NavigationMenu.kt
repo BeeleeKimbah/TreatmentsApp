@@ -1,4 +1,4 @@
-package com.example.myapplication.components
+package com.razvanberchez.proiectlicenta.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -22,7 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.resources.navItems
+import com.razvanberchez.proiectlicenta.resources.navItems
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -36,7 +36,7 @@ fun NavMenu(modifier: Modifier) {
 
     ModalNavigationDrawer(
         drawerContent = {
-            ModalDrawerSheet (
+            ModalDrawerSheet(
                 drawerContainerColor = Color(7, 26, 78)
             ) {
                 Spacer(modifier = modifier.height(16.dp))

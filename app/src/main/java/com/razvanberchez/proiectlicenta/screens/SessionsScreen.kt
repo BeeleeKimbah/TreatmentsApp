@@ -1,4 +1,4 @@
-package com.example.myapplication.screens
+package com.razvanberchez.proiectlicenta.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.resources.sessionList
+import com.razvanberchez.proiectlicenta.resources.sessionList
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -38,36 +38,36 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                 .background(Color(255, 252, 245)),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            sessionList.forEach {
-                    session -> item{
-                Column (
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clickable {
+            sessionList.forEach { session ->
+                item {
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .clickable {
 
-                        }
-                        .fillMaxWidth()
-                ) {
-                    Text (
-                        text = "Medic: "+ session.medicName,
-                        fontSize = 20.sp,
-                        color = Color.Black
-                    )
-                    Text (
-                        text = "Primul consult: " + session.startDate.toString(),
-                        fontSize = 20.sp,
-                        color = Color.Black
-                    )
-                    if (session.diagnostic != null) {
-                        Text (
-                            text = "Diagnostic: " + session.diagnostic,
+                            }
+                            .fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Medic: " + session.medicName,
                             fontSize = 20.sp,
                             color = Color.Black
                         )
+                        Text(
+                            text = "Primul consult: " + session.startDate.toString(),
+                            fontSize = 20.sp,
+                            color = Color.Black
+                        )
+                        if (session.diagnostic != null) {
+                            Text(
+                                text = "Diagnostic: " + session.diagnostic,
+                                fontSize = 20.sp,
+                                color = Color.Black
+                            )
+                        }
+                        Divider(color = Color.Black)
                     }
-                    Divider(color = Color.Black)
                 }
-            }
             }
             item { Spacer(modifier = modifier.height(76.dp)) }
         }

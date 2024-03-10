@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.razvanberchez.proiectlicenta
 
 import org.junit.Test
 

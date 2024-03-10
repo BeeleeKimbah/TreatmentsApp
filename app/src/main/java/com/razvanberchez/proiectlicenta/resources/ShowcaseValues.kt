@@ -1,4 +1,4 @@
-package com.example.myapplication.resources
+package com.razvanberchez.proiectlicenta.resources
 
 import android.os.Build
 import androidx.annotation.RequiresApi
