@@ -70,20 +70,12 @@ fun NavMenu(modifier: Modifier) {
 
     ModalNavigationDrawer(
         drawerContent = {
-            ModalDrawerSheet(
-                drawerContainerColor = Color(7, 26, 78)
-            ) {
+            ModalDrawerSheet {
                 Spacer(modifier = modifier.height(16.dp))
                 navItems.forEachIndexed { index, navigationItem ->
                     NavigationDrawerItem(
-                        colors = NavigationDrawerItemDefaults.colors(
-                            unselectedContainerColor = Color(7, 26, 78),
-                            selectedContainerColor = Color(24, 61, 164),
-                            selectedIconColor = Color.White,
-                            unselectedIconColor = Color.White
-                        ),
                         label = {
-                            Text(text = navigationItem.title, color = Color.White)
+                            Text(text = navigationItem.title)
                         },
                         selected = index == selectedNavItemIndex,
                         onClick = {

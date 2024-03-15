@@ -15,7 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,41 +39,48 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
-                .padding(values)
-                .background(Color(255, 252, 245)),
+                .padding(values),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             getSessions().forEach { session ->
                 item {
                     Column(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(horizontal = 16.dp, vertical = 4.dp)
                             .clickable {
-                            /* TODO */
+                                /* TODO */
                             }
                             .fillMaxWidth()
                     ) {
-                        Text(
-                            text = stringResource(R.string.session_list_Medic)
-                                    + ": " + session.medicName,
-                            fontSize = 20.sp,
-                            color = Color.Black
-                        )
-                        Text(
-                            text = stringResource(R.string.session_list_StartDate)
-                                    + ": " + session.startDate.toString(),
-                            fontSize = 20.sp,
-                            color = Color.Black
-                        )
-                        if (session.diagnostic != null) {
-                            Text(
-                                text = stringResource(R.string.session_list_Diagnostic)
-                                        + ": " + session.diagnostic,
-                                fontSize = 20.sp,
-                                color = Color.Black
+                        Card (
+                            modifier = modifier
+                                .fillMaxWidth(),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer
                             )
+                        ) {
+                            Text(
+                                modifier = modifier.padding(horizontal = 16.dp),
+                                text = stringResource(R.string.session_list_Medic)
+                                        + ": " + session.medicName,
+                                fontSize = 20.sp
+                            )
+                            Text(
+                                modifier = modifier.padding(horizontal = 16.dp),
+                                text = stringResource(R.string.session_list_StartDate)
+                                        + ": " + session.startDate.toString(),
+                                fontSize = 20.sp
+                            )
+                            if (session.diagnostic != null) {
+                                Text(
+                                    modifier = modifier.padding(horizontal = 16.dp),
+                                    text = stringResource(R.string.session_list_Diagnostic)
+                                            + ": " + session.diagnostic,
+                                    fontSize = 20.sp
+                                )
+                            }
                         }
-                        Divider(color = Color.Black)
+                        //Divider(color = Color.Black)
                     }
                 }
             }
@@ -81,15 +91,11 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
             onClick = { /*TODO*/ },
             modifier = modifier
                 .align(Alignment.BottomCenter)
-                .padding(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(31, 57, 129)
-            )
+                .padding(16.dp)
         ) {
             Text(
                 text = stringResource(R.string.button_NewSession),
-                fontSize = 25.sp,
-                color = Color.White
+                fontSize = 25.sp
             )
         }
     }
