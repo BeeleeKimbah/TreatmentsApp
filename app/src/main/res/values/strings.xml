@@ -8,4 +8,11 @@
     <string name="session_list_Medic">Medic</string>
     <string name="session_list_StartDate">Primul consult</string>
     <string name="session_list_Diagnostic">Diagnostic</string>
+    <string name="text_welcome_back">Bine ai revenit!</string>
+    <string name="text_login_message">Te rugăm să te autentifici</string>
+    <string name="input_text_username">Nume utilizator</string>
+    <string name="input_text_password">Parola</string>
+    <string name="text_forgot_password">Am uitat parola</string>
+    <string name="button_text_login">Autentificare</string>
+    <string name="button_text_register">Înregistrare</string>
 </resources>

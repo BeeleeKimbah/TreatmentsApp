@@ -26,12 +26,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.razvanberchez.proiectlicenta.R
 
 @Composable
 fun LoginScreen(modifier: Modifier) {
@@ -52,13 +54,13 @@ fun LoginScreen(modifier: Modifier) {
         }
 
         Text(
-            text = "Bine ai revenit!",
+            text = stringResource(R.string.text_welcome_back),
             fontSize = 45.sp,
             fontWeight = FontWeight.Bold,
             modifier = modifier.padding(top = 20.dp)
         )
         Text(
-            text = "Te rugam sa te autentifici",
+            text = stringResource(R.string.text_login_message),
             fontSize = 25.sp,
             modifier = modifier.padding(bottom = 80.dp)
         )
@@ -67,7 +69,7 @@ fun LoginScreen(modifier: Modifier) {
             value = username,
             onValueChange = { username = it },
             label = {
-                Text(text = "Nume utilizator", fontSize = 16.sp)
+                Text(text = stringResource(R.string.input_text_username), fontSize = 16.sp)
             },
             shape = ShapeDefaults.Medium
         )
@@ -76,7 +78,7 @@ fun LoginScreen(modifier: Modifier) {
             value = password,
             onValueChange = { password = it },
             label = {
-                Text(text = "Parola", fontSize = 16.sp)
+                Text(text = stringResource(R.string.input_text_password), fontSize = 16.sp)
             },
             visualTransformation = if (showPassword) {
                 VisualTransformation.None
@@ -97,7 +99,7 @@ fun LoginScreen(modifier: Modifier) {
                         onClick = { showPassword = true }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = "hide_password"
+                            contentDescription = "show_password"
                         )
                     }
                 }
@@ -111,8 +113,8 @@ fun LoginScreen(modifier: Modifier) {
         ) {
             TextButton(onClick = { /*TODO*/ }) {
                 Text(
-                    text = "Am uitat parola",
-                    fontSize = 20.sp
+                    text = stringResource(R.string.text_forgot_password),
+                    fontSize = 16.sp
                 )
             }
         }
@@ -122,7 +124,7 @@ fun LoginScreen(modifier: Modifier) {
                 .padding(top = 16.dp),
             onClick = {},
         ) {
-            Text(text = "Autentificare", fontSize = 25.sp)
+            Text(text = stringResource(R.string.button_text_login), fontSize = 25.sp)
         }
 
         Button(
@@ -130,7 +132,7 @@ fun LoginScreen(modifier: Modifier) {
                 .padding(top = 16.dp),
             onClick = {},
         ) {
-            Text(text = "Inregistrare", fontSize = 25.sp)
+            Text(text = stringResource(R.string.button_text_register), fontSize = 25.sp)
         }
     }
 }

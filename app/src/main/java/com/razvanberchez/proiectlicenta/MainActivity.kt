@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
-import com.razvanberchez.proiectlicenta.view.components.NavMenu
 import com.razvanberchez.proiectlicenta.view.screen.LoginScreen
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 Surface(
-                    tonalElevation = 2.dp
+                    tonalElevation = 5.dp
                 ) {
                     LoginScreen(modifier = Modifier)
                     //NavMenu(modifier = Modifier)
