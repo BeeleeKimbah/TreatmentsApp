@@ -15,4 +15,8 @@
     <string name="text_forgot_password">Am uitat parola</string>
     <string name="button_text_login">Autentificare</string>
     <string name="button_text_register">Înregistrare</string>
+    <string name="text_welcome">Bine ai venit!</string>
+    <string name="text_register_message">Completează datele contului</string>
+    <string name="input_text_email">Email</string>
+    <string name="input_text_confirm_password">Confirmare parolă</string>
 </resources>
