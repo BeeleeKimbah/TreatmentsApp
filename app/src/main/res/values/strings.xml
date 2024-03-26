@@ -19,4 +19,5 @@
     <string name="text_register_message">Completează datele contului</string>
     <string name="input_text_email">Email</string>
     <string name="input_text_confirm_password">Confirmare parolă</string>
+    <string name="session_lastConsult">Ultimul consult</string>
 </resources>

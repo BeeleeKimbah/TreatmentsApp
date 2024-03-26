@@ -15,8 +15,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import com.razvanberchez.proiectlicenta.view.screen.SessionsScreen
+import com.razvanberchez.proiectlicenta.view.screen.SessionDetailsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -49,6 +48,6 @@ fun TopBar(
             )
         }
     ) { values ->
-        SessionsScreen(values, modifier)
+        SessionDetailsScreen(values, modifier)
     }
 }

@@ -39,11 +39,11 @@ fun RegisterScreen(modifier: Modifier) {
     Box (
         modifier = Modifier.padding(16.dp)
     ) {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { /*TODO*/ }, modifier = modifier.size(60.dp)) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
                 contentDescription = "Back",
-                modifier = modifier.size(60.dp)
+                modifier = modifier.size(50.dp)
             )
         }
     }
