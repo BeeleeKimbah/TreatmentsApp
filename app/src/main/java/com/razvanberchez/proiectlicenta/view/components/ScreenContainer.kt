@@ -1,7 +1,5 @@
 package com.razvanberchez.proiectlicenta.view.components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -18,9 +16,8 @@ import androidx.compose.ui.Modifier
 import com.razvanberchez.proiectlicenta.view.screen.SessionDetailsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TopBar(
+fun ScreenContainer(
     modifier: Modifier, selectedItem: String,
     openDrawer: () -> Unit
 ) {

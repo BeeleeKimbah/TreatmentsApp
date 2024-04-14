@@ -147,7 +147,7 @@ val sessionList = listOf(
                 15
             )
         ),
-        "Valoare"
+        "Hipertensiune"
     )
 )
 

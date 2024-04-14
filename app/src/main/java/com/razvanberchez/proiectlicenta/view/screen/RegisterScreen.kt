@@ -42,7 +42,7 @@ fun RegisterScreen(modifier: Modifier) {
         IconButton(onClick = { /*TODO*/ }, modifier = modifier.size(60.dp)) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = null,
                 modifier = modifier.size(50.dp)
             )
         }
@@ -119,7 +119,7 @@ fun RegisterScreen(modifier: Modifier) {
                     IconButton(onClick = { showPassword = false }) {
                         Icon(
                             imageVector = Icons.Filled.Visibility,
-                            contentDescription = "hide_password"
+                            contentDescription = null
                         )
                     }
                 } else {
@@ -127,7 +127,7 @@ fun RegisterScreen(modifier: Modifier) {
                         onClick = { showPassword = true }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = "show_password"
+                            contentDescription = null
                         )
                     }
                 }
@@ -152,7 +152,7 @@ fun RegisterScreen(modifier: Modifier) {
                     IconButton(onClick = { showPasswordConfirm = false }) {
                         Icon(
                             imageVector = Icons.Filled.Visibility,
-                            contentDescription = "hide_password"
+                            contentDescription = null
                         )
                     }
                 } else {
@@ -160,7 +160,7 @@ fun RegisterScreen(modifier: Modifier) {
                         onClick = { showPasswordConfirm = true }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = "show_password"
+                            contentDescription = null
                         )
                     }
                 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -18,6 +19,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -65,16 +68,17 @@ fun LoginScreen(modifier: Modifier) {
             modifier = modifier.padding(bottom = 80.dp)
         )
         OutlinedTextField(
-            modifier = modifier.padding(10.dp),
+            modifier = modifier.padding(vertical = 10.dp).fillMaxWidth(),
             value = username,
             onValueChange = { username = it },
             label = {
                 Text(text = stringResource(R.string.input_text_username), fontSize = 16.sp)
             },
-            shape = ShapeDefaults.Medium
+            shape = ShapeDefaults.Medium,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
         )
         OutlinedTextField(
-            modifier = modifier.padding(top = 10.dp),
+            modifier = modifier.padding(top = 10.dp).fillMaxWidth(),
             value = password,
             onValueChange = { password = it },
             label = {
@@ -85,13 +89,21 @@ fun LoginScreen(modifier: Modifier) {
             } else {
                 PasswordVisualTransformation()
             },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    /* TODO: Implement Login button and call it here too */
+                }
+            ),
             trailingIcon = {
                 if (showPassword) {
                     IconButton(onClick = { showPassword = false }) {
                         Icon(
                             imageVector = Icons.Filled.Visibility,
-                            contentDescription = "hide_password"
+                            contentDescription = null
                         )
                     }
                 } else {
@@ -99,7 +111,7 @@ fun LoginScreen(modifier: Modifier) {
                         onClick = { showPassword = true }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = "show_password"
+                            contentDescription = null
                         )
                     }
                 }
@@ -107,30 +119,20 @@ fun LoginScreen(modifier: Modifier) {
             shape = ShapeDefaults.Medium
         )
 
-        Row(
-            horizontalArrangement = Arrangement.End,
-            modifier = modifier.fillMaxWidth(0.7f)
-        ) {
-            TextButton(onClick = { /*TODO*/ }) {
-                Text(
-                    text = stringResource(R.string.text_forgot_password),
-                    fontSize = 16.sp
-                )
-            }
-        }
-
         FilledTonalButton(
-            modifier = modifier
-                .padding(top = 16.dp),
-            onClick = {},
+            modifier = modifier.padding(top = 16.dp).fillMaxWidth(),
+            onClick = {
+                /* TODO */
+            },
         ) {
             Text(text = stringResource(R.string.button_text_login), fontSize = 25.sp)
         }
 
         Button(
-            modifier = modifier
-                .padding(top = 16.dp),
-            onClick = {},
+            modifier = modifier.padding(top = 16.dp).fillMaxWidth(),
+            onClick = {
+                /* TODO */
+            },
         ) {
             Text(text = stringResource(R.string.button_text_register), fontSize = 25.sp)
         }

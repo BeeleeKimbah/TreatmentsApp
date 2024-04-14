@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
 import com.razvanberchez.proiectlicenta.view.components.NavMenu
+import com.razvanberchez.proiectlicenta.view.screen.LoginScreen
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -20,10 +21,9 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     tonalElevation = 5.dp
                 ) {
-
                     //RegisterScreen(modifier = Modifier)
-                    //LoginScreen(modifier = Modifier)
-                    NavMenu(modifier = Modifier)
+                    LoginScreen(modifier = Modifier)
+                    //NavMenu(modifier = Modifier)
                 }
             }
         }

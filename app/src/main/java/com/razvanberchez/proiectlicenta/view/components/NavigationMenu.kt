@@ -89,7 +89,7 @@ fun NavMenu(modifier: Modifier) {
                                 if (index == selectedNavItemIndex)
                                     navigationItem.selectedIcon
                                 else navigationItem.unselectedIcon,
-                                contentDescription = navigationItem.title,
+                                contentDescription = null,
                             )
                         },
                         modifier = modifier
@@ -100,7 +100,7 @@ fun NavMenu(modifier: Modifier) {
         },
         drawerState = drawerState
     ) {
-        TopBar(modifier, navItems[selectedNavItemIndex].title) {
+        ScreenContainer(modifier, navItems[selectedNavItemIndex].title) {
             scope.launch {
                 drawerState.open()
             }
