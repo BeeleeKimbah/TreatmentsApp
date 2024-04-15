@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
 import com.razvanberchez.proiectlicenta.view.components.NavMenu
 import com.razvanberchez.proiectlicenta.view.screen.LoginScreen
+import com.razvanberchez.proiectlicenta.view.screen.RegisterScreen
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)

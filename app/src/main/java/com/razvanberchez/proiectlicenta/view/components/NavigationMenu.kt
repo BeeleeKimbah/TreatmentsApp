@@ -29,8 +29,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.data.model.NavigationItem
 import kotlinx.coroutines.launch
@@ -70,11 +71,14 @@ fun NavMenu(modifier: Modifier) {
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
-                Spacer(modifier = modifier.height(16.dp))
+                Spacer(modifier = modifier.height(dimensionResource(R.dimen.ui_elem_padding)))
                 navItems.forEachIndexed { index, navigationItem ->
                     NavigationDrawerItem(
                         label = {
-                            Text(text = navigationItem.title)
+                            Text(
+                                text = navigationItem.title,
+                                fontSize = dimensionResource(R.dimen.subtitle_fontsize).value.sp
+                            )
                         },
                         selected = index == selectedNavItemIndex,
                         onClick = {

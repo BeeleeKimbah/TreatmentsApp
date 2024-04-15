@@ -18,8 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.data.repository.getSessions
@@ -39,7 +39,10 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                 item {
                     Column(
                         modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                            .padding(
+                                horizontal = dimensionResource(R.dimen.ui_elem_padding),
+                                vertical = dimensionResource(R.dimen.list_elem_padding)
+                            )
                             .clickable {
                                 /* TODO */
                             }
@@ -53,23 +56,29 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                             )
                         ) {
                             Text(
-                                modifier = modifier.padding(horizontal = 16.dp),
+                                modifier = modifier.padding(
+                                    horizontal = dimensionResource(R.dimen.card_text_padding)
+                                ),
                                 text = stringResource(R.string.session_list_Medic)
                                         + ": " + session.medicName,
-                                fontSize = 20.sp
+                                fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                             )
                             Text(
-                                modifier = modifier.padding(horizontal = 16.dp),
+                                modifier = modifier.padding(
+                                    horizontal = dimensionResource(R.dimen.card_text_padding)
+                                ),
                                 text = stringResource(R.string.session_list_StartDate)
                                         + ": " + session.startDate.toString(),
-                                fontSize = 20.sp
+                                fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                             )
                             if (session.diagnostic != null) {
                                 Text(
-                                    modifier = modifier.padding(horizontal = 16.dp),
+                                    modifier = modifier.padding(
+                                        horizontal = dimensionResource(R.dimen.card_text_padding)
+                                    ),
                                     text = stringResource(R.string.session_list_Diagnostic)
                                             + ": " + session.diagnostic,
-                                    fontSize = 20.sp
+                                    fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                             }
                         }
@@ -77,18 +86,22 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                     }
                 }
             }
-            item { Spacer(modifier = modifier.height(76.dp)) }
+            item {
+                Spacer(modifier = modifier.height(dimensionResource(R.dimen.title_uielems_sep)))
+            }
         }
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                /* TODO */
+            },
             modifier = modifier
                 .align(Alignment.BottomCenter)
-                .padding(16.dp)
+                .padding(dimensionResource(R.dimen.ui_elem_padding))
         ) {
             Text(
                 text = stringResource(R.string.button_NewSession),
-                fontSize = 25.sp
+                fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
             )
         }
     }
