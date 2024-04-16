@@ -12,6 +12,7 @@ import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
 import com.razvanberchez.proiectlicenta.view.components.NavMenu
 import com.razvanberchez.proiectlicenta.view.screen.LoginScreen
 import com.razvanberchez.proiectlicenta.view.screen.RegisterScreen
+import com.razvanberchez.proiectlicenta.view.screen.SessionDetailsScreen
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -23,8 +24,9 @@ class MainActivity : ComponentActivity() {
                     tonalElevation = 5.dp
                 ) {
                     //RegisterScreen(modifier = Modifier)
-                    LoginScreen(modifier = Modifier)
+                    //LoginScreen(modifier = Modifier)
                     //NavMenu(modifier = Modifier)
+                    SessionDetailsScreen(modifier = Modifier)
                 }
             }
         }

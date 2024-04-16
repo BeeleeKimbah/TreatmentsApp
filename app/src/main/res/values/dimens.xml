@@ -5,9 +5,12 @@
     <dimen name="subtitle_fontsize">22.sp</dimen>
     <dimen name="textfield_fontsize">16.sp</dimen>
     <dimen name="button_text_fontsize">25.sp</dimen>
-    <dimen name="title_uielems_sep">70.dp</dimen>
+    <dimen name="title_uielems_sep">50.dp</dimen>
     <dimen name="button_size">50.dp</dimen>
     <dimen name="list_elem_padding">4.dp</dimen>
     <dimen name="list_elem_fontsize">20.sp</dimen>
     <dimen name="card_text_padding">16.dp</dimen>
+    <dimen name="details_text_fontsize">25.sp</dimen>
+    <dimen name="treatment_list_padding">8.dp</dimen>
+    <dimen name="treatment_list_height">200.dp</dimen>
 </resources>

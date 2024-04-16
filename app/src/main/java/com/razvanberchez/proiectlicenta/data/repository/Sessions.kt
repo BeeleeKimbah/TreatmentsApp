@@ -14,7 +14,110 @@ val sessionList = listOf(
                 "Paramociotol",
                 LocalDate.of(2024, 4, 23),
                 2,
+                12,
+                2
+            ),
+            Treatment(
+                "Aspacardin",
+                LocalDate.of(2024, 4, 23),
+                4,
                 8,
+                1
+            ),
+            Treatment(
+                "Azitromicina",
+                LocalDate.of(2024, 4, 23),
+                6,
+                12,
+                1
+            ),
+            Treatment(
+                "Xyzal",
+                LocalDate.of(2024, 4, 23),
+                14,
+                6,
+                1
+            ),Treatment(
+                "Paramociotol",
+                LocalDate.of(2024, 4, 23),
+                2,
+                12,
+                2
+            ),
+            Treatment(
+                "Aspacardin",
+                LocalDate.of(2024, 4, 23),
+                4,
+                8,
+                1
+            ),
+            Treatment(
+                "Azitromicina",
+                LocalDate.of(2024, 4, 23),
+                6,
+                12,
+                1
+            ),
+            Treatment(
+                "Xyzal",
+                LocalDate.of(2024, 4, 23),
+                14,
+                6,
+                1
+            ),Treatment(
+                "Paramociotol",
+                LocalDate.of(2024, 4, 23),
+                2,
+                12,
+                2
+            ),
+            Treatment(
+                "Aspacardin",
+                LocalDate.of(2024, 4, 23),
+                4,
+                8,
+                1
+            ),
+            Treatment(
+                "Azitromicina",
+                LocalDate.of(2024, 4, 23),
+                6,
+                12,
+                1
+            ),
+            Treatment(
+                "Xyzal",
+                LocalDate.of(2024, 4, 23),
+                14,
+                6,
+                1
+            ),
+            Treatment(
+                "Paramociotol",
+                LocalDate.of(2024, 4, 23),
+                2,
+                12,
+                2
+            ),
+            Treatment(
+                "Aspacardin",
+                LocalDate.of(2024, 4, 23),
+                4,
+                8,
+                1
+            ),
+            Treatment(
+                "Azitromicina",
+                LocalDate.of(2024, 4, 23),
+                6,
+                12,
+                1
+            ),
+            Treatment(
+                "Xyzal",
+                LocalDate.of(2024, 4, 23),
+                14,
+                6,
                 1
             )
         ),

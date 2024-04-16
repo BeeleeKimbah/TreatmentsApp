@@ -20,4 +20,8 @@
     <string name="input_text_email">Email</string>
     <string name="input_text_confirm_password">Confirmare parolă</string>
     <string name="session_lastConsult">Ultimul consult</string>
+    <string name="treatment_name">Medicament</string>
+    <string name="treatment_dose">doze</string>
+    <string name="treatment_frequency">frecvență</string>
+    <string name="button_text_add_consult">Consult nou</string>
 </resources>

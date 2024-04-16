@@ -78,7 +78,8 @@ fun LoginScreen(modifier: Modifier) {
                 )
             },
             shape = ShapeDefaults.Medium,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            maxLines = 1
         )
         OutlinedTextField(
             modifier = modifier
@@ -124,7 +125,8 @@ fun LoginScreen(modifier: Modifier) {
                     }
                 }
             },
-            shape = ShapeDefaults.Medium
+            shape = ShapeDefaults.Medium,
+            maxLines = 1
         )
 
         FilledTonalButton(
