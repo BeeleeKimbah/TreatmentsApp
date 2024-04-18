@@ -58,7 +58,8 @@ fun LoginScreen(modifier: Modifier) {
             text = stringResource(R.string.text_welcome_back),
             fontSize = dimensionResource(R.dimen.title_fontsize).value.sp,
             fontWeight = FontWeight.Bold,
-            modifier = modifier.padding(top = dimensionResource(R.dimen.ui_elem_padding))
+            modifier = modifier
+                .padding(top = dimensionResource(R.dimen.ui_elem_padding))
         )
         Text(
             text = stringResource(R.string.text_login_message),
@@ -68,6 +69,7 @@ fun LoginScreen(modifier: Modifier) {
         OutlinedTextField(
             modifier = modifier
                 .padding(top = dimensionResource(R.dimen.ui_elem_padding))
+                .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                 .fillMaxWidth(),
             value = username,
             onValueChange = { username = it },
@@ -83,7 +85,7 @@ fun LoginScreen(modifier: Modifier) {
         )
         OutlinedTextField(
             modifier = modifier
-                .padding(vertical = dimensionResource(R.dimen.ui_elem_padding))
+                .padding(dimensionResource(R.dimen.ui_elem_padding))
                 .fillMaxWidth(),
             value = password,
             onValueChange = { password = it },
@@ -132,6 +134,7 @@ fun LoginScreen(modifier: Modifier) {
         FilledTonalButton(
             modifier = modifier
                 .padding(top = dimensionResource(R.dimen.ui_elem_padding))
+                .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
@@ -147,6 +150,7 @@ fun LoginScreen(modifier: Modifier) {
         Button(
             modifier = modifier
                 .padding(top = dimensionResource(R.dimen.ui_elem_padding))
+                .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {

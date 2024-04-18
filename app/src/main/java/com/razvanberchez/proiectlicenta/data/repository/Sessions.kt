@@ -3,11 +3,12 @@ package com.razvanberchez.proiectlicenta.data.repository
 import com.razvanberchez.proiectlicenta.data.model.Session
 import com.razvanberchez.proiectlicenta.data.model.Treatment
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 val sessionList = listOf(
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Marian Paun",
         listOf(
             Treatment(
@@ -124,8 +125,8 @@ val sessionList = listOf(
         "Raceala"
     ),
     Session(
-        LocalDate.of(2024, 2, 12),
-        LocalDate.of(2024, 3, 19),
+        LocalDateTime.of(2024, 2, 12, 0, 0),
+        LocalDateTime.of(2024, 3, 19, 0, 0),
         "Gigel Samsaru",
         listOf(
             Treatment(
@@ -138,8 +139,8 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDate.of(2024, 3, 17),
-        LocalDate.of(2024, 4, 9),
+        LocalDateTime.of(2024, 3, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 9, 0, 0),
         "Eusebiu Manea",
         listOf(
             Treatment(
@@ -153,8 +154,8 @@ val sessionList = listOf(
         "Migrena"
     ),
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Marian Paun",
         listOf(
             Treatment(
@@ -167,8 +168,8 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Ileana Sharap",
         listOf(
             Treatment(
@@ -181,8 +182,8 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Maria Geangu",
         listOf(
             Treatment(
@@ -195,8 +196,8 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Vasile Copot",
         listOf(
             Treatment(
@@ -210,8 +211,8 @@ val sessionList = listOf(
         "Hipertensiune"
     ),
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Irina Popa",
         listOf(
             Treatment(
@@ -224,8 +225,8 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Giani Vasiliu",
         listOf(
             Treatment(
@@ -238,8 +239,8 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDate.of(2024, 4, 17),
-        LocalDate.of(2024, 4, 17),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
+        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Bogdan Ciurea",
         listOf(
             Treatment(

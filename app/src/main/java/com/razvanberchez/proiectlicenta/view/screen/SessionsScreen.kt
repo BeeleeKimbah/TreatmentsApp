@@ -48,7 +48,7 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                             }
                             .fillMaxWidth()
                     ) {
-                        Card (
+                        Card(
                             modifier = modifier
                                 .fillMaxWidth(),
                             colors = CardDefaults.cardColors(
@@ -68,7 +68,7 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                                     horizontal = dimensionResource(R.dimen.card_text_padding)
                                 ),
                                 text = stringResource(R.string.session_list_StartDate)
-                                        + ": " + session.startDate.toString(),
+                                        + ": " + session.startDate.toLocalDate().toString(),
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                             )
                             if (session.diagnostic != null) {
@@ -87,7 +87,12 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                 }
             }
             item {
-                Spacer(modifier = modifier.height(dimensionResource(R.dimen.title_uielems_sep)))
+                Spacer(
+                    modifier = modifier.height(
+                        dimensionResource(R.dimen.button_size)
+                        + dimensionResource(R.dimen.ui_elem_padding)
+                    )
+                )
             }
         }
 
@@ -98,6 +103,7 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
             modifier = modifier
                 .align(Alignment.BottomCenter)
                 .padding(dimensionResource(R.dimen.ui_elem_padding))
+                .height(dimensionResource(R.dimen.button_size))
         ) {
             Text(
                 text = stringResource(R.string.button_NewSession),

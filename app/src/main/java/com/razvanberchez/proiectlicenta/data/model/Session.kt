@@ -1,10 +1,10 @@
 package com.razvanberchez.proiectlicenta.data.model
 
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class Session(
-    val startDate: LocalDate,
-    val lastConsult: LocalDate,
+    val startDate: LocalDateTime,
+    val lastConsult: LocalDateTime,
     val medicName: String,
     val treatmentScheme: List<Treatment>,
     val diagnostic: String? = null

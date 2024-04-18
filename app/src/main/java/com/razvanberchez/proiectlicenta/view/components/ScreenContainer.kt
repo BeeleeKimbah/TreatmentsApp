@@ -2,6 +2,7 @@ package com.razvanberchez.proiectlicenta.view.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,7 +47,8 @@ fun ScreenContainer(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Menu,
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = modifier.size(dimensionResource(R.dimen.button_size))
                         )
                     }
                 }
