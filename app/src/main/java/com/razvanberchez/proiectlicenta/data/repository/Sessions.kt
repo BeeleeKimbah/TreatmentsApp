@@ -38,7 +38,7 @@ val sessionList = listOf(
                 14,
                 6,
                 1
-            ),Treatment(
+            ), Treatment(
                 "Paramociotol",
                 LocalDate.of(2024, 4, 23),
                 2,
@@ -65,7 +65,7 @@ val sessionList = listOf(
                 14,
                 6,
                 1
-            ),Treatment(
+            ), Treatment(
                 "Paramociotol",
                 LocalDate.of(2024, 4, 23),
                 2,

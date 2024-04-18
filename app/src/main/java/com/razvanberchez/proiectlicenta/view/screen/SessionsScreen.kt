@@ -90,7 +90,7 @@ fun SessionsScreen(values: PaddingValues, modifier: Modifier) {
                 Spacer(
                     modifier = modifier.height(
                         dimensionResource(R.dimen.button_size)
-                        + dimensionResource(R.dimen.ui_elem_padding)
+                                + dimensionResource(R.dimen.ui_elem_padding)
                     )
                 )
             }

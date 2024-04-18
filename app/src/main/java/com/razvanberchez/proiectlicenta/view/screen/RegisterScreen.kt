@@ -77,8 +77,7 @@ fun RegisterScreen(modifier: Modifier) {
                 }
             )
         }
-    ) {
-        values ->
+    ) { values ->
         Column(
             modifier = modifier
                 .fillMaxSize()

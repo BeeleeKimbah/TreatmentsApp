@@ -9,10 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
-import com.razvanberchez.proiectlicenta.view.components.NavMenu
-import com.razvanberchez.proiectlicenta.view.screen.AddConsultScreen
-import com.razvanberchez.proiectlicenta.view.screen.LoginScreen
-import com.razvanberchez.proiectlicenta.view.screen.RegisterScreen
 import com.razvanberchez.proiectlicenta.view.screen.SessionDetailsScreen
 
 class MainActivity : ComponentActivity() {
