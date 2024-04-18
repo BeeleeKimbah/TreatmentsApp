@@ -44,7 +44,7 @@ fun SessionDetailsScreen(modifier: Modifier) {
                 ),
                 title = {
                     Text(
-                        text = "Detalii sesiune",
+                        text = stringResource(R.string.session_details_title),
                         fontSize = dimensionResource(R.dimen.title_fontsize).value.sp
                     )
                 },
@@ -103,9 +103,7 @@ fun SessionDetailsScreen(modifier: Modifier) {
                 ) {
                     Text(
                         modifier = modifier.padding(dimensionResource(R.dimen.list_elem_padding)),
-                        text = stringResource(R.string.treatment_name)
-                                + ": " + stringResource(R.string.treatment_dose)
-                                + " / " + stringResource(R.string.treatment_frequency),
+                        text = stringResource(R.string.treat_dosage_freq),
                         fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -121,8 +119,12 @@ fun SessionDetailsScreen(modifier: Modifier) {
                         session.treatmentScheme.forEach { treatment ->
                             item {
                                 Text(
-                                    text = treatment.treatmentName + ": "
-                                            + treatment.applications + " / " + treatment.frequency + "h",
+                                    text = stringResource(
+                                        R.string.treatment_scheme_item,
+                                        treatment.treatmentName,
+                                        treatment.dose,
+                                        treatment.frequency
+                                    ),
                                     fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                                 )
                                 Divider(
