@@ -35,9 +35,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
 
 @Composable
-fun LoginScreen(modifier: Modifier) {
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    viewState: LoginScreenViewState
+) {
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -106,7 +110,10 @@ fun LoginScreen(modifier: Modifier) {
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    /* TODO: Implement Login button and call it here too */
+//                    if (viewState.loginButtonEnabled) {
+//                        /* TODO: Implement Login button and call it here too */
+//
+//                    }
                 }
             ),
             trailingIcon = {
@@ -139,7 +146,8 @@ fun LoginScreen(modifier: Modifier) {
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
                 /* TODO */
-            }
+            },
+            enabled = viewState.loginButtonEnabled
         ) {
             Text(
                 text = stringResource(R.string.button_text_login),
