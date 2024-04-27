@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -39,7 +40,22 @@ fun SessionsScreen(
         },
         bottomBar = {
             BottomBar(0)
-        }
+        },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = {
+                    /* TODO */
+                },
+                modifier = modifier
+                    .height(dimensionResource(R.dimen.button_size))
+            ) {
+                Text(
+                    text = stringResource(R.string.button_NewSession),
+                    fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
     ) { values ->
         Box(
             modifier = modifier
@@ -101,23 +117,6 @@ fun SessionsScreen(
                         }
                     }
                 }
-            }
-
-            ExtendedFloatingActionButton(
-                onClick = {
-                    /* TODO */
-                },
-                modifier = modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(dimensionResource(R.dimen.ui_elem_padding))
-                    .height(dimensionResource(R.dimen.button_size)),
-                shape = FloatingActionButtonDefaults.extendedFabShape,
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer
-            ) {
-                Text(
-                    text = stringResource(R.string.button_NewSession),
-                    fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
-                )
             }
         }
     }
