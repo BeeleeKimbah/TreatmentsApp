@@ -6,24 +6,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,38 +38,21 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.view.components.TopBar
+import com.razvanberchez.proiectlicenta.view.viewstate.RegisterScreenViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(modifier: Modifier) {
+fun RegisterScreen(
+    modifier: Modifier = Modifier,
+    viewState: RegisterScreenViewState
+) {
     val localFocusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                ),
-                title = {
-                    Text(
-                        text = stringResource(R.string.button_text_register),
-                        fontSize = dimensionResource(R.dimen.title_fontsize).value.sp
-                    )
-                },
-                navigationIcon = {
-                    IconButton(
-                        modifier = modifier.height(dimensionResource(R.dimen.button_size)),
-                        onClick = {
-                            /* TODO */
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            modifier = modifier.size(dimensionResource(R.dimen.button_size)),
-                            contentDescription = null
-                        )
-                    }
-                }
+            TopBar(
+                stringResource(R.string.button_text_register), true
             )
         }
     ) { values ->
@@ -221,7 +199,9 @@ fun RegisterScreen(modifier: Modifier) {
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        /* TODO: Implement Register button and call it here too */
+//                        if (viewState.registerButtonEnabled) {
+//                            /* TODO: Implement Register button and call it here too */
+//                        }
                     }
                 ),
                 trailingIcon = {
@@ -255,6 +235,7 @@ fun RegisterScreen(modifier: Modifier) {
                 onClick = {
                     /* TODO */
                 },
+                enabled = viewState.registerButtonEnabled
             ) {
                 Text(
                     text = stringResource(R.string.button_text_register),

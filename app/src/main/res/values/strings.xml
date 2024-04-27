@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="menu_item_MySessions">Sesiunile mele</string>
+    <string name="menu_item_MySessions">Sesiuni</string>
     <string name="menu_item_Medics">Medici</string>
-    <string name="menu_item_SettingsPreferences">Setări și Preferințe</string>
+    <string name="menu_item_Settings">Setări</string>
     <string name="menu_item_Logout">Deconectare</string>
     <string name="button_NewSession">Sesiune nouă</string>
     <string name="session_list_Medic">Medic</string>
