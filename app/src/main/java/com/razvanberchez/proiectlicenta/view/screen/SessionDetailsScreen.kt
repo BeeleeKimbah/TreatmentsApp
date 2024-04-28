@@ -9,15 +9,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -28,7 +25,6 @@ import com.razvanberchez.proiectlicenta.view.components.BottomBar
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SessionDetailsScreen(
     modifier: Modifier = Modifier,
@@ -155,8 +151,6 @@ fun SessionDetailsScreen(
                             Divider(
                                 color = MaterialTheme.colorScheme.onSecondary
                             )
-
-
                         }
                     }
                 }

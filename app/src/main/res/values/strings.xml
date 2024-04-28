@@ -24,4 +24,6 @@
     <string name="treat_dosage_freq">Medicament: doze / frecvență</string>
     <string name="treatment_scheme_item">%1$s: %2$d / %3$d h</string>
     <string name="session_details_title">Detalii sesiune</string>
+    <string name="medic_list_main_specialty">Specializare</string>
+    <string name="medic_list_avg_score">Scor</string>
 </resources>
