@@ -26,4 +26,9 @@
     <string name="session_details_title">Detalii sesiune</string>
     <string name="medic_list_main_specialty">Specializare</string>
     <string name="medic_list_avg_score">Scor</string>
+    <string name="medic_secondary_specialties">Specializări secundare</string>
+    <string name="medic_reviews">Recenzii</string>
+    <string name="medic_details_title">Detalii medic</string>
+    <string name="medic_details_name">Nume</string>
+    <string name="medic_details_general_info">Informații generale</string>
 </resources>

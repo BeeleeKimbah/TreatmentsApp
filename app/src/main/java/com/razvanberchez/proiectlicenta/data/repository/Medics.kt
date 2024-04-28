@@ -9,11 +9,27 @@ val medicList = listOf(
         "Vasile Versaci",
         "Endocrinologie",
         listOf(
-            "Gastroenterologie"
+            "Gastroenterologie",
+            "Cardiologie",
+            "Chirurgie generala",
+            "Medicina de familie",
+            "Radiologie"
         ),
         listOf(
             Review(
                 "Ok, se putea si mai bine",
+                Score.FOUR
+            ),
+            Review(
+                "Foarte bun, mai venim",
+                Score.FIVE
+            ),
+            Review(
+                "Cam arogant",
+                Score.TWO
+            ),
+            Review(
+                "Ok, se putea si mai bine. Poate mai venim si alta data",
                 Score.FOUR
             ),
             Review(
@@ -28,7 +44,7 @@ val medicList = listOf(
         11.0 / 3.0
     ),
     Medic(
-        "Giani",
+        "Giani Mateiș",
         "Medicina interna",
         listOf(
             "Diabet zaharat"

@@ -12,7 +12,7 @@ val sessionList = listOf(
         "Marian Paun",
         listOf(
             Treatment(
-                "Paramociotol",
+                "Paracetamol",
                 LocalDate.of(2024, 4, 23),
                 2,
                 12,
@@ -39,7 +39,7 @@ val sessionList = listOf(
                 6,
                 1
             ), Treatment(
-                "Paramociotol",
+                "Paracetamol",
                 LocalDate.of(2024, 4, 23),
                 2,
                 12,
@@ -66,7 +66,7 @@ val sessionList = listOf(
                 6,
                 1
             ), Treatment(
-                "Paramociotol",
+                "Paracetamol",
                 LocalDate.of(2024, 4, 23),
                 2,
                 12,
@@ -94,7 +94,7 @@ val sessionList = listOf(
                 1
             ),
             Treatment(
-                "Paramociotol",
+                "Paracetamol",
                 LocalDate.of(2024, 4, 23),
                 2,
                 12,
@@ -130,7 +130,7 @@ val sessionList = listOf(
         "Gigel Samsaru",
         listOf(
             Treatment(
-                "Paramociotol",
+                "Paracetamol",
                 LocalDate.of(2024, 4, 23),
                 2,
                 8,
@@ -170,7 +170,7 @@ val sessionList = listOf(
     Session(
         LocalDateTime.of(2024, 4, 17, 0, 0),
         LocalDateTime.of(2024, 4, 17, 0, 0),
-        "Ileana Sharap",
+        "Ileana Vicov",
         listOf(
             Treatment(
                 "Aspacardin",

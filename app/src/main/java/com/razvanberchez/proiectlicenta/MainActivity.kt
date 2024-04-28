@@ -7,11 +7,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.unit.dp
 import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
 import com.razvanberchez.proiectlicenta.view.screen.LoginScreen
+import com.razvanberchez.proiectlicenta.view.screen.MedicDetailsScreen
 import com.razvanberchez.proiectlicenta.view.screen.MedicsScreen
 import com.razvanberchez.proiectlicenta.view.screen.RegisterScreen
 import com.razvanberchez.proiectlicenta.view.screen.SessionDetailsScreen
 import com.razvanberchez.proiectlicenta.view.screen.SessionsScreen
 import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
+import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicsScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.RegisterScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
@@ -29,7 +31,8 @@ class MainActivity : ComponentActivity() {
                     //LoginScreen(viewState = LoginScreenViewState())
                     //SessionsScreen(viewState = SessionsScreenViewState())
                     //SessionDetailsScreen(viewState = SessionDetailsScreenViewState())
-                    MedicsScreen(viewState = MedicsScreenViewState())
+                    //MedicsScreen(viewState = MedicsScreenViewState())
+                    MedicDetailsScreen(viewState = MedicDetailsScreenViewState())
                 }
             }
         }

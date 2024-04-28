@@ -11,6 +11,7 @@
     <dimen name="list_elem_fontsize">20.sp</dimen>
     <dimen name="card_text_padding">16.dp</dimen>
     <dimen name="details_text_fontsize">25.sp</dimen>
+    <dimen name="details_list_fontsize">20.sp</dimen>
     <dimen name="treatment_list_padding">8.dp</dimen>
     <dimen name="details_text_padding">8.dp</dimen>
     <dimen name="treatment_list_height">200.dp</dimen>
