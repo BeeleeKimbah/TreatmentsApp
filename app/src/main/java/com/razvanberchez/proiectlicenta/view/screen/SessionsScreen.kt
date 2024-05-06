@@ -3,6 +3,7 @@ package com.razvanberchez.proiectlicenta.view.screen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,7 +13,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,24 +22,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
-import com.razvanberchez.proiectlicenta.view.components.BottomBar
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
 
+@RootNavGraph
+@Destination
 @Composable
 fun SessionsScreen(
     modifier: Modifier = Modifier,
-    viewState: SessionsScreenViewState
+    bottomBarPaddingValues: PaddingValues,
+    navigator: DestinationsNavigator,
+    viewState: SessionsScreenViewState = SessionsScreenViewState()
 ) {
     Scaffold(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(bottomBarPaddingValues),
         topBar = {
             TopBar(title = stringResource(R.string.menu_item_MySessions))
-        },
-        bottomBar = {
-            BottomBar(0)
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(

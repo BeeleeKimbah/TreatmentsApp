@@ -36,14 +36,20 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.RegisterScreenViewState
 
+@RootNavGraph
+@Destination
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
-    viewState: RegisterScreenViewState
+    navigator: DestinationsNavigator,
+    viewState: RegisterScreenViewState = RegisterScreenViewState()
 ) {
     val localFocusManager = LocalFocusManager.current
 

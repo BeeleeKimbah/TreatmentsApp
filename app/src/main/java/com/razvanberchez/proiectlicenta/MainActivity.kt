@@ -3,36 +3,53 @@ package com.razvanberchez.proiectlicenta
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
-import com.razvanberchez.proiectlicenta.view.screen.LoginScreen
-import com.razvanberchez.proiectlicenta.view.screen.MedicDetailsScreen
+import com.razvanberchez.proiectlicenta.view.components.BottomBar
 import com.razvanberchez.proiectlicenta.view.screen.MedicsScreen
-import com.razvanberchez.proiectlicenta.view.screen.RegisterScreen
-import com.razvanberchez.proiectlicenta.view.screen.SessionDetailsScreen
+import com.razvanberchez.proiectlicenta.view.screen.NavGraphs
 import com.razvanberchez.proiectlicenta.view.screen.SessionsScreen
-import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
-import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
-import com.razvanberchez.proiectlicenta.view.viewstate.MedicsScreenViewState
-import com.razvanberchez.proiectlicenta.view.viewstate.RegisterScreenViewState
-import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
-import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
+import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicsScreenDestination
+import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
+                val navController = rememberNavController()
                 Surface(
                     tonalElevation = 5.dp
                 ) {
-                    //RegisterScreen(viewState = RegisterScreenViewState())
-                    //LoginScreen(viewState = LoginScreenViewState())
-                    //SessionsScreen(viewState = SessionsScreenViewState())
-                    //SessionDetailsScreen(viewState = SessionDetailsScreenViewState())
-                    //MedicsScreen(viewState = MedicsScreenViewState())
-                    MedicDetailsScreen(viewState = MedicDetailsScreenViewState())
+                    Scaffold (
+                        bottomBar = {
+                            BottomBar(navController)
+                        }
+                    ) {
+                        values ->
+                        DestinationsNavHost(
+                            navGraph = NavGraphs.root,
+                            navController = navController
+                        ) {
+                            composable(SessionsScreenDestination) {
+                                SessionsScreen(
+                                    bottomBarPaddingValues = values,
+                                    navigator = destinationsNavigator
+                                )
+                            }
+                            composable(MedicsScreenDestination) {
+                                MedicsScreen(
+                                    bottomBarPaddingValues = values,
+                                    navigator = destinationsNavigator
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }

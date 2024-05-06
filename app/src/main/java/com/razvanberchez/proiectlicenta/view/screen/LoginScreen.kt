@@ -34,13 +34,20 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    viewState: LoginScreenViewState
+    navigator: DestinationsNavigator,
+    viewState: LoginScreenViewState = LoginScreenViewState()
 ) {
     Column(
         modifier = modifier
@@ -146,6 +153,7 @@ fun LoginScreen(
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
                 /* TODO */
+                navigator.navigate(SessionsScreenDestination)
             },
             enabled = viewState.loginButtonEnabled
         ) {

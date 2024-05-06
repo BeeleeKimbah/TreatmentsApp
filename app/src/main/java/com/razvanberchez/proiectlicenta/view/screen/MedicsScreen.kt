@@ -3,6 +3,7 @@ package com.razvanberchez.proiectlicenta.view.screen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,24 +19,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
-import com.razvanberchez.proiectlicenta.view.components.BottomBar
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicsScreenViewState
 
+@RootNavGraph
+@Destination
 @Composable
 fun MedicsScreen(
     modifier: Modifier = Modifier,
-    viewState: MedicsScreenViewState
+    navigator: DestinationsNavigator,
+    bottomBarPaddingValues: PaddingValues,
+    viewState: MedicsScreenViewState = MedicsScreenViewState()
 ) {
     Scaffold(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(bottomBarPaddingValues),
         topBar = {
             TopBar(title = stringResource(R.string.menu_item_Medics))
-        },
-        bottomBar = {
-            BottomBar(1)
         }
     ) { values ->
         Box(

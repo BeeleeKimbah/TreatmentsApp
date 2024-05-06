@@ -20,15 +20,20 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
-import com.razvanberchez.proiectlicenta.view.components.BottomBar
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
 
+@RootNavGraph
+@Destination
 @Composable
 fun SessionDetailsScreen(
     modifier: Modifier = Modifier,
-    viewState: SessionDetailsScreenViewState
+    navigator: DestinationsNavigator,
+    viewState: SessionDetailsScreenViewState = SessionDetailsScreenViewState()
 ) {
     Scaffold(
         modifier = modifier
@@ -37,9 +42,6 @@ fun SessionDetailsScreen(
             TopBar(
                 title = stringResource(R.string.session_details_title), true
             )
-        },
-        bottomBar = {
-            BottomBar(0)
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
