@@ -6,7 +6,7 @@
     <string name="menu_item_Logout">Deconectare</string>
     <string name="button_NewSession">Sesiune nouă</string>
     <string name="session_list_Medic">Medic</string>
-    <string name="session_list_StartDate">Primul consult</string>
+    <string name="session_list_consultDate">Dată consult</string>
     <string name="session_list_Diagnostic">Diagnostic</string>
     <string name="text_welcome_back">Bine ai revenit!</string>
     <string name="text_login_message">Te rugăm să te autentifici</string>

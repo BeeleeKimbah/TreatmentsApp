@@ -114,8 +114,8 @@ fun SessionsScreen(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = stringResource(R.string.session_list_StartDate)
-                                            + ": " + session.startDate.toLocalDate().toString(),
+                                    text = stringResource(R.string.session_list_consultDate)
+                                            + ": " + session.consultDate.toLocalDate().toString(),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                                 if (session.diagnostic != null) {

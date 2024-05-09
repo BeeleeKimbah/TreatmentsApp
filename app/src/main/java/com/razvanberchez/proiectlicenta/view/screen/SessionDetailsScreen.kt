@@ -95,17 +95,8 @@ fun SessionDetailsScreen(
                                 top = dimensionResource(R.dimen.details_text_padding),
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.session_list_StartDate)
-                                    + ": " + session.startDate.toLocalDate(),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
-                        )
-                        Text(
-                            modifier = modifier.padding(
-                                top = dimensionResource(R.dimen.details_text_padding),
-                                start = dimensionResource(R.dimen.details_text_padding)
-                            ),
-                            text = stringResource(R.string.session_lastConsult)
-                                    + ": " + session.lastConsult.toLocalDate(),
+                            text = stringResource(R.string.session_list_consultDate)
+                                    + ": " + session.consultDate.toLocalDate().toString(),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(

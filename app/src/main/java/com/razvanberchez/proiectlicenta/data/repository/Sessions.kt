@@ -8,7 +8,6 @@ import java.time.LocalDateTime
 val sessionList = listOf(
     Session(
         LocalDateTime.of(2024, 4, 17, 0, 0),
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Marian Paun",
         listOf(
             Treatment(
@@ -126,7 +125,6 @@ val sessionList = listOf(
     ),
     Session(
         LocalDateTime.of(2024, 2, 12, 0, 0),
-        LocalDateTime.of(2024, 3, 19, 0, 0),
         "Gigel Samsaru",
         listOf(
             Treatment(
@@ -140,7 +138,6 @@ val sessionList = listOf(
     ),
     Session(
         LocalDateTime.of(2024, 3, 17, 0, 0),
-        LocalDateTime.of(2024, 4, 9, 0, 0),
         "Eusebiu Manea",
         listOf(
             Treatment(
@@ -155,7 +152,6 @@ val sessionList = listOf(
     ),
     Session(
         LocalDateTime.of(2024, 4, 17, 0, 0),
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Marian Paun",
         listOf(
             Treatment(
@@ -168,7 +164,6 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         LocalDateTime.of(2024, 4, 17, 0, 0),
         "Ileana Vicov",
         listOf(
@@ -183,7 +178,6 @@ val sessionList = listOf(
     ),
     Session(
         LocalDateTime.of(2024, 4, 17, 0, 0),
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Maria Geangu",
         listOf(
             Treatment(
@@ -196,7 +190,6 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         LocalDateTime.of(2024, 4, 17, 0, 0),
         "Vasile Copot",
         listOf(
@@ -212,7 +205,6 @@ val sessionList = listOf(
     ),
     Session(
         LocalDateTime.of(2024, 4, 17, 0, 0),
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Irina Popa",
         listOf(
             Treatment(
@@ -226,7 +218,6 @@ val sessionList = listOf(
     ),
     Session(
         LocalDateTime.of(2024, 4, 17, 0, 0),
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         "Giani Vasiliu",
         listOf(
             Treatment(
@@ -239,7 +230,6 @@ val sessionList = listOf(
         )
     ),
     Session(
-        LocalDateTime.of(2024, 4, 17, 0, 0),
         LocalDateTime.of(2024, 4, 17, 0, 0),
         "Bogdan Ciurea",
         listOf(
