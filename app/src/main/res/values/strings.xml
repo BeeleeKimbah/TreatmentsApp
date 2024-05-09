@@ -5,9 +5,9 @@
     <string name="menu_item_Settings">Setări</string>
     <string name="menu_item_Logout">Deconectare</string>
     <string name="button_NewSession">Sesiune nouă</string>
-    <string name="session_list_Medic">Medic</string>
-    <string name="session_list_consultDate">Dată consult</string>
-    <string name="session_list_Diagnostic">Diagnostic</string>
+    <string name="session_list_Medic">Medic: %1$s</string>
+    <string name="session_list_consultDate">Dată consult: %1$s</string>
+    <string name="session_list_Diagnostic">Diagnostic: %1$s</string>
     <string name="text_welcome_back">Bine ai revenit!</string>
     <string name="text_login_message">Te rugăm să te autentifici</string>
     <string name="input_text_username">Nume utilizator</string>
@@ -23,12 +23,12 @@
     <string name="treat_dosage_freq">Medicament: doze / frecvență</string>
     <string name="treatment_scheme_item">%1$s: %2$d / %3$d h</string>
     <string name="session_details_title">Detalii sesiune</string>
-    <string name="medic_list_main_specialty">Specializare</string>
-    <string name="medic_list_avg_score">Scor</string>
+    <string name="medic_list_main_specialty">Specializare: %1$s</string>
+    <string name="medic_list_avg_score">Scor: %1$s</string>
     <string name="medic_secondary_specialties">Specializări secundare</string>
     <string name="medic_reviews">Recenzii</string>
     <string name="button_text_add_review">Recenzie nouă</string>
     <string name="medic_details_title">Detalii medic</string>
-    <string name="medic_details_name">Nume</string>
+    <string name="medic_details_name">Nume: %1$s</string>
     <string name="medic_details_general_info">Informații generale</string>
 </resources>

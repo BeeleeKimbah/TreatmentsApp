@@ -157,8 +157,8 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
-                navigator.navigate(SessionsScreenDestination) {
-                    popUpTo(LoginScreenDestination.route)
+                navigator.navigate(direction = SessionsScreenDestination) {
+                    popUpTo(route = LoginScreenDestination.route)
                 }
             },
             enabled = viewState.loginButtonEnabled
@@ -176,7 +176,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
-                navigator.navigate(RegisterScreenDestination)
+                navigator.navigate(direction = RegisterScreenDestination)
             }
         ) {
             Text(

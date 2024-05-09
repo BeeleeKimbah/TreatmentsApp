@@ -43,8 +43,8 @@ fun MedicDetailsScreen(
         topBar = {
             TopBar(
                 title = stringResource(R.string.medic_details_title),
-                true,
-                navigator
+                hasBackButton = true,
+                navigator = navigator
             )
         },
         floatingActionButton = {
@@ -96,8 +96,10 @@ fun MedicDetailsScreen(
                                 top = dimensionResource(R.dimen.details_text_padding),
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.medic_details_name)
-                                    + ": " + medic.name,
+                            text = stringResource(
+                                R.string.medic_details_name,
+                                medic.name
+                            ),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -105,8 +107,10 @@ fun MedicDetailsScreen(
                                 top = dimensionResource(R.dimen.details_text_padding),
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.medic_list_main_specialty)
-                                    + ": " + medic.mainSpecialty,
+                            text = stringResource(
+                                R.string.medic_list_main_specialty,
+                                medic.mainSpecialty
+                            ),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -114,9 +118,13 @@ fun MedicDetailsScreen(
                                 top = dimensionResource(R.dimen.details_text_padding),
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.medic_list_avg_score)
-                                    + ": " + (if (medic.averageScore != null)
-                                "%.2f".format(medic.averageScore) else "-"),
+                            text = stringResource(
+                                R.string.medic_list_avg_score,
+                                if (medic.averageScore != null)
+                                    "%.2f".format(medic.averageScore)
+                                else
+                                    "-"
+                            ),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                     }
@@ -140,7 +148,6 @@ fun MedicDetailsScreen(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer
                         )
                     ) {
-
                         if (medic.secondarySpecialties.isNotEmpty()) {
                             medic.secondarySpecialties.forEach { spec ->
                                 Text(
@@ -192,7 +199,7 @@ fun MedicDetailsScreen(
                                 modifier = modifier.padding(
                                     horizontal = dimensionResource(R.dimen.details_text_padding)
                                 ),
-                                text = review.score.value.toString() + " / 5",
+                                text = "${review.score.value} / 5",
                                 fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp,
                                 fontWeight = FontWeight.Bold
                             )

@@ -25,45 +25,47 @@ fun TopBar(
     hasBackButton: Boolean = false,
     navigator: DestinationsNavigator,
     hasLogoutButton: Boolean = true
-) = TopAppBar(
-    colors = TopAppBarDefaults.topAppBarColors(
-        containerColor = MaterialTheme.colorScheme.primaryContainer
-    ),
-    title = {
-        Text(
-            text = title,
-            fontSize = dimensionResource(R.dimen.topbar_title_fontsize).value.sp
-        )
-    },
-    navigationIcon = {
-        if (hasBackButton)
-            IconButton(
-                onClick = {
-                    navigator.popBackStack()
+) {
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        title = {
+            Text(
+                text = title,
+                fontSize = dimensionResource(R.dimen.topbar_title_fontsize).value.sp
+            )
+        },
+        navigationIcon = {
+            if (hasBackButton)
+                IconButton(
+                    onClick = {
+                        navigator.popBackStack()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.ArrowBack,
+                        contentDescription = null
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = null
-                )
-            }
-    },
-    actions = {
-        if (hasLogoutButton) {
-            IconButton(
-                onClick = {
-                    navigator.navigate(LoginScreenDestination) {
-                        popUpTo(NavGraphs.root.route) {
-                            inclusive = true
+        },
+        actions = {
+            if (hasLogoutButton) {
+                IconButton(
+                    onClick = {
+                        navigator.navigate(direction = LoginScreenDestination) {
+                            popUpTo(route = NavGraphs.root.route) {
+                                inclusive = true
+                            }
                         }
                     }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.ExitToApp,
+                        contentDescription = null
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.ExitToApp,
-                    contentDescription = null
-                )
             }
         }
-    }
-)
+    )
+}

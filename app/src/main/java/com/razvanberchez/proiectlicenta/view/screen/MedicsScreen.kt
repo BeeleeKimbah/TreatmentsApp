@@ -68,8 +68,8 @@ fun MedicsScreen(
                                 )
                                 .clickable {
                                     navigator.navigate(
-                                        MedicDetailsScreenDestination(
-                                            MedicDetailsScreenViewState(
+                                        direction = MedicDetailsScreenDestination(
+                                            navArgs = MedicDetailsScreenViewState(
                                                 medicId = index
                                             )
                                         )
@@ -88,25 +88,33 @@ fun MedicsScreen(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = stringResource(R.string.session_list_Medic)
-                                            + ": " + medic.name,
+                                    text = stringResource(
+                                        R.string.medic_details_name,
+                                        medic.name
+                                    ),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                                 Text(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = stringResource(R.string.medic_list_main_specialty)
-                                            + ": " + medic.mainSpecialty,
+                                    text = stringResource(
+                                        R.string.medic_list_main_specialty,
+                                        medic.mainSpecialty
+                                    ),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                                 Text(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = stringResource(R.string.medic_list_avg_score)
-                                            + ": " + (if (medic.averageScore != null)
-                                        "%.2f".format(medic.averageScore) else "-"),
+                                    text = stringResource(
+                                        R.string.medic_list_avg_score,
+                                        if (medic.averageScore != null)
+                                            "%.2f".format(medic.averageScore)
+                                        else
+                                            "-"
+                                    ),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                             }

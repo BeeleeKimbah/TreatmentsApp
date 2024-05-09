@@ -38,27 +38,29 @@ enum class BottomBarDestinations (
     val unselectedIcon: ImageVector
 ) {
     Sessions(
-        SessionsScreenDestination,
-        R.string.menu_item_MySessions,
-        Icons.Filled.List,
-        Icons.Outlined.List
+        direction = SessionsScreenDestination,
+        title = R.string.menu_item_MySessions,
+        selectedIcon = Icons.Filled.List,
+        unselectedIcon = Icons.Outlined.List
     ),
     Medics(
-        MedicsScreenDestination,
-        R.string.menu_item_Medics,
-        Icons.Filled.Person,
-        Icons.Outlined.Person
+        direction = MedicsScreenDestination,
+        title = R.string.menu_item_Medics,
+        selectedIcon = Icons.Filled.Person,
+        unselectedIcon = Icons.Outlined.Person
     ),
     Settings(
-        MedicsScreenDestination,
-        R.string.menu_item_Settings,
-        Icons.Filled.Settings,
-        Icons.Outlined.Settings
+        direction = MedicsScreenDestination,
+        title = R.string.menu_item_Settings,
+        selectedIcon = Icons.Filled.Settings,
+        unselectedIcon = Icons.Outlined.Settings
     )
 }
 
 @Composable
-fun BottomBar(navController: NavController) {
+fun BottomBar(
+    navController: NavController
+) {
     val currentDestination: Destination = navController.appCurrentDestinationAsState().value
         ?: NavGraphs.root.startAppDestination
 
@@ -69,9 +71,9 @@ fun BottomBar(navController: NavController) {
                     selected = currentDestination == item.direction,
                     label = { Text(stringResource(item.title)) },
                     onClick = {
-                        navController.navigate(item.direction) {
+                        navController.navigate(direction = item.direction) {
                             launchSingleTop = true
-                            popUpTo(item.direction.route) {
+                            popUpTo(route = item.direction.route) {
                                 inclusive = true
                             }
                         }

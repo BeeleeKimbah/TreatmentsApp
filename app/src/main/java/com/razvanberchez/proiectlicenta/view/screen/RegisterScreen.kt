@@ -56,10 +56,10 @@ fun RegisterScreen(
     Scaffold(
         topBar = {
             TopBar(
-                stringResource(R.string.button_text_register),
-                true,
-                navigator,
-                false
+                title = stringResource(R.string.button_text_register),
+                hasBackButton = true,
+                navigator = navigator,
+                hasLogoutButton = false
             )
         }
     ) { values ->
@@ -146,10 +146,10 @@ fun RegisterScreen(
                     )
                 },
                 visualTransformation = if (showPassword) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
+                                        VisualTransformation.None
+                                    } else {
+                                        PasswordVisualTransformation()
+                                    },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
@@ -195,11 +195,10 @@ fun RegisterScreen(
                         fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
                     )
                 },
-                visualTransformation = if (showPasswordConfirm) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
+                visualTransformation = if (showPasswordConfirm)
+                                        VisualTransformation.None
+                                    else
+                                        PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done

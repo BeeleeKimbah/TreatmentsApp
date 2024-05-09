@@ -86,8 +86,8 @@ fun SessionsScreen(
                                 )
                                 .clickable {
                                     navigator.navigate(
-                                        SessionDetailsScreenDestination(
-                                            SessionDetailsScreenViewState(
+                                        direction = SessionDetailsScreenDestination(
+                                            navArgs = SessionDetailsScreenViewState(
                                                 sessionId = index
                                             )
                                         )
@@ -106,16 +106,20 @@ fun SessionsScreen(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = stringResource(R.string.session_list_Medic)
-                                            + ": " + session.medicName,
+                                    text = stringResource(
+                                        R.string.session_list_Medic,
+                                        session.medicName
+                                    ),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                                 Text(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = stringResource(R.string.session_list_consultDate)
-                                            + ": " + session.consultDate.toLocalDate().toString(),
+                                    text = stringResource(
+                                        R.string.session_list_consultDate,
+                                        session.consultDate.toLocalDate().toString()
+                                    ),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                                 if (session.diagnostic != null) {
@@ -123,8 +127,10 @@ fun SessionsScreen(
                                         modifier = modifier.padding(
                                             horizontal = dimensionResource(R.dimen.card_text_padding)
                                         ),
-                                        text = stringResource(R.string.session_list_Diagnostic)
-                                                + ": " + session.diagnostic,
+                                        text = stringResource(
+                                            R.string.session_list_Diagnostic,
+                                            session.diagnostic
+                                        ),
                                         fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                     )
                                 }

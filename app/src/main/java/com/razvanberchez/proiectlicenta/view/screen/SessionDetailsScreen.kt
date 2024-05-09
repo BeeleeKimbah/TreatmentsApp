@@ -43,8 +43,8 @@ fun SessionDetailsScreen(
         topBar = {
             TopBar(
                 title = stringResource(R.string.session_details_title),
-                true,
-                navigator
+                hasBackButton = true,
+                navigator = navigator
             )
         },
         floatingActionButton = {
@@ -86,8 +86,10 @@ fun SessionDetailsScreen(
                                 top = dimensionResource(R.dimen.details_text_padding),
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.session_list_Medic)
-                                    + ": " + session.medicName,
+                            text = stringResource(
+                                R.string.session_list_Medic,
+                                session.medicName
+                            ),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -95,8 +97,10 @@ fun SessionDetailsScreen(
                                 top = dimensionResource(R.dimen.details_text_padding),
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.session_list_consultDate)
-                                    + ": " + session.consultDate.toLocalDate().toString(),
+                            text = stringResource(
+                                R.string.session_list_consultDate,
+                                session.consultDate.toLocalDate().toString()
+                            ),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -105,8 +109,10 @@ fun SessionDetailsScreen(
                                 start = dimensionResource(R.dimen.details_text_padding),
                                 bottom = dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.session_list_Diagnostic)
-                                    + ": " + (session.diagnostic ?: "-"),
+                            text = stringResource(
+                                R.string.session_list_Diagnostic,
+                                (session.diagnostic ?: "-")
+                            ),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                     }
