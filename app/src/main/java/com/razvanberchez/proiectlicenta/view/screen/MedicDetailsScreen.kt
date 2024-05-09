@@ -77,7 +77,7 @@ fun MedicDetailsScreen(
                         modifier = modifier.padding(
                             dimensionResource(R.dimen.details_text_padding)
                         ),
-                        text = stringResource(R.string.medic_details_general_info),
+                        text = stringResource(R.string.details_general_info),
                         fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -100,7 +100,7 @@ fun MedicDetailsScreen(
                                 R.string.medic_details_name,
                                 medic.name
                             ),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                         )
                         Text(
                             modifier = modifier.padding(
@@ -111,12 +111,13 @@ fun MedicDetailsScreen(
                                 R.string.medic_list_main_specialty,
                                 medic.mainSpecialty
                             ),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                         )
                         Text(
                             modifier = modifier.padding(
                                 top = dimensionResource(R.dimen.details_text_padding),
-                                start = dimensionResource(R.dimen.details_text_padding)
+                                start = dimensionResource(R.dimen.details_text_padding),
+                                bottom = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(
                                 R.string.medic_list_avg_score,
@@ -125,7 +126,7 @@ fun MedicDetailsScreen(
                                 else
                                     "-"
                             ),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                         )
                     }
                 }

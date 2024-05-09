@@ -73,6 +73,16 @@ fun SessionDetailsScreen(
                     .fillMaxSize()
             ) {
                 item {
+                    Text(
+                        modifier = modifier.padding(
+                            dimensionResource(R.dimen.details_text_padding)
+                        ),
+                        text = stringResource(R.string.details_general_info),
+                        fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                item {
                     Card(
                         modifier = modifier
                             .fillMaxWidth()
@@ -90,7 +100,7 @@ fun SessionDetailsScreen(
                                 R.string.session_list_Medic,
                                 session.medicName
                             ),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                         )
                         Text(
                             modifier = modifier.padding(
@@ -101,7 +111,7 @@ fun SessionDetailsScreen(
                                 R.string.session_list_consultDate,
                                 session.consultDate.toLocalDate().toString()
                             ),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                         )
                         Text(
                             modifier = modifier.padding(
@@ -113,9 +123,19 @@ fun SessionDetailsScreen(
                                 R.string.session_list_Diagnostic,
                                 (session.diagnostic ?: "-")
                             ),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                         )
                     }
+                }
+                item {
+                    Text(
+                        modifier = modifier.padding(
+                            dimensionResource(R.dimen.details_text_padding)
+                        ),
+                        text = stringResource(R.string.session_details_treatment_scheme),
+                        fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
                 item {
                     Card(
@@ -149,7 +169,7 @@ fun SessionDetailsScreen(
                                     treatment.dose,
                                     treatment.frequency
                                 ),
-                                fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
+                                fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                             )
                             Divider(
                                 color = MaterialTheme.colorScheme.onSecondary

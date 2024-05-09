@@ -30,5 +30,6 @@
     <string name="button_text_add_review">Recenzie nouă</string>
     <string name="medic_details_title">Detalii medic</string>
     <string name="medic_details_name">Nume: %1$s</string>
-    <string name="medic_details_general_info">Informații generale</string>
+    <string name="details_general_info">Informații generale</string>
+    <string name="session_details_treatment_scheme">Schemă de tratament</string>
 </resources>
