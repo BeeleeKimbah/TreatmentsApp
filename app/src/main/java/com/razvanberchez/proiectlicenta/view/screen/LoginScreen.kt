@@ -38,6 +38,8 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.view.screen.destinations.LoginScreenDestination
+import com.razvanberchez.proiectlicenta.view.screen.destinations.RegisterScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
 
@@ -117,10 +119,13 @@ fun LoginScreen(
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-//                    if (viewState.loginButtonEnabled) {
-//                        /* TODO: Implement Login button and call it here too */
-//
-//                    }
+                    if (viewState.loginButtonEnabled) {
+                        navigator.navigate(SessionsScreenDestination) {
+                            popUpTo(LoginScreenDestination.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 }
             ),
             trailingIcon = {
@@ -152,8 +157,9 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
-                /* TODO */
-                navigator.navigate(SessionsScreenDestination)
+                navigator.navigate(SessionsScreenDestination) {
+                    popUpTo(LoginScreenDestination.route)
+                }
             },
             enabled = viewState.loginButtonEnabled
         ) {
@@ -170,7 +176,7 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
-                /* TODO */
+                navigator.navigate(RegisterScreenDestination)
             }
         ) {
             Text(

@@ -26,12 +26,11 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     tonalElevation = 5.dp
                 ) {
-                    Scaffold (
+                    Scaffold(
                         bottomBar = {
                             BottomBar(navController)
                         }
-                    ) {
-                        values ->
+                    ) { values ->
                         DestinationsNavHost(
                             navGraph = NavGraphs.root,
                             navController = navController

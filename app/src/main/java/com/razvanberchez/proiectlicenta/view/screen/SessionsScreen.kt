@@ -27,6 +27,8 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.view.components.TopBar
+import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionDetailsScreenDestination
+import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
 
 @RootNavGraph
@@ -43,7 +45,10 @@ fun SessionsScreen(
             .fillMaxSize()
             .padding(bottomBarPaddingValues),
         topBar = {
-            TopBar(title = stringResource(R.string.menu_item_MySessions))
+            TopBar(
+                title = stringResource(R.string.menu_item_MySessions),
+                navigator = navigator
+            )
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
@@ -71,7 +76,7 @@ fun SessionsScreen(
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                viewState.sessions.forEach { session ->
+                viewState.sessions.forEachIndexed { index, session ->
                     item {
                         Column(
                             modifier = Modifier
@@ -80,7 +85,13 @@ fun SessionsScreen(
                                     vertical = dimensionResource(R.dimen.list_elem_padding)
                                 )
                                 .clickable {
-                                    /* TODO */
+                                    navigator.navigate(
+                                        SessionDetailsScreenDestination(
+                                            SessionDetailsScreenViewState(
+                                                sessionId = index
+                                            )
+                                        )
+                                    )
                                 }
                                 .fillMaxWidth()
                         ) {

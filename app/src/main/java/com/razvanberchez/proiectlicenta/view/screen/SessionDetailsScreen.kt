@@ -24,23 +24,27 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.data.repository.getSession
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
 
 @RootNavGraph
-@Destination
+@Destination(navArgsDelegate = SessionDetailsScreenViewState::class)
 @Composable
 fun SessionDetailsScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
-    viewState: SessionDetailsScreenViewState = SessionDetailsScreenViewState()
+    viewState: SessionDetailsScreenViewState
 ) {
+    val session = getSession(viewState.sessionId)
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
         topBar = {
             TopBar(
-                title = stringResource(R.string.session_details_title), true
+                title = stringResource(R.string.session_details_title),
+                true,
+                navigator
             )
         },
         floatingActionButton = {
@@ -83,7 +87,7 @@ fun SessionDetailsScreen(
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.session_list_Medic)
-                                    + ": " + viewState.session.medicName,
+                                    + ": " + session.medicName,
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -92,7 +96,7 @@ fun SessionDetailsScreen(
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.session_list_StartDate)
-                                    + ": " + viewState.session.startDate.toLocalDate(),
+                                    + ": " + session.startDate.toLocalDate(),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -101,7 +105,7 @@ fun SessionDetailsScreen(
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.session_lastConsult)
-                                    + ": " + viewState.session.lastConsult.toLocalDate(),
+                                    + ": " + session.lastConsult.toLocalDate(),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -111,7 +115,7 @@ fun SessionDetailsScreen(
                                 bottom = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.session_list_Diagnostic)
-                                    + ": " + viewState.session.diagnostic,
+                                    + ": " + (session.diagnostic ?: "-"),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                     }
@@ -136,7 +140,7 @@ fun SessionDetailsScreen(
                         Divider(
                             color = MaterialTheme.colorScheme.onSurface
                         )
-                        viewState.session.treatmentScheme.forEach { treatment ->
+                        session.treatmentScheme.forEach { treatment ->
 
                             Text(
                                 modifier = modifier.padding(

@@ -24,6 +24,8 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.view.components.TopBar
+import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicDetailsScreenDestination
+import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicsScreenViewState
 
 @RootNavGraph
@@ -40,7 +42,10 @@ fun MedicsScreen(
             .fillMaxSize()
             .padding(bottomBarPaddingValues),
         topBar = {
-            TopBar(title = stringResource(R.string.menu_item_Medics))
+            TopBar(
+                title = stringResource(R.string.menu_item_Medics),
+                navigator = navigator
+            )
         }
     ) { values ->
         Box(
@@ -53,7 +58,7 @@ fun MedicsScreen(
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                viewState.medics.forEach { medic ->
+                viewState.medics.forEachIndexed { index, medic ->
                     item {
                         Column(
                             modifier = Modifier
@@ -62,7 +67,13 @@ fun MedicsScreen(
                                     vertical = dimensionResource(R.dimen.list_elem_padding)
                                 )
                                 .clickable {
-                                    /* TODO */
+                                    navigator.navigate(
+                                        MedicDetailsScreenDestination(
+                                            MedicDetailsScreenViewState(
+                                                medicId = index
+                                            )
+                                        )
+                                    )
                                 }
                                 .fillMaxWidth()
                         ) {
@@ -95,7 +106,7 @@ fun MedicsScreen(
                                     ),
                                     text = stringResource(R.string.medic_list_avg_score)
                                             + ": " + (if (medic.averageScore != null)
-                                                "%.2f".format(medic.averageScore) else "-"),
+                                        "%.2f".format(medic.averageScore) else "-"),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
                             }

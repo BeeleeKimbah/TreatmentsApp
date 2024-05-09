@@ -24,23 +24,27 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.data.repository.getMedic
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
 
 @RootNavGraph
-@Destination
+@Destination(navArgsDelegate = MedicDetailsScreenViewState::class)
 @Composable
 fun MedicDetailsScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
-    viewState: MedicDetailsScreenViewState = MedicDetailsScreenViewState()
+    viewState: MedicDetailsScreenViewState
 ) {
+    val medic = getMedic(viewState.medicId)
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
         topBar = {
             TopBar(
-                title = stringResource(R.string.medic_details_title), true
+                title = stringResource(R.string.medic_details_title),
+                true,
+                navigator
             )
         },
         floatingActionButton = {
@@ -52,7 +56,7 @@ fun MedicDetailsScreen(
                     .height(dimensionResource(R.dimen.button_size))
             ) {
                 Text(
-                    text = stringResource(R.string.button_text_add_consult),
+                    text = stringResource(R.string.button_text_add_review),
                     fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
                 )
             }
@@ -93,7 +97,7 @@ fun MedicDetailsScreen(
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.medic_details_name)
-                                    + ": " + viewState.medic.name,
+                                    + ": " + medic.name,
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -102,7 +106,7 @@ fun MedicDetailsScreen(
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.medic_list_main_specialty)
-                                    + ": " + viewState.medic.mainSpecialty,
+                                    + ": " + medic.mainSpecialty,
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                         Text(
@@ -111,8 +115,8 @@ fun MedicDetailsScreen(
                                 start = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.medic_list_avg_score)
-                                    + ": " + (if (viewState.medic.averageScore != null)
-                                "%.2f".format(viewState.medic.averageScore) else "-"),
+                                    + ": " + (if (medic.averageScore != null)
+                                "%.2f".format(medic.averageScore) else "-"),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp
                         )
                     }
@@ -137,8 +141,8 @@ fun MedicDetailsScreen(
                         )
                     ) {
 
-                        if (viewState.medic.secondarySpecialties.isNotEmpty()) {
-                            viewState.medic.secondarySpecialties.forEach { spec ->
+                        if (medic.secondarySpecialties.isNotEmpty()) {
+                            medic.secondarySpecialties.forEach { spec ->
                                 Text(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.details_text_padding)
@@ -174,7 +178,7 @@ fun MedicDetailsScreen(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                viewState.medic.reviews.forEach { review ->
+                medic.reviews.forEach { review ->
                     item {
                         Card(
                             modifier = modifier

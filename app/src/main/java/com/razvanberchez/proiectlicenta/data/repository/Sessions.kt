@@ -259,7 +259,7 @@ fun getSessions(): List<Session> {
     return sessionList
 }
 
-fun getSession(): Session {
-    return sessionList[0]
+fun getSession(i: Int): Session {
+    return sessionList[i]
 }
 

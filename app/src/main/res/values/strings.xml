@@ -11,8 +11,7 @@
     <string name="text_welcome_back">Bine ai revenit!</string>
     <string name="text_login_message">Te rugăm să te autentifici</string>
     <string name="input_text_username">Nume utilizator</string>
-    <string name="input_text_password">Parola</string>
-    <string name="text_forgot_password">Am uitat parola</string>
+    <string name="input_text_password">Parolă</string>
     <string name="button_text_login">Autentificare</string>
     <string name="button_text_register">Înregistrare</string>
     <string name="text_welcome">Bine ai venit!</string>
@@ -28,6 +27,7 @@
     <string name="medic_list_avg_score">Scor</string>
     <string name="medic_secondary_specialties">Specializări secundare</string>
     <string name="medic_reviews">Recenzii</string>
+    <string name="button_text_add_review">Recenzie nouă</string>
     <string name="medic_details_title">Detalii medic</string>
     <string name="medic_details_name">Nume</string>
     <string name="medic_details_general_info">Informații generale</string>

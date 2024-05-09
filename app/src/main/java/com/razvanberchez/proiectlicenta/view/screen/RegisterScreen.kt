@@ -56,7 +56,10 @@ fun RegisterScreen(
     Scaffold(
         topBar = {
             TopBar(
-                stringResource(R.string.button_text_register), true
+                stringResource(R.string.button_text_register),
+                true,
+                navigator,
+                false
             )
         }
     ) { values ->

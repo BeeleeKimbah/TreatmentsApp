@@ -246,6 +246,6 @@ fun getMedics(): List<Medic> {
     return medicList
 }
 
-fun getMedic(): Medic {
-    return medicList[0]
+fun getMedic(i: Int): Medic {
+    return medicList[i]
 }
