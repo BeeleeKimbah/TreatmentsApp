@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -66,7 +68,8 @@ fun RegisterScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(values),
+                .padding(values)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -155,9 +158,6 @@ fun RegisterScreen(
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
-                    onSend = {
-                        localFocusManager.moveFocus(FocusDirection.Down)
-                    },
                     onNext = {
                         localFocusManager.moveFocus(FocusDirection.Down)
                     }
@@ -201,10 +201,10 @@ fun RegisterScreen(
                                         PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
+                    imeAction = ImeAction.Go
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = {
+                    onGo = {
 //                        if (viewState.registerButtonEnabled) {
 //                            /* TODO: Implement Register button and call it here too */
 //                        }
