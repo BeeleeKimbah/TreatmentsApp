@@ -27,9 +27,12 @@
     <string name="medic_list_avg_score">Scor: %1$s</string>
     <string name="medic_secondary_specialties">Specializări secundare</string>
     <string name="medic_reviews">Recenzii</string>
-    <string name="button_text_add_review">Recenzie nouă</string>
+    <string name="text_add_review">Recenzie nouă</string>
     <string name="medic_details_title">Detalii medic</string>
     <string name="medic_details_name">Nume: %1$s</string>
     <string name="details_general_info">Informații generale</string>
     <string name="session_details_treatment_scheme">Schemă de tratament</string>
+    <string name="text_header_score">Scor</string>
+    <string name="text_header_review">Recenzie</string>
+    <string name="button_text_add_review">Adaugă recenzie</string>
 </resources>

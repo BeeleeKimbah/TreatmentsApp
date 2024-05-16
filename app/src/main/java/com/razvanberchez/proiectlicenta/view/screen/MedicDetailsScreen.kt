@@ -26,6 +26,8 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.data.repository.getMedic
 import com.razvanberchez.proiectlicenta.view.components.TopBar
+import com.razvanberchez.proiectlicenta.view.screen.destinations.AddReviewScreenDestination
+import com.razvanberchez.proiectlicenta.view.viewstate.AddReviewScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
 
 @RootNavGraph
@@ -50,13 +52,19 @@ fun MedicDetailsScreen(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = {
-                    /* TODO */
+                    navigator.navigate(
+                        direction = AddReviewScreenDestination(
+                            navArgs = AddReviewScreenViewState(
+                                medicId = viewState.medicId
+                            )
+                        )
+                    )
                 },
                 modifier = modifier
                     .height(dimensionResource(R.dimen.button_size))
             ) {
                 Text(
-                    text = stringResource(R.string.button_text_add_review),
+                    text = stringResource(R.string.text_add_review),
                     fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
                 )
             }

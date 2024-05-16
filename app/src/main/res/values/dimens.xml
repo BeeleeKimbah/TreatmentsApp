@@ -16,4 +16,6 @@
     <dimen name="details_text_padding">8.dp</dimen>
     <dimen name="treatment_list_height">200.dp</dimen>
     <dimen name="topbar_title_fontsize">26.sp</dimen>
+    <dimen name="review_star_size">40.dp</dimen>
+    <dimen name="review_star_spacing">8.dp</dimen>
 </resources>
