@@ -35,4 +35,8 @@
     <string name="text_header_score">Scor</string>
     <string name="text_header_review">Recenzie</string>
     <string name="button_text_add_review">Adaugă recenzie</string>
+    <string name="text_header_notifications">Notificări</string>
+    <string name="text_settings_enable_notifications">Permite notificări</string>
+    <string name="text_settings_treatment_notifications">Notificări tratament</string>
+    <string name="text_settings_consult_notifications">Notificări consulturi</string>
 </resources>

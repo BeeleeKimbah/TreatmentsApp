@@ -14,8 +14,10 @@ import com.razvanberchez.proiectlicenta.view.components.BottomBar
 import com.razvanberchez.proiectlicenta.view.screen.MedicsScreen
 import com.razvanberchez.proiectlicenta.view.screen.NavGraphs
 import com.razvanberchez.proiectlicenta.view.screen.SessionsScreen
+import com.razvanberchez.proiectlicenta.view.screen.SettingsScreen
 import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicsScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
+import com.razvanberchez.proiectlicenta.view.screen.destinations.SettingsScreenDestination
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,12 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(MedicsScreenDestination) {
                                 MedicsScreen(
+                                    bottomBarPaddingValues = values,
+                                    navigator = destinationsNavigator
+                                )
+                            }
+                            composable(SettingsScreenDestination) {
+                                SettingsScreen(
                                     bottomBarPaddingValues = values,
                                     navigator = destinationsNavigator
                                 )
