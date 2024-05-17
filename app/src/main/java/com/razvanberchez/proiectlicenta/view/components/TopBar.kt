@@ -40,7 +40,7 @@ fun TopBar(
             if (hasBackButton)
                 IconButton(
                     onClick = {
-                        navigator.popBackStack()
+                        navigator.navigateUp()
                     }
                 ) {
                     Icon(

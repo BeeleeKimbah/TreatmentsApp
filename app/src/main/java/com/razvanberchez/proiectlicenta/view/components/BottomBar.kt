@@ -24,11 +24,13 @@ import com.razvanberchez.proiectlicenta.view.screen.appCurrentDestinationAsState
 import com.razvanberchez.proiectlicenta.view.screen.destinations.Destination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicsScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
+import com.razvanberchez.proiectlicenta.view.screen.destinations.SettingsScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.startAppDestination
 
 val bottomNavScreenRoutes = listOf(
     MedicsScreenDestination.route,
-    SessionsScreenDestination.route
+    SessionsScreenDestination.route,
+    SettingsScreenDestination.route
 )
 
 enum class BottomBarDestinations (
@@ -50,7 +52,7 @@ enum class BottomBarDestinations (
         unselectedIcon = Icons.Outlined.Person
     ),
     Settings(
-        direction = MedicsScreenDestination,
+        direction = SettingsScreenDestination,
         title = R.string.menu_item_Settings,
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings

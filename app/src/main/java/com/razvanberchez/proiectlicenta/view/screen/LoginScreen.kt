@@ -21,10 +21,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,10 +36,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.presentation.intent.LoginScreenIntent
+import com.razvanberchez.proiectlicenta.presentation.viewmodel.LoginScreenViewModel
 import com.razvanberchez.proiectlicenta.view.screen.destinations.LoginScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.RegisterScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
@@ -51,7 +54,24 @@ import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
 fun LoginScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
-    viewState: LoginScreenViewState = LoginScreenViewState()
+    viewModel: LoginScreenViewModel = hiltViewModel()
+) {
+    val state by viewModel.viewState.collectAsState()
+
+    LoginScreenContent(
+        modifier = modifier,
+        navigator = navigator,
+        viewState = state,
+        onIntent = viewModel::onIntent
+    )
+}
+
+@Composable
+fun LoginScreenContent(
+    modifier: Modifier,
+    navigator: DestinationsNavigator,
+    viewState: LoginScreenViewState,
+    onIntent: (LoginScreenIntent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -60,12 +80,6 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        var username by rememberSaveable {
-            mutableStateOf("")
-        }
-        var password by rememberSaveable {
-            mutableStateOf("")
-        }
         var showPassword by remember {
             mutableStateOf(value = false)
         }
@@ -87,8 +101,8 @@ fun LoginScreen(
                 .padding(top = dimensionResource(R.dimen.ui_elem_padding))
                 .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                 .fillMaxWidth(),
-            value = username,
-            onValueChange = { username = it },
+            value = viewState.username,
+            onValueChange = { onIntent(LoginScreenIntent.ModifyUsername(it)) },
             label = {
                 Text(
                     text = stringResource(R.string.input_text_username),
@@ -103,8 +117,8 @@ fun LoginScreen(
             modifier = modifier
                 .padding(dimensionResource(R.dimen.ui_elem_padding))
                 .fillMaxWidth(),
-            value = password,
-            onValueChange = { password = it },
+            value = viewState.password,
+            onValueChange = { onIntent(LoginScreenIntent.ModifyPassword(it)) },
             label = {
                 Text(
                     text = stringResource(R.string.input_text_password),
@@ -160,8 +174,11 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
+                onIntent(LoginScreenIntent.Login)
                 navigator.navigate(direction = SessionsScreenDestination) {
-                    popUpTo(route = LoginScreenDestination.route)
+                    popUpTo(route = LoginScreenDestination.route) {
+                        inclusive = true
+                    }
                 }
             },
             enabled = viewState.loginButtonEnabled
