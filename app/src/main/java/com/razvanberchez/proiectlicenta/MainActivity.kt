@@ -7,9 +7,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
+import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
 import com.razvanberchez.proiectlicenta.view.components.BottomBar
 import com.razvanberchez.proiectlicenta.view.screen.MedicsScreen
 import com.razvanberchez.proiectlicenta.view.screen.NavGraphs
@@ -47,6 +47,12 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(MedicsScreenDestination) {
                                 MedicsScreen(
+                                    bottomBarPaddingValues = values,
+                                    navigator = destinationsNavigator
+                                )
+                            }
+                            composable(SettingsScreenDestination) {
+                                SettingsScreen(
                                     bottomBarPaddingValues = values,
                                     navigator = destinationsNavigator
                                 )
