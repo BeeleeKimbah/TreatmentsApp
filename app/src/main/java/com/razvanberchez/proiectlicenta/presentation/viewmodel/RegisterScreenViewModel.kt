@@ -1,12 +1,14 @@
 package com.razvanberchez.proiectlicenta.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.razvanberchez.proiectlicenta.presentation.intent.RegisterScreenIntent
 import com.razvanberchez.proiectlicenta.view.viewstate.RegisterScreenViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,12 +39,41 @@ class RegisterScreenViewModel @Inject constructor() : ViewModel() {
                 registerButtonEnabled =
                     validUsername &&validPassword && passwordsMatch && validEmail
             )
-        }
+        }.launchIn(viewModelScope)
     }
 
     fun onIntent(intent: RegisterScreenIntent) {
         when(intent) {
-            else -> Unit
+            is RegisterScreenIntent.ModifyUsername ->
+                modifyUsername(intent.newUsername)
+            is RegisterScreenIntent.ModifyPassword ->
+                modifyPassword(intent.newPassword)
+            is RegisterScreenIntent.ModifyEmail ->
+                modifyEmail(intent.newEmail)
+            is RegisterScreenIntent.ModifyConfirmPassword ->
+                modifyConfirmPassword(intent.newConfirmPassword)
+            is RegisterScreenIntent.Register ->
+                register()
         }
+    }
+
+    private fun register() {
+        // TODO: Add user to database
+    }
+
+    private fun modifyConfirmPassword(newConfirmPassword: String) {
+        _confirmPassword.value = newConfirmPassword
+    }
+
+    private fun modifyEmail(newEmail: String) {
+        _email.value = newEmail
+    }
+
+    private fun modifyPassword(newPassword: String) {
+        _password.value = newPassword
+    }
+
+    private fun modifyUsername(newUsername: String) {
+        _username.value = newUsername
     }
 }

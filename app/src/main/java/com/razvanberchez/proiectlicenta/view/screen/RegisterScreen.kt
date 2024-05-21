@@ -21,11 +21,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,11 +33,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -57,7 +55,7 @@ fun RegisterScreen(
     navigator: DestinationsNavigator,
     viewModel: RegisterScreenViewModel = hiltViewModel()
 ) {
-    val state by viewModel.viewState.collectAsState()
+    val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     RegisterScreenContent(
         modifier = modifier,
@@ -94,18 +92,6 @@ fun RegisterScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            var username by rememberSaveable {
-                mutableStateOf("")
-            }
-            var email by rememberSaveable {
-                mutableStateOf("")
-            }
-            var password by rememberSaveable {
-                mutableStateOf("")
-            }
-            var passwordConfirm by rememberSaveable {
-                mutableStateOf("")
-            }
             var showPassword by remember {
                 mutableStateOf(value = false)
             }
@@ -127,8 +113,8 @@ fun RegisterScreenContent(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding)),
-                value = username,
-                onValueChange = { username = it },
+                value = viewState.username,
+                onValueChange = { onIntent(RegisterScreenIntent.ModifyUsername(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.input_text_username),
@@ -144,8 +130,8 @@ fun RegisterScreenContent(
                     .padding(top = dimensionResource(R.dimen.ui_elem_padding))
                     .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                     .fillMaxWidth(),
-                value = email,
-                onValueChange = { email = it },
+                value = viewState.email,
+                onValueChange = { onIntent(RegisterScreenIntent.ModifyEmail(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.input_text_email),
@@ -161,8 +147,8 @@ fun RegisterScreenContent(
                     .padding(top = dimensionResource(R.dimen.ui_elem_padding))
                     .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                     .fillMaxWidth(),
-                value = password,
-                onValueChange = { password = it },
+                value = viewState.password,
+                onValueChange = { onIntent(RegisterScreenIntent.ModifyPassword(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.input_text_password),
@@ -208,8 +194,8 @@ fun RegisterScreenContent(
                 modifier = modifier
                     .padding(dimensionResource(R.dimen.ui_elem_padding))
                     .fillMaxWidth(),
-                value = passwordConfirm,
-                onValueChange = { passwordConfirm = it },
+                value = viewState.confirmPassword,
+                onValueChange = { onIntent(RegisterScreenIntent.ModifyConfirmPassword(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.input_text_confirm_password),
@@ -261,6 +247,7 @@ fun RegisterScreenContent(
                     .height(dimensionResource(R.dimen.button_size)),
                 onClick = {
                     /* TODO: Add user to database */
+                    onIntent(RegisterScreenIntent.Register)
                     navigator.navigateUp()
                 },
                 enabled = viewState.registerButtonEnabled

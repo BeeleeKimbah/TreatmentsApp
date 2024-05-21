@@ -27,8 +27,8 @@ class LoginScreenViewModel @Inject constructor(): ViewModel() {
                 validUsername = validUsername,
                 validPassword = validPassword,
                 loginButtonEnabled = validUsername && validPassword,
-                username = _username.value,
-                password = _password.value
+                username = username,
+                password = password
             )
         }.launchIn(viewModelScope)
     }
