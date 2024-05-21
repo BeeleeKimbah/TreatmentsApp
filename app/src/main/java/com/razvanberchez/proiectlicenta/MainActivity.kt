@@ -51,12 +51,6 @@ class MainActivity : ComponentActivity() {
                                     navigator = destinationsNavigator
                                 )
                             }
-                            composable(SettingsScreenDestination) {
-                                SettingsScreen(
-                                    bottomBarPaddingValues = values,
-                                    navigator = destinationsNavigator
-                                )
-                            }
                         }
                     }
                 }
