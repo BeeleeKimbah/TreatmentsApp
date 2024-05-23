@@ -12,15 +12,14 @@ import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginScreenViewModel @Inject constructor(): ViewModel() {
+class LoginScreenViewModel @Inject constructor() : ViewModel() {
     private val _username = MutableStateFlow("")
     private val _password = MutableStateFlow("")
     private val _viewState = MutableStateFlow(LoginScreenViewState())
     val viewState = _viewState.asStateFlow()
 
     init {
-        combine(_username, _password) {
-            username, password->
+        combine(_username, _password) { username, password ->
             val validUsername = username.length >= 6
             val validPassword = password.length >= 8
             _viewState.value = _viewState.value.copy(
@@ -34,7 +33,7 @@ class LoginScreenViewModel @Inject constructor(): ViewModel() {
     }
 
     fun onIntent(intent: LoginScreenIntent) {
-        when(intent) {
+        when (intent) {
             is LoginScreenIntent.Login -> login()
             is LoginScreenIntent.ModifyPassword -> updatePassword(intent.newPassword)
             is LoginScreenIntent.ModifyUsername -> updateUsername(intent.newUsername)

@@ -6,4 +6,4 @@ data class SettingsScreenViewState(
     val consultNotificationsOn: Boolean = false,
     val treatmentNotificationsOn: Boolean = false,
 
-)
+    )

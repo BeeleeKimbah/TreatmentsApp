@@ -21,8 +21,12 @@ class RegisterScreenViewModel @Inject constructor() : ViewModel() {
     val viewState = _viewState.asStateFlow()
 
     init {
-        combine(_username, _email, _password, _confirmPassword) {
-            username, email, password, confirmPassword ->
+        combine(
+            _username,
+            _email,
+            _password,
+            _confirmPassword
+        ) { username, email, password, confirmPassword ->
             val validUsername = username.length >= 6
             val validPassword = password.length >= 8
             val validEmail = true
@@ -37,21 +41,25 @@ class RegisterScreenViewModel @Inject constructor() : ViewModel() {
                 validEmail = validEmail,
                 passwordsMatch = passwordsMatch,
                 registerButtonEnabled =
-                    validUsername &&validPassword && passwordsMatch && validEmail
+                validUsername && validPassword && passwordsMatch && validEmail
             )
         }.launchIn(viewModelScope)
     }
 
     fun onIntent(intent: RegisterScreenIntent) {
-        when(intent) {
+        when (intent) {
             is RegisterScreenIntent.ModifyUsername ->
                 modifyUsername(intent.newUsername)
+
             is RegisterScreenIntent.ModifyPassword ->
                 modifyPassword(intent.newPassword)
+
             is RegisterScreenIntent.ModifyEmail ->
                 modifyEmail(intent.newEmail)
+
             is RegisterScreenIntent.ModifyConfirmPassword ->
                 modifyConfirmPassword(intent.newConfirmPassword)
+
             is RegisterScreenIntent.Register ->
                 register()
         }

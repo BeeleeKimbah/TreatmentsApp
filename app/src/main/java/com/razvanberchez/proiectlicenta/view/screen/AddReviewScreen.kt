@@ -62,7 +62,7 @@ fun AddReviewScreen(
             )
         }
     ) { values ->
-        LazyColumn (
+        LazyColumn(
             modifier = modifier
                 .padding(values)
                 .fillMaxSize()

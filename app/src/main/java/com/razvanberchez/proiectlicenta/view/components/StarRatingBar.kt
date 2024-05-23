@@ -44,7 +44,8 @@ fun StarRatingBar(
                             onRatingChanged(i)
                         }
                     )
-                    .width(starSize).height(starSize)
+                    .width(starSize)
+                    .height(starSize)
             )
 
             if (i < maxStars) {

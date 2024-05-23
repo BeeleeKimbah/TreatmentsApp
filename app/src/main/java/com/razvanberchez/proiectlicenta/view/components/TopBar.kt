@@ -1,8 +1,8 @@
 package com.razvanberchez.proiectlicenta.view.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.ExitToApp
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -49,7 +49,7 @@ fun TopBar(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                         contentDescription = null
                     )
                 }
@@ -66,7 +66,7 @@ fun TopBar(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.ExitToApp,
+                        imageVector = Icons.AutoMirrored.Outlined.ExitToApp,
                         contentDescription = null
                     )
                 }

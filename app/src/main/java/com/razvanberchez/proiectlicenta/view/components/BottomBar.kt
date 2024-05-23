@@ -2,10 +2,10 @@ package com.razvanberchez.proiectlicenta.view.components
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
@@ -33,7 +33,7 @@ val bottomNavScreenRoutes = listOf(
     SettingsScreenDestination.route
 )
 
-enum class BottomBarDestinations (
+enum class BottomBarDestinations(
     val direction: DirectionDestinationSpec,
     @StringRes val title: Int,
     val selectedIcon: ImageVector,
@@ -42,8 +42,8 @@ enum class BottomBarDestinations (
     Sessions(
         direction = SessionsScreenDestination,
         title = R.string.menu_item_MySessions,
-        selectedIcon = Icons.Filled.List,
-        unselectedIcon = Icons.Outlined.List
+        selectedIcon = Icons.AutoMirrored.Filled.List,
+        unselectedIcon = Icons.AutoMirrored.Outlined.List
     ),
     Medics(
         direction = MedicsScreenDestination,
@@ -83,9 +83,9 @@ fun BottomBar(
                     icon = {
                         Icon(
                             imageVector = if (currentDestination == item.direction)
-                                            item.selectedIcon
-                                        else
-                                            item.unselectedIcon,
+                                item.selectedIcon
+                            else
+                                item.unselectedIcon,
                             contentDescription = null
                         )
                     }

@@ -76,7 +76,7 @@ fun SettingsScreen(
                 )
             }
             item {
-                Card (
+                Card(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.list_elem_padding)),
@@ -85,7 +85,7 @@ fun SettingsScreen(
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 ) {
-                    Row (
+                    Row(
                         modifier = modifier.padding(top = dimensionResource(R.dimen.details_text_padding)),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -103,7 +103,7 @@ fun SettingsScreen(
                             }
                         )
                     }
-                    Row (
+                    Row(
                         modifier = modifier.padding(top = dimensionResource(R.dimen.details_text_padding)),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -122,7 +122,7 @@ fun SettingsScreen(
                             enabled = notificationsEnabled
                         )
                     }
-                    Row (
+                    Row(
                         modifier = modifier.padding(top = dimensionResource(R.dimen.details_text_padding)),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
