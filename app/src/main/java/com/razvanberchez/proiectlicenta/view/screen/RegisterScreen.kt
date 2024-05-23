@@ -212,9 +212,11 @@ fun RegisterScreenContent(
                 ),
                 keyboardActions = KeyboardActions(
                     onGo = {
-//                        if (viewState.registerButtonEnabled) {
-//                            /* TODO: Implement Register button and call it here too */
-//                        }
+                        if (viewState.registerButtonEnabled) {
+                            /* TODO: Implement Register button and call it here too */
+                            onIntent(RegisterScreenIntent.Register)
+                            navigator.navigateUp()
+                        }
                     }
                 ),
                 trailingIcon = {

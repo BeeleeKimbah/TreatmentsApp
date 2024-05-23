@@ -81,7 +81,8 @@ fun SettingsScreen(
                         .fillMaxWidth()
                         .padding(dimensionResource(R.dimen.list_elem_padding)),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 ) {
                     Row (
