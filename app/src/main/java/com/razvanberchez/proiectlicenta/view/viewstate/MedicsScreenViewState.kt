@@ -4,5 +4,5 @@ import com.razvanberchez.proiectlicenta.data.model.Medic
 
 data class MedicsScreenViewState(
     val medics: List<Medic> = listOf(),
-    val loading: Boolean = false
+    val loading: Boolean = true
 )

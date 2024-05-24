@@ -39,7 +39,6 @@ import com.razvanberchez.proiectlicenta.presentation.intent.SessionsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.SessionsScreenViewModel
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionDetailsScreenDestination
-import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
 
 @RootNavGraph
@@ -126,9 +125,7 @@ fun SessionsScreenContent(
                                     .clickable {
                                         navigator.navigate(
                                             direction = SessionDetailsScreenDestination(
-                                                navArgs = SessionDetailsScreenViewState(
-                                                    sessionId = index
-                                                )
+                                                sessionId = index
                                             )
                                         )
                                     }
@@ -138,7 +135,8 @@ fun SessionsScreenContent(
                                     modifier = modifier
                                         .fillMaxWidth(),
                                     colors = CardDefaults.cardColors(
-                                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                                        containerColor =
+                                        MaterialTheme.colorScheme.secondaryContainer
                                     )
                                 ) {
                                     Text(
