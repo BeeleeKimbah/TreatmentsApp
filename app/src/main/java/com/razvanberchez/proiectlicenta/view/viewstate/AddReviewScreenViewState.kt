@@ -1,7 +1,11 @@
 package com.razvanberchez.proiectlicenta.view.viewstate
 
+import com.razvanberchez.proiectlicenta.data.model.Medic
+import com.razvanberchez.proiectlicenta.data.model.Score
+
 data class AddReviewScreenViewState(
-    val medicId: Int,
+    val medic: Medic? = null,
     val reviewBody: String = "",
-    val loading: Boolean = false
+    val score: Score = Score.ONE,
+    val loading: Boolean = true
 )

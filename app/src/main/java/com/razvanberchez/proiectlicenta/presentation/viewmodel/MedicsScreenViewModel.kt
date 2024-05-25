@@ -35,7 +35,7 @@ class MedicsScreenViewModel @Inject constructor() : ViewModel() {
         )
         viewModelScope.launch {
             // simulate database call delay
-            delay(2000)
+            delay(1000)
             val medics = getMedics()
 
             _viewState.value = _viewState.value.copy(

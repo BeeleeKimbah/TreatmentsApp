@@ -35,7 +35,7 @@ class SessionsScreenViewModel @Inject constructor() : ViewModel() {
         )
         viewModelScope.launch {
             // simulate database call delay
-            delay(2000)
+            delay(1000)
             val sessions = getSessions()
 
             _viewState.value = _viewState.value.copy(

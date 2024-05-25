@@ -38,7 +38,6 @@ import com.razvanberchez.proiectlicenta.presentation.intent.MedicDetailsScreenIn
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.MedicDetailsScreenViewModel
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.AddReviewScreenDestination
-import com.razvanberchez.proiectlicenta.view.viewstate.AddReviewScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
 
 @RootNavGraph
@@ -61,7 +60,8 @@ fun MedicDetailsScreen(
         modifier = modifier,
         navigator = navigator,
         viewState = state,
-        onIntent = viewModel::onIntent
+        onIntent = viewModel::onIntent,
+        medicId = medicId
     )
 }
 
@@ -71,7 +71,8 @@ fun MedicDetailsScreenContent (
     modifier: Modifier,
     navigator: DestinationsNavigator,
     viewState: MedicDetailsScreenViewState,
-    onIntent: (MedicDetailsScreenIntent) -> Unit
+    onIntent: (MedicDetailsScreenIntent) -> Unit,
+    medicId: Int
 ) {
     val pullRefreshState = rememberPullRefreshState(
         refreshing = viewState.loading,
@@ -91,13 +92,11 @@ fun MedicDetailsScreenContent (
             if (!viewState.loading) {
                 ExtendedFloatingActionButton(
                     onClick = {
-//                    navigator.navigate(
-//                        direction = AddReviewScreenDestination(
-//                            navArgs = AddReviewScreenViewState(
-//                                medicId = viewState.medic?.id
-//                            )
-//                        )
-//                    )
+                        navigator.navigate(
+                            direction = AddReviewScreenDestination(
+                                medicId = medicId
+                            )
+                        )
                     },
                     modifier = modifier
                         .height(dimensionResource(R.dimen.button_size))
