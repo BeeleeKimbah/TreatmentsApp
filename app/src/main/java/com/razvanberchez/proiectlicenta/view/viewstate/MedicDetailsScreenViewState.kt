@@ -1,6 +1,8 @@
 package com.razvanberchez.proiectlicenta.view.viewstate
 
+import com.razvanberchez.proiectlicenta.data.model.Medic
+
 data class MedicDetailsScreenViewState(
-    val medicId: Int,
-    val loading: Boolean = false
+    val medic: Medic? = null,
+    val loading: Boolean = true
 )

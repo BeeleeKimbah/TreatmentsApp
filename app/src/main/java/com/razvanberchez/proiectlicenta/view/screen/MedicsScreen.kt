@@ -36,7 +36,6 @@ import com.razvanberchez.proiectlicenta.presentation.intent.MedicsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.MedicsScreenViewModel
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicDetailsScreenDestination
-import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicsScreenViewState
 
 @RootNavGraph
@@ -83,7 +82,6 @@ fun MedicsScreenContent(
             )
         }
     ) { values ->
-
         if (!viewState.loading) {
             Box(
                 modifier = modifier
@@ -107,9 +105,7 @@ fun MedicsScreenContent(
                                     .clickable {
                                         navigator.navigate(
                                             direction = MedicDetailsScreenDestination(
-                                                navArgs = MedicDetailsScreenViewState(
-                                                    medicId = index
-                                                )
+                                                medicId = index
                                             )
                                         )
                                     }
