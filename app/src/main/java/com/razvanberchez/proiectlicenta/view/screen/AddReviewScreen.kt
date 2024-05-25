@@ -1,5 +1,6 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -35,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.data.model.Score
 import com.razvanberchez.proiectlicenta.presentation.intent.AddReviewScreenIntent
@@ -49,8 +51,13 @@ import com.razvanberchez.proiectlicenta.view.viewstate.AddReviewScreenViewState
 fun AddReviewScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
+    resultNavigator: ResultBackNavigator<Boolean>,
     medicId: Int
 ) {
+    BackHandler {
+        resultNavigator.navigateBack(result = false)
+    }
+
     val viewModel = hiltViewModel<AddReviewScreenViewModel, AddReviewScreenViewModel.Factory>(
         creationCallback = { factory ->
             factory.create(medicId = medicId)
@@ -62,6 +69,7 @@ fun AddReviewScreen(
     AddReviewScreenContent(
         modifier = modifier,
         navigator = navigator,
+        resultNavigator = resultNavigator,
         viewState = state,
         onIntent = viewModel::onIntent
     )
@@ -71,6 +79,7 @@ fun AddReviewScreen(
 fun AddReviewScreenContent(
     modifier: Modifier,
     navigator: DestinationsNavigator,
+    resultNavigator: ResultBackNavigator<Boolean>,
     viewState: AddReviewScreenViewState,
     onIntent: (AddReviewScreenIntent) -> Unit
 ) {
@@ -204,7 +213,7 @@ fun AddReviewScreenContent(
                         keyboardActions = KeyboardActions(
                             onGo = {
                                 /* TODO: add review to medic entity */
-                                navigator.popBackStack()
+                                resultNavigator.navigateBack(result = true)
                             }
                         )
                     ) { innerTextField ->
@@ -229,7 +238,7 @@ fun AddReviewScreenContent(
                             .height(dimensionResource(R.dimen.button_size)),
                         onClick = {
                             /* TODO: add review to medic entity */
-                            navigator.popBackStack()
+                            resultNavigator.navigateBack(result = true)
                         }
                     ) {
                         Text(

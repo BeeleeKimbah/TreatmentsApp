@@ -33,6 +33,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.NavResult
+import com.ramcosta.composedestinations.result.ResultRecipient
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.intent.MedicDetailsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.MedicDetailsScreenViewModel
@@ -46,6 +48,7 @@ import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewSta
 fun MedicDetailsScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
+    resultRecipient: ResultRecipient<AddReviewScreenDestination, Boolean>,
     medicId: Int
 ) {
     val viewModel = hiltViewModel<MedicDetailsScreenViewModel, MedicDetailsScreenViewModel.Factory>(
@@ -55,6 +58,17 @@ fun MedicDetailsScreen(
     )
 
     val state by viewModel.viewState.collectAsStateWithLifecycle()
+
+    resultRecipient.onNavResult {
+        when (it) {
+            is NavResult.Value -> {
+                if (it.value) {
+                    viewModel.onIntent(MedicDetailsScreenIntent.Refresh)
+                }
+            }
+            else -> Unit
+        }
+    }
 
     MedicDetailsScreenContent(
         modifier = modifier,
