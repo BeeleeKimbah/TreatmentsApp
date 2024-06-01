@@ -3,17 +3,19 @@ package com.razvanberchez.proiectlicenta.view.screen
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -49,7 +51,6 @@ import com.razvanberchez.proiectlicenta.view.viewstate.AddReviewScreenViewState
 @Destination
 @Composable
 fun AddReviewScreen(
-    modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     resultNavigator: ResultBackNavigator<Boolean>,
     medicId: Int
@@ -67,7 +68,6 @@ fun AddReviewScreen(
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     AddReviewScreenContent(
-        modifier = modifier,
         navigator = navigator,
         resultNavigator = resultNavigator,
         viewState = state,
@@ -77,7 +77,7 @@ fun AddReviewScreen(
 
 @Composable
 fun AddReviewScreenContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     resultNavigator: ResultBackNavigator<Boolean>,
     viewState: AddReviewScreenViewState,
@@ -95,157 +95,150 @@ fun AddReviewScreenContent(
         }
     ) { values ->
         if (!viewState.loading) {
-            LazyColumn(
+            Column(
                 modifier = modifier
+                    .verticalScroll(rememberScrollState())
                     .padding(values)
                     .fillMaxSize()
             ) {
-                item {
+                Text(
+                    modifier = modifier.padding(
+                        dimensionResource(R.dimen.details_text_padding)
+                    ),
+                    text = stringResource(R.string.details_general_info),
+                    fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Card(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(dimensionResource(R.dimen.list_elem_padding)),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                ) {
                     Text(
                         modifier = modifier.padding(
-                            dimensionResource(R.dimen.details_text_padding)
+                            top = dimensionResource(R.dimen.details_text_padding),
+                            start = dimensionResource(R.dimen.details_text_padding)
                         ),
-                        text = stringResource(R.string.details_general_info),
-                        fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
-                        fontWeight = FontWeight.Bold
+                        text = stringResource(
+                            R.string.medic_details_name,
+                            viewState.medic?.name ?: ""
+                        ),
+                        fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                    )
+                    Text(
+                        modifier = modifier.padding(
+                            top = dimensionResource(R.dimen.details_text_padding),
+                            start = dimensionResource(R.dimen.details_text_padding)
+                        ),
+                        text = stringResource(
+                            R.string.medic_list_main_specialty,
+                            viewState.medic?.mainSpecialty ?: ""
+                        ),
+                        fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                    )
+                    Text(
+                        modifier = modifier.padding(
+                            top = dimensionResource(R.dimen.details_text_padding),
+                            start = dimensionResource(R.dimen.details_text_padding),
+                            bottom = dimensionResource(R.dimen.details_text_padding)
+                        ),
+                        text = stringResource(
+                            R.string.medic_list_avg_score,
+                            if (viewState.medic?.averageScore != null)
+                                "%.2f".format(viewState.medic.averageScore)
+                            else
+                                "-"
+                        ),
+                        fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                     )
                 }
-                item {
-                    Card(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(dimensionResource(R.dimen.list_elem_padding)),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer
-                        )
-                    ) {
-                        Text(
-                            modifier = modifier.padding(
-                                top = dimensionResource(R.dimen.details_text_padding),
-                                start = dimensionResource(R.dimen.details_text_padding)
-                            ),
-                            text = stringResource(
-                                R.string.medic_details_name,
-                                viewState.medic?.name ?: ""
-                            ),
-                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
-                        )
-                        Text(
-                            modifier = modifier.padding(
-                                top = dimensionResource(R.dimen.details_text_padding),
-                                start = dimensionResource(R.dimen.details_text_padding)
-                            ),
-                            text = stringResource(
-                                R.string.medic_list_main_specialty,
-                                viewState.medic?.mainSpecialty ?: ""
-                            ),
-                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
-                        )
-                        Text(
-                            modifier = modifier.padding(
-                                top = dimensionResource(R.dimen.details_text_padding),
-                                start = dimensionResource(R.dimen.details_text_padding),
-                                bottom = dimensionResource(R.dimen.details_text_padding)
-                            ),
-                            text = stringResource(
-                                R.string.medic_list_avg_score,
-                                if (viewState.medic?.averageScore != null)
-                                    "%.2f".format(viewState.medic.averageScore)
-                                else
-                                    "-"
-                            ),
-                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+
+                Text(
+                    modifier = modifier.padding(
+                        dimensionResource(R.dimen.details_text_padding)
+                    ),
+                    text = stringResource(R.string.text_header_score),
+                    fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                StarRatingBar(
+                    maxStars = 5,
+                    rating = viewState.score.value,
+                    onRatingChanged = {
+                        onIntent(
+                            AddReviewScreenIntent
+                                .ModifyRating(Score.getScore(it) ?: Score.ONE)
                         )
                     }
-                }
-                item {
-                    Text(
-                        modifier = modifier.padding(
-                            dimensionResource(R.dimen.details_text_padding)
-                        ),
-                        text = stringResource(R.string.text_header_score),
-                        fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                item {
-                    StarRatingBar(
-                        maxStars = 5,
-                        rating = viewState.score.value,
-                        onRatingChanged = {
-                            onIntent(
-                                AddReviewScreenIntent
-                                    .ModifyRating(Score.getScore(it) ?: Score.ONE)
-                            )
-                        }
-                    )
-                }
-                item {
-                    Text(
-                        modifier = modifier.padding(
-                            dimensionResource(R.dimen.details_text_padding)
-                        ),
-                        text = stringResource(R.string.text_header_review),
-                        fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                item {
-                    BasicTextField(
-                        modifier = modifier
-                            .padding(top = dimensionResource(R.dimen.ui_elem_padding))
-                            .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
-                            .fillMaxSize()
-                            .background(color = MaterialTheme.colorScheme.secondaryContainer),
-                        value = viewState.reviewBody,
-                        onValueChange = {
-                            onIntent(AddReviewScreenIntent.ModifyReviewBody(it))
-                        },
-                        minLines = 5,
-                        maxLines = 16,
-                        textStyle = TextStyle(
-                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Go
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onGo = {
-                                /* TODO: add review to medic entity */
-                                resultNavigator.navigateBack(result = true)
-                            }
-                        )
-                    ) { innerTextField ->
-                        Row(
-                            Modifier
-                                .background(
-                                    MaterialTheme.colorScheme.secondaryContainer,
-                                    RoundedCornerShape(percent = 80)
-                                )
-                                .padding(dimensionResource(R.dimen.ui_elem_padding))
-                        ) {
-                            innerTextField()
-                        }
-                    }
-                }
-                item {
-                    Button(
-                        modifier = modifier
-                            .padding(top = dimensionResource(R.dimen.ui_elem_padding))
-                            .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
-                            .fillMaxWidth()
-                            .height(dimensionResource(R.dimen.button_size)),
-                        onClick = {
+                )
+
+                Text(
+                    modifier = modifier.padding(
+                        dimensionResource(R.dimen.details_text_padding)
+                    ),
+                    text = stringResource(R.string.text_header_review),
+                    fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                BasicTextField(
+                    modifier = modifier
+                        .padding(top = dimensionResource(R.dimen.ui_elem_padding))
+                        .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.secondaryContainer),
+                    value = viewState.reviewBody,
+                    onValueChange = {
+                        onIntent(AddReviewScreenIntent.ModifyReviewBody(it))
+                    },
+                    minLines = 5,
+                    maxLines = 16,
+                    textStyle = TextStyle(
+                        fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Go
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onGo = {
                             /* TODO: add review to medic entity */
                             resultNavigator.navigateBack(result = true)
                         }
+                    )
+                ) { innerTextField ->
+                    Row(
+                        Modifier
+                            .background(
+                                MaterialTheme.colorScheme.secondaryContainer,
+                                RoundedCornerShape(percent = 80)
+                            )
+                            .padding(dimensionResource(R.dimen.ui_elem_padding))
                     ) {
-                        Text(
-                            text = stringResource(R.string.button_text_add_review),
-                            fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
-                        )
+                        innerTextField()
                     }
+                }
+
+                Button(
+                    modifier = modifier
+                        .padding(top = dimensionResource(R.dimen.ui_elem_padding))
+                        .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
+                        .fillMaxWidth()
+                        .height(dimensionResource(R.dimen.button_size)),
+                    onClick = {
+                        /* TODO: add review to medic entity */
+                        resultNavigator.navigateBack(result = true)
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.button_text_add_review),
+                        fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
+                    )
                 }
             }
         } else {

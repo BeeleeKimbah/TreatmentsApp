@@ -58,7 +58,6 @@ fun RegisterScreen(
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     RegisterScreenContent(
-        modifier = modifier,
         navigator = navigator,
         viewState = state,
         onIntent = viewModel::onIntent
@@ -67,7 +66,7 @@ fun RegisterScreen(
 
 @Composable
 fun RegisterScreenContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     viewState: RegisterScreenViewState,
     onIntent: (RegisterScreenIntent) -> Unit

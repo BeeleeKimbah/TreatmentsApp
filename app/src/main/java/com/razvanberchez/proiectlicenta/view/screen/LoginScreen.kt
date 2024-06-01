@@ -74,7 +74,6 @@ fun LoginScreen(
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     LoginScreenContent(
-        modifier = modifier,
         navigator = navigator,
         viewState = state,
         onIntent = viewModel::onIntent
@@ -83,7 +82,7 @@ fun LoginScreen(
 
 @Composable
 fun LoginScreenContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     viewState: LoginScreenViewState,
     onIntent: (LoginScreenIntent) -> Unit

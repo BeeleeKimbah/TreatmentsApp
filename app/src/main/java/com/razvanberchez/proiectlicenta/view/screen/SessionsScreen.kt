@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -53,7 +54,6 @@ fun SessionsScreen(
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     SessionsScreenContent(
-        modifier = modifier,
         bottomBarPaddingValues = bottomBarPaddingValues,
         navigator = navigator,
         viewState = state,
@@ -64,7 +64,7 @@ fun SessionsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SessionsScreenContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     bottomBarPaddingValues: PaddingValues,
     navigator: DestinationsNavigator,
     viewState: SessionsScreenViewState,
@@ -114,63 +114,61 @@ fun SessionsScreenContent(
                         .pullRefresh(pullRefreshState),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    viewState.sessions.forEachIndexed { index, session ->
-                        item {
-                            Column(
-                                modifier = Modifier
-                                    .padding(
-                                        horizontal = dimensionResource(R.dimen.ui_elem_padding),
-                                        vertical = dimensionResource(R.dimen.list_elem_padding)
-                                    )
-                                    .clickable {
-                                        navigator.navigate(
-                                            direction = SessionDetailsScreenDestination(
-                                                sessionId = index
-                                            )
+                    itemsIndexed(viewState.sessions) { index, session ->
+                        Column(
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = dimensionResource(R.dimen.ui_elem_padding),
+                                    vertical = dimensionResource(R.dimen.list_elem_padding)
+                                )
+                                .clickable {
+                                    navigator.navigate(
+                                        direction = SessionDetailsScreenDestination(
+                                            sessionId = index
                                         )
-                                    }
-                                    .fillMaxWidth()
+                                    )
+                                }
+                                .fillMaxWidth()
+                        ) {
+                            Card(
+                                modifier = modifier
+                                    .fillMaxWidth(),
+                                colors = CardDefaults.cardColors(
+                                    containerColor =
+                                    MaterialTheme.colorScheme.secondaryContainer
+                                )
                             ) {
-                                Card(
-                                    modifier = modifier
-                                        .fillMaxWidth(),
-                                    colors = CardDefaults.cardColors(
-                                        containerColor =
-                                        MaterialTheme.colorScheme.secondaryContainer
-                                    )
-                                ) {
+                                Text(
+                                    modifier = modifier.padding(
+                                        horizontal = dimensionResource(R.dimen.card_text_padding)
+                                    ),
+                                    text = stringResource(
+                                        R.string.session_list_Medic,
+                                        session.medicName
+                                    ),
+                                    fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
+                                )
+                                Text(
+                                    modifier = modifier.padding(
+                                        horizontal = dimensionResource(R.dimen.card_text_padding)
+                                    ),
+                                    text = stringResource(
+                                        R.string.session_list_consultDate,
+                                        session.consultDate.toLocalDate().toString()
+                                    ),
+                                    fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
+                                )
+                                if (session.diagnostic != null) {
                                     Text(
                                         modifier = modifier.padding(
                                             horizontal = dimensionResource(R.dimen.card_text_padding)
                                         ),
                                         text = stringResource(
-                                            R.string.session_list_Medic,
-                                            session.medicName
+                                            R.string.session_list_Diagnostic,
+                                            session.diagnostic
                                         ),
                                         fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                     )
-                                    Text(
-                                        modifier = modifier.padding(
-                                            horizontal = dimensionResource(R.dimen.card_text_padding)
-                                        ),
-                                        text = stringResource(
-                                            R.string.session_list_consultDate,
-                                            session.consultDate.toLocalDate().toString()
-                                        ),
-                                        fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                                    )
-                                    if (session.diagnostic != null) {
-                                        Text(
-                                            modifier = modifier.padding(
-                                                horizontal = dimensionResource(R.dimen.card_text_padding)
-                                            ),
-                                            text = stringResource(
-                                                R.string.session_list_Diagnostic,
-                                                session.diagnostic
-                                            ),
-                                            fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                                        )
-                                    }
                                 }
                             }
                         }

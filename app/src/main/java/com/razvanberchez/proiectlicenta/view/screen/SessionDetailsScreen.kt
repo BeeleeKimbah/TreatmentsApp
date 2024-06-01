@@ -1,12 +1,14 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -57,7 +59,6 @@ fun SessionDetailsScreen(
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     SessionDetailsScreenContent(
-        modifier = modifier,
         navigator = navigator,
         viewState = state,
         onIntent = viewModel::onIntent
@@ -67,7 +68,7 @@ fun SessionDetailsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SessionDetailsScreenContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     viewState: SessionDetailsScreenViewState,
     onIntent: (SessionDetailsScreenIntent) -> Unit
@@ -110,117 +111,114 @@ fun SessionDetailsScreenContent(
                     .fillMaxSize()
                     .padding(values)
             ) {
-                LazyColumn(
+                Column(
                     modifier = modifier
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .pullRefresh(pullRefreshState)
                 ) {
-                    item {
+                    Text(
+                        modifier = modifier.padding(
+                            dimensionResource(R.dimen.details_text_padding)
+                        ),
+                        text = stringResource(R.string.details_general_info),
+                        fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Card(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(dimensionResource(R.dimen.list_elem_padding)),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        )
+                    ) {
+                        Text(
+                            modifier = modifier.padding(
+                                top = dimensionResource(R.dimen.details_text_padding),
+                                start = dimensionResource(R.dimen.details_text_padding)
+                            ),
+                            text = stringResource(
+                                R.string.session_list_Medic,
+                                viewState.session?.medicName ?: ""
+                            ),
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                        )
+                        Text(
+                            modifier = modifier.padding(
+                                top = dimensionResource(R.dimen.details_text_padding),
+                                start = dimensionResource(R.dimen.details_text_padding)
+                            ),
+                            text = stringResource(
+                                R.string.session_list_consultDate,
+                                viewState.session?.consultDate?.toLocalDate().toString()
+                            ),
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                        )
+                        Text(
+                            modifier = modifier.padding(
+                                top = dimensionResource(R.dimen.details_text_padding),
+                                start = dimensionResource(R.dimen.details_text_padding),
+                                bottom = dimensionResource(R.dimen.details_text_padding)
+                            ),
+                            text = stringResource(
+                                R.string.session_list_Diagnostic,
+                                (viewState.session?.diagnostic ?: "-")
+                            ),
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                        )
+                    }
+
+                    Text(
+                        modifier = modifier.padding(
+                            dimensionResource(R.dimen.details_text_padding)
+                        ),
+                        text = stringResource(R.string.session_details_treatment_scheme),
+                        fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Card(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(dimensionResource(R.dimen.list_elem_padding)),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        )
+                    ) {
                         Text(
                             modifier = modifier.padding(
                                 dimensionResource(R.dimen.details_text_padding)
                             ),
-                            text = stringResource(R.string.details_general_info),
+                            text = stringResource(R.string.treat_dosage_freq),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
                             fontWeight = FontWeight.Bold
                         )
-                    }
-                    item {
-                        Card(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .padding(dimensionResource(R.dimen.list_elem_padding)),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer
-                            )
-                        ) {
-                            Text(
-                                modifier = modifier.padding(
-                                    top = dimensionResource(R.dimen.details_text_padding),
-                                    start = dimensionResource(R.dimen.details_text_padding)
-                                ),
-                                text = stringResource(
-                                    R.string.session_list_Medic,
-                                    viewState.session?.medicName ?: ""
-                                ),
-                                fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
-                            )
-                            Text(
-                                modifier = modifier.padding(
-                                    top = dimensionResource(R.dimen.details_text_padding),
-                                    start = dimensionResource(R.dimen.details_text_padding)
-                                ),
-                                text = stringResource(
-                                    R.string.session_list_consultDate,
-                                    viewState.session?.consultDate?.toLocalDate().toString()
-                                ),
-                                fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
-                            )
-                            Text(
-                                modifier = modifier.padding(
-                                    top = dimensionResource(R.dimen.details_text_padding),
-                                    start = dimensionResource(R.dimen.details_text_padding),
-                                    bottom = dimensionResource(R.dimen.details_text_padding)
-                                ),
-                                text = stringResource(
-                                    R.string.session_list_Diagnostic,
-                                    (viewState.session?.diagnostic ?: "-")
-                                ),
-                                fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
-                            )
-                        }
-                    }
-                    item {
-                        Text(
-                            modifier = modifier.padding(
-                                dimensionResource(R.dimen.details_text_padding)
-                            ),
-                            text = stringResource(R.string.session_details_treatment_scheme),
-                            fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
-                            fontWeight = FontWeight.Bold
+                        Divider(
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                    }
-                    item {
-                        Card(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .padding(dimensionResource(R.dimen.list_elem_padding)),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer
-                            )
-                        ) {
+                        viewState.session?.treatmentScheme?.forEach { treatment ->
+
                             Text(
                                 modifier = modifier.padding(
-                                    dimensionResource(R.dimen.details_text_padding)
+                                    horizontal = dimensionResource(R.dimen.details_text_padding)
                                 ),
-                                text = stringResource(R.string.treat_dosage_freq),
-                                fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
-                                fontWeight = FontWeight.Bold
+                                text = stringResource(
+                                    R.string.treatment_scheme_item,
+                                    treatment.treatmentName,
+                                    treatment.dose,
+                                    treatment.frequency
+                                ),
+                                fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                             )
                             Divider(
-                                color = MaterialTheme.colorScheme.onSurface
+                                color = MaterialTheme.colorScheme.onSecondary
                             )
-                            viewState.session?.treatmentScheme?.forEach { treatment ->
-
-                                Text(
-                                    modifier = modifier.padding(
-                                        horizontal = dimensionResource(R.dimen.details_text_padding)
-                                    ),
-                                    text = stringResource(
-                                        R.string.treatment_scheme_item,
-                                        treatment.treatmentName,
-                                        treatment.dose,
-                                        treatment.frequency
-                                    ),
-                                    fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
-                                )
-                                Divider(
-                                    color = MaterialTheme.colorScheme.onSecondary
-                                )
-                            }
                         }
                     }
                 }
+
                 PullRefreshIndicator(
                     refreshing = viewState.loading,
                     state = pullRefreshState,

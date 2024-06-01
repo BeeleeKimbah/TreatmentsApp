@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -50,7 +51,6 @@ fun MedicsScreen(
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     MedicsScreenContent(
-        modifier = modifier,
         navigator = navigator,
         bottomBarPaddingValues = bottomBarPaddingValues,
         viewState = state,
@@ -61,7 +61,7 @@ fun MedicsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MedicsScreenContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     bottomBarPaddingValues: PaddingValues,
     viewState: MedicsScreenViewState,
@@ -94,64 +94,62 @@ fun MedicsScreenContent(
                         .pullRefresh(pullRefreshState),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    viewState.medics.forEachIndexed { index, medic ->
-                        item {
-                            Column(
-                                modifier = Modifier
-                                    .padding(
-                                        horizontal = dimensionResource(R.dimen.ui_elem_padding),
-                                        vertical = dimensionResource(R.dimen.list_elem_padding)
-                                    )
-                                    .clickable {
-                                        navigator.navigate(
-                                            direction = MedicDetailsScreenDestination(
-                                                medicId = index
-                                            )
+                    itemsIndexed(viewState.medics) { index, medic ->
+                        Column(
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = dimensionResource(R.dimen.ui_elem_padding),
+                                    vertical = dimensionResource(R.dimen.list_elem_padding)
+                                )
+                                .clickable {
+                                    navigator.navigate(
+                                        direction = MedicDetailsScreenDestination(
+                                            medicId = index
                                         )
-                                    }
-                                    .fillMaxWidth()
-                            ) {
-                                Card(
-                                    modifier = modifier
-                                        .fillMaxWidth(),
-                                    colors = CardDefaults.cardColors(
-                                        containerColor = MaterialTheme.colorScheme.secondaryContainer
-                                    )
-                                ) {
-                                    Text(
-                                        modifier = modifier.padding(
-                                            horizontal = dimensionResource(R.dimen.card_text_padding)
-                                        ),
-                                        text = stringResource(
-                                            R.string.medic_details_name,
-                                            medic.name
-                                        ),
-                                        fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                                    )
-                                    Text(
-                                        modifier = modifier.padding(
-                                            horizontal = dimensionResource(R.dimen.card_text_padding)
-                                        ),
-                                        text = stringResource(
-                                            R.string.medic_list_main_specialty,
-                                            medic.mainSpecialty
-                                        ),
-                                        fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                                    )
-                                    Text(
-                                        modifier = modifier.padding(
-                                            horizontal = dimensionResource(R.dimen.card_text_padding)
-                                        ),
-                                        text = stringResource(
-                                            R.string.medic_list_avg_score,
-                                            if (medic.averageScore != null)
-                                                "%.2f".format(medic.averageScore)
-                                            else
-                                                "-"
-                                        ),
-                                        fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                     )
                                 }
+                                .fillMaxWidth()
+                        ) {
+                            Card(
+                                modifier = modifier
+                                    .fillMaxWidth(),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                                )
+                            ) {
+                                Text(
+                                    modifier = modifier.padding(
+                                        horizontal = dimensionResource(R.dimen.card_text_padding)
+                                    ),
+                                    text = stringResource(
+                                        R.string.medic_details_name,
+                                        medic.name
+                                    ),
+                                    fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
+                                )
+                                Text(
+                                    modifier = modifier.padding(
+                                        horizontal = dimensionResource(R.dimen.card_text_padding)
+                                    ),
+                                    text = stringResource(
+                                        R.string.medic_list_main_specialty,
+                                        medic.mainSpecialty
+                                    ),
+                                    fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
+                                )
+                                Text(
+                                    modifier = modifier.padding(
+                                        horizontal = dimensionResource(R.dimen.card_text_padding)
+                                    ),
+                                    text = stringResource(
+                                        R.string.medic_list_avg_score,
+                                        if (medic.averageScore != null)
+                                            "%.2f".format(medic.averageScore)
+                                        else
+                                            "-"
+                                    ),
+                                    fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
+                                )
                             }
                         }
                     }

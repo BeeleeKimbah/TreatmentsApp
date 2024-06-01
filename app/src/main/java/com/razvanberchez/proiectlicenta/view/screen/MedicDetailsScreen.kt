@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -72,7 +73,6 @@ fun MedicDetailsScreen(
     }
 
     MedicDetailsScreenContent(
-        modifier = modifier,
         navigator = navigator,
         viewState = state,
         onIntent = viewModel::onIntent,
@@ -83,7 +83,7 @@ fun MedicDetailsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MedicDetailsScreenContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     viewState: MedicDetailsScreenViewState,
     onIntent: (MedicDetailsScreenIntent) -> Unit,
@@ -250,8 +250,9 @@ fun MedicDetailsScreenContent(
                             fontWeight = FontWeight.Bold
                         )
                     }
-                    viewState.medic?.reviews?.forEach { review ->
-                        item {
+                    val reviews = viewState.medic?.reviews
+                    reviews?.let {
+                        items(reviews) { review ->
                             Card(
                                 modifier = modifier
                                     .fillMaxWidth()
