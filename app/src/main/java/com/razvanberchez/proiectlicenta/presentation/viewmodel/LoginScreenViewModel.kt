@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.razvanberchez.proiectlicenta.presentation.intent.LoginScreenIntent
+import com.razvanberchez.proiectlicenta.view.viewstate.AuthState
 import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,18 +44,26 @@ class LoginScreenViewModel @Inject constructor() : ViewModel() {
 
     fun onIntent(intent: LoginScreenIntent) {
         when (intent) {
-            is LoginScreenIntent.Login -> login(intent.onLogin)
+            is LoginScreenIntent.Login -> login()
+            is LoginScreenIntent.SetLoggedIn -> setLoggedIn(intent.authState)
             is LoginScreenIntent.ModifyPassword -> updatePassword(intent.newPassword)
             is LoginScreenIntent.ModifyEmail -> updateUsername(intent.newEmail)
         }
     }
 
-    private fun login(onLogin: (String) -> Unit) {
+    private fun setLoggedIn(authState: AuthState) {
+        _viewState.value = _viewState.value.copy(
+            authState = authState
+        )
+    }
+
+    private fun login() {
         auth.signInWithEmailAndPassword(_email.value, _password.value)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    user?.uid?.let { onLogin(it) }
+                    _viewState.value = _viewState.value.copy(
+                        authState = AuthState.LoggedIn
+                    )
                 } else {
                     _viewState.value = _viewState.value.copy(
                         errorMessage = "Autentificare eșuată"
