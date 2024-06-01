@@ -151,11 +151,13 @@ fun LoginScreenContent(
             keyboardActions = KeyboardActions(
                 onGo = {
                     if (viewState.loginButtonEnabled) {
-                        navigator.navigate(SessionsScreenDestination) {
-                            popUpTo(LoginScreenDestination.route) {
-                                inclusive = true
+                        onIntent(LoginScreenIntent.Login { _ ->
+                            navigator.navigate(direction = SessionsScreenDestination) {
+                                popUpTo(route = LoginScreenDestination.route) {
+                                    inclusive = true
+                                }
                             }
-                        }
+                        })
                     }
                 }
             ),
