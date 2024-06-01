@@ -101,11 +101,11 @@ fun LoginScreenContent(
                 .padding(top = dimensionResource(R.dimen.ui_elem_padding))
                 .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                 .fillMaxWidth(),
-            value = viewState.username,
-            onValueChange = { onIntent(LoginScreenIntent.ModifyUsername(it)) },
+            value = viewState.email,
+            onValueChange = { onIntent(LoginScreenIntent.ModifyEmail(it)) },
             label = {
                 Text(
-                    text = stringResource(R.string.input_text_username),
+                    text = stringResource(R.string.input_text_email),
                     fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
                 )
             },

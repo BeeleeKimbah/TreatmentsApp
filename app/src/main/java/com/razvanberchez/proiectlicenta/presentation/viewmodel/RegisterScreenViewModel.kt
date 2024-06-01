@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterScreenViewModel @Inject constructor() : ViewModel() {
-    private val _username = MutableStateFlow("")
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
     private val _confirmPassword = MutableStateFlow("")
@@ -22,35 +21,28 @@ class RegisterScreenViewModel @Inject constructor() : ViewModel() {
 
     init {
         combine(
-            _username,
             _email,
             _password,
             _confirmPassword
-        ) { username, email, password, confirmPassword ->
-            val validUsername = username.length >= 6
+        ) { email, password, confirmPassword ->
             val validPassword = password.length >= 8
             val validEmail = true
             val passwordsMatch = password == confirmPassword
             _viewState.value = _viewState.value.copy(
-                username = username,
                 email = email,
                 password = password,
                 confirmPassword = confirmPassword,
-                validUsername = validUsername,
                 validPassword = validPassword,
                 validEmail = validEmail,
                 passwordsMatch = passwordsMatch,
                 registerButtonEnabled =
-                validUsername && validPassword && passwordsMatch && validEmail
+                validPassword && passwordsMatch && validEmail
             )
         }.launchIn(viewModelScope)
     }
 
     fun onIntent(intent: RegisterScreenIntent) {
         when (intent) {
-            is RegisterScreenIntent.ModifyUsername ->
-                modifyUsername(intent.newUsername)
-
             is RegisterScreenIntent.ModifyPassword ->
                 modifyPassword(intent.newPassword)
 
@@ -79,9 +71,5 @@ class RegisterScreenViewModel @Inject constructor() : ViewModel() {
 
     private fun modifyPassword(newPassword: String) {
         _password.value = newPassword
-    }
-
-    private fun modifyUsername(newUsername: String) {
-        _username.value = newUsername
     }
 }

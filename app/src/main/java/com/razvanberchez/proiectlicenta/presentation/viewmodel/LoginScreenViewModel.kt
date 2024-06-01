@@ -13,20 +13,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor() : ViewModel() {
-    private val _username = MutableStateFlow("")
+    private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
     private val _viewState = MutableStateFlow(LoginScreenViewState())
     val viewState = _viewState.asStateFlow()
 
     init {
-        combine(_username, _password) { username, password ->
-            val validUsername = username.length >= 6
+        combine(_email, _password) { email, password ->
+            val validUsername = email.length >= 8
             val validPassword = password.length >= 8
             _viewState.value = _viewState.value.copy(
                 validUsername = validUsername,
                 validPassword = validPassword,
                 loginButtonEnabled = validUsername && validPassword,
-                username = username,
+                email = email,
                 password = password
             )
         }.launchIn(viewModelScope)
@@ -36,7 +36,7 @@ class LoginScreenViewModel @Inject constructor() : ViewModel() {
         when (intent) {
             is LoginScreenIntent.Login -> login()
             is LoginScreenIntent.ModifyPassword -> updatePassword(intent.newPassword)
-            is LoginScreenIntent.ModifyUsername -> updateUsername(intent.newUsername)
+            is LoginScreenIntent.ModifyEmail -> updateUsername(intent.newEmail)
         }
     }
 
@@ -44,8 +44,8 @@ class LoginScreenViewModel @Inject constructor() : ViewModel() {
         // TODO: validate login credentials with database
     }
 
-    private fun updateUsername(newUsername: String) {
-        _username.value = newUsername
+    private fun updateUsername(newEmail: String) {
+        _email.value = newEmail
     }
 
     private fun updatePassword(newPassword: String) {

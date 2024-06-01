@@ -111,22 +111,6 @@ fun RegisterScreenContent(
             )
             OutlinedTextField(
                 modifier = modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding)),
-                value = viewState.username,
-                onValueChange = { onIntent(RegisterScreenIntent.ModifyUsername(it)) },
-                label = {
-                    Text(
-                        text = stringResource(R.string.input_text_username),
-                        fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
-                    )
-                },
-                shape = ShapeDefaults.Medium,
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
-            )
-            OutlinedTextField(
-                modifier = modifier
                     .padding(top = dimensionResource(R.dimen.ui_elem_padding))
                     .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                     .fillMaxWidth(),
