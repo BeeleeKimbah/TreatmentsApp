@@ -66,6 +66,7 @@ fun MedicDetailsScreen(
                     viewModel.onIntent(MedicDetailsScreenIntent.Refresh)
                 }
             }
+
             else -> Unit
         }
     }
@@ -81,7 +82,7 @@ fun MedicDetailsScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MedicDetailsScreenContent (
+fun MedicDetailsScreenContent(
     modifier: Modifier,
     navigator: DestinationsNavigator,
     viewState: MedicDetailsScreenViewState,

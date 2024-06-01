@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.view.screen.NavGraphs
@@ -58,6 +60,7 @@ fun TopBar(
             if (hasLogoutButton) {
                 IconButton(
                     onClick = {
+                        Firebase.auth.signOut()
                         navigator.navigate(direction = LoginScreenDestination) {
                             popUpTo(route = NavGraphs.root.route) {
                                 inclusive = true

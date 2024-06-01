@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,6 +38,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -56,6 +59,17 @@ fun LoginScreen(
     navigator: DestinationsNavigator,
     viewModel: LoginScreenViewModel = hiltViewModel()
 ) {
+    // TODO: fix login screen showing while checking if user is already logged in
+    val auth = Firebase.auth
+    val currentUser = auth.currentUser
+    if (currentUser != null) {
+        navigator.navigate(direction = SessionsScreenDestination) {
+            popUpTo(route = LoginScreenDestination.route) {
+                inclusive = true
+            }
+        }
+    }
+
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     LoginScreenContent(
@@ -167,6 +181,15 @@ fun LoginScreenContent(
             maxLines = 1
         )
 
+        viewState.errorMessage?.let {
+            Text(
+                text = viewState.errorMessage,
+                color = Color.Red,
+                fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
+                modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
+            )
+        }
+
         FilledTonalButton(
             modifier = modifier
                 .padding(top = dimensionResource(R.dimen.ui_elem_padding))
@@ -174,12 +197,13 @@ fun LoginScreenContent(
                 .fillMaxWidth()
                 .height(dimensionResource(R.dimen.button_size)),
             onClick = {
-                onIntent(LoginScreenIntent.Login)
-                navigator.navigate(direction = SessionsScreenDestination) {
-                    popUpTo(route = LoginScreenDestination.route) {
-                        inclusive = true
+                onIntent(LoginScreenIntent.Login { _ ->
+                    navigator.navigate(direction = SessionsScreenDestination) {
+                        popUpTo(route = LoginScreenDestination.route) {
+                            inclusive = true
+                        }
                     }
-                }
+                })
             },
             enabled = viewState.loginButtonEnabled
         ) {

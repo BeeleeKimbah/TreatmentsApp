@@ -7,9 +7,9 @@ enum class Score(val value: Int) {
     FOUR(4),
     FIVE(5);
 
-    companion object{
+    companion object {
         fun getScore(intValue: Int): Score? {
-            return when(intValue) {
+            return when (intValue) {
                 1 -> ONE
                 2 -> TWO
                 3 -> THREE

@@ -5,5 +5,6 @@ data class LoginScreenViewState(
     val email: String = "",
     val validUsername: Boolean = false,
     val password: String = "",
-    val validPassword: Boolean = false
+    val validPassword: Boolean = false,
+    val errorMessage: String? = null
 )

@@ -2,6 +2,8 @@ package com.razvanberchez.proiectlicenta.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.razvanberchez.proiectlicenta.presentation.intent.LoginScreenIntent
 import com.razvanberchez.proiectlicenta.view.viewstate.LoginScreenViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,30 +20,47 @@ class LoginScreenViewModel @Inject constructor() : ViewModel() {
     private val _viewState = MutableStateFlow(LoginScreenViewState())
     val viewState = _viewState.asStateFlow()
 
+    private val auth = Firebase.auth
+
     init {
         combine(_email, _password) { email, password ->
-            val validUsername = email.length >= 8
+            // TODO: validate email properly
+            val validEmail = email.length >= 8
             val validPassword = password.length >= 8
             _viewState.value = _viewState.value.copy(
-                validUsername = validUsername,
+                validUsername = validEmail,
                 validPassword = validPassword,
-                loginButtonEnabled = validUsername && validPassword,
+                loginButtonEnabled = validEmail && validPassword,
                 email = email,
-                password = password
+                password = password,
+                // TODO: Extract string resources for error messages
+                errorMessage = if (!validEmail) "Adresa de email nu este validă"
+                else if (!validPassword) "Parola nu are cel puțin 8 caractere"
+                else null
             )
         }.launchIn(viewModelScope)
     }
 
     fun onIntent(intent: LoginScreenIntent) {
         when (intent) {
-            is LoginScreenIntent.Login -> login()
+            is LoginScreenIntent.Login -> login(intent.onLogin)
             is LoginScreenIntent.ModifyPassword -> updatePassword(intent.newPassword)
             is LoginScreenIntent.ModifyEmail -> updateUsername(intent.newEmail)
         }
     }
 
-    private fun login() {
-        // TODO: validate login credentials with database
+    private fun login(onLogin: (String) -> Unit) {
+        auth.signInWithEmailAndPassword(_email.value, _password.value)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    user?.uid?.let { onLogin(it) }
+                } else {
+                    _viewState.value = _viewState.value.copy(
+                        errorMessage = "Autentificare eșuată"
+                    )
+                }
+            }
     }
 
     private fun updateUsername(newEmail: String) {

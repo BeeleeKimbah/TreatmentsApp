@@ -17,4 +17,5 @@
     <dimen name="review_star_size">40.dp</dimen>
     <dimen name="review_star_spacing">8.dp</dimen>
     <dimen name="circular_progress_indicator_size">80.dp</dimen>
+    <dimen name="validation_error_fontsize">14.sp</dimen>
 </resources>
