@@ -9,19 +9,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -75,6 +77,7 @@ fun AddReviewScreen(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AddReviewScreenContent(
     modifier: Modifier = Modifier,
@@ -244,13 +247,14 @@ fun AddReviewScreenContent(
             }
         } else {
             Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(values)
             ) {
                 CircularProgressIndicator(
-                    modifier = modifier.size(
-                        dimensionResource(R.dimen.circular_progress_indicator_size)
-                    )
+                    modifier = modifier
+                        .padding(PullToRefreshDefaults.PositionalThreshold)
+                        .align(Alignment.TopCenter)
                 )
             }
         }

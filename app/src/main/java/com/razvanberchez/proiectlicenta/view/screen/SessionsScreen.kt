@@ -1,22 +1,15 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -37,6 +30,7 @@ import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.intent.SessionsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.SessionsScreenViewModel
 import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
+import com.razvanberchez.proiectlicenta.view.components.PullDownToRefreshBox
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionDetailsScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
@@ -60,7 +54,6 @@ fun SessionsScreen(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SessionsScreenContent(
     modifier: Modifier = Modifier,
@@ -69,10 +62,6 @@ fun SessionsScreenContent(
     viewState: SessionsScreenViewState,
     onIntent: (SessionsScreenIntent) -> Unit
 ) {
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = viewState.loading,
-        onRefresh = { onIntent(SessionsScreenIntent.Refresh) })
-
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -101,94 +90,75 @@ fun SessionsScreenContent(
         },
         floatingActionButtonPosition = FabPosition.End
     ) { values ->
-        if (!viewState.loading) {
-            Box(
+        PullDownToRefreshBox(
+            onRefresh = { onIntent(SessionsScreenIntent.Refresh) },
+            paddingValues = values,
+            loading = viewState.loading
+        ) {
+            LazyColumn(
                 modifier = modifier
-                    .fillMaxSize()
-                    .padding(values)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                LazyColumn(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .pullRefresh(pullRefreshState),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    itemsIndexed(viewState.sessions) { index, session ->
-                        Column(
-                            modifier = Modifier
-                                .padding(
-                                    top = dimensionResource(R.dimen.card_padding)
-                                )
-                                .padding(
-                                    horizontal = dimensionResource(R.dimen.card_padding)
-                                )
-                                .clickable {
-                                    navigator.navigate(
-                                        direction = SessionDetailsScreenDestination(
-                                            sessionId = index
-                                        )
+                itemsIndexed(viewState.sessions) { index, session ->
+                    Column(
+                        modifier = Modifier
+                            .padding(
+                                top = dimensionResource(R.dimen.card_padding)
+                            )
+                            .padding(
+                                horizontal = dimensionResource(R.dimen.card_padding)
+                            )
+                            .clickable {
+                                navigator.navigate(
+                                    direction = SessionDetailsScreenDestination(
+                                        sessionId = index
                                     )
-                                }
-                                .fillMaxWidth()
+                                )
+                            }
+                            .fillMaxWidth()
+                    ) {
+                        Card(
+                            modifier = modifier
+                                .fillMaxWidth(),
+                            colors = CardScheme.cardColors(),
+                            elevation = CardScheme.cardElevation()
                         ) {
-                            Card(
-                                modifier = modifier
-                                    .fillMaxWidth(),
-                                colors = CardScheme.cardColors(),
-                                elevation = CardScheme.cardElevation()
-                            ) {
+                            Text(
+                                modifier = modifier.padding(
+                                    horizontal = dimensionResource(R.dimen.card_text_padding)
+                                ),
+                                text = stringResource(
+                                    R.string.session_list_Medic,
+                                    session.medicName
+                                ),
+                                fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
+                            )
+                            Text(
+                                modifier = modifier.padding(
+                                    horizontal = dimensionResource(R.dimen.card_text_padding)
+                                ),
+                                text = stringResource(
+                                    R.string.session_list_consultDate,
+                                    session.consultDate.toLocalDate().toString()
+                                ),
+                                fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
+                            )
+                            if (session.diagnostic != null) {
                                 Text(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
                                     text = stringResource(
-                                        R.string.session_list_Medic,
-                                        session.medicName
+                                        R.string.session_list_Diagnostic,
+                                        session.diagnostic
                                     ),
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
-                                Text(
-                                    modifier = modifier.padding(
-                                        horizontal = dimensionResource(R.dimen.card_text_padding)
-                                    ),
-                                    text = stringResource(
-                                        R.string.session_list_consultDate,
-                                        session.consultDate.toLocalDate().toString()
-                                    ),
-                                    fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                                )
-                                if (session.diagnostic != null) {
-                                    Text(
-                                        modifier = modifier.padding(
-                                            horizontal = dimensionResource(R.dimen.card_text_padding)
-                                        ),
-                                        text = stringResource(
-                                            R.string.session_list_Diagnostic,
-                                            session.diagnostic
-                                        ),
-                                        fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                                    )
-                                }
                             }
                         }
                     }
                 }
-                PullRefreshIndicator(
-                    refreshing = viewState.loading,
-                    state = pullRefreshState,
-                    modifier = Modifier.align(Alignment.TopCenter)
-                )
-            }
-        } else {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = modifier.size(
-                        dimensionResource(R.dimen.circular_progress_indicator_size)
-                    )
-                )
             }
         }
     }
