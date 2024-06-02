@@ -41,12 +41,12 @@ class RegisterScreenViewModel @Inject constructor() : ViewModel() {
                 validEmail = validEmail,
                 passwordsMatch = passwordsMatch,
                 registerButtonEnabled =
-                    validPassword && passwordsMatch && validEmail,
+                validPassword && passwordsMatch && validEmail,
                 errorMessage =
-                    if (!validEmail) "Adresa de email nu este validă"
-                    else if (!validPassword) "Parola trebuie să conțină cel puțin 8 caractere, o literă și o cifră"
-                    else if (!passwordsMatch) "Parolele nu se potrivesc"
-                    else null
+                if (!validEmail) "Adresa de email nu este validă"
+                else if (!validPassword) "Parola trebuie să conțină cel puțin 8 caractere, o literă și o cifră"
+                else if (!passwordsMatch) "Parolele nu se potrivesc"
+                else null
             )
         }.launchIn(viewModelScope)
     }

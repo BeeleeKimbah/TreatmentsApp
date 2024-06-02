@@ -16,7 +16,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PullDownToRefreshBox (
+fun PullDownToRefreshBox(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues? = null,
     onRefresh: () -> Unit,
@@ -57,7 +57,7 @@ fun PullDownToRefreshBox (
                     CircularProgressIndicator()
                 else
                     CircularProgressIndicator(
-                        progress = { it. progress }
+                        progress = { it.progress }
                     )
             }
         )
