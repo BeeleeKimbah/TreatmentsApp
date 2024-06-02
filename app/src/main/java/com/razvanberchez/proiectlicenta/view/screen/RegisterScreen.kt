@@ -28,11 +28,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
@@ -71,6 +73,9 @@ fun RegisterScreenContent(
     viewState: RegisterScreenViewState,
     onIntent: (RegisterScreenIntent) -> Unit
 ) {
+    if (viewState.registered)
+        navigator.navigateUp()
+
     val localFocusManager = LocalFocusManager.current
 
     Scaffold(
@@ -144,7 +149,7 @@ fun RegisterScreenContent(
                     PasswordVisualTransformation()
                 },
                 keyboardOptions = KeyboardOptions(
-                    //keyboardType = KeyboardType.Password,
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
@@ -190,15 +195,13 @@ fun RegisterScreenContent(
                 else
                     PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
-                    //keyboardType = KeyboardType.Password,
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Go
                 ),
                 keyboardActions = KeyboardActions(
                     onGo = {
                         if (viewState.registerButtonEnabled) {
-                            /* TODO: Implement Register button and call it here too */
                             onIntent(RegisterScreenIntent.Register)
-                            navigator.navigateUp()
                         }
                     }
                 ),
@@ -224,6 +227,15 @@ fun RegisterScreenContent(
                 maxLines = 1
             )
 
+            viewState.errorMessage?.let {
+                Text(
+                    text = viewState.errorMessage,
+                    color = Color.Red,
+                    fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
+                    modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
+                )
+            }
+
             Button(
                 modifier = modifier
                     .padding(top = dimensionResource(R.dimen.ui_elem_padding))
@@ -231,9 +243,7 @@ fun RegisterScreenContent(
                     .fillMaxWidth()
                     .height(dimensionResource(R.dimen.button_size)),
                 onClick = {
-                    /* TODO: Add user to database */
                     onIntent(RegisterScreenIntent.Register)
-                    navigator.navigateUp()
                 },
                 enabled = viewState.registerButtonEnabled
             ) {
