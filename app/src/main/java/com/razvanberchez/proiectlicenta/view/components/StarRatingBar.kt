@@ -3,6 +3,7 @@ package com.razvanberchez.proiectlicenta.view.components
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -26,7 +27,9 @@ fun StarRatingBar(
     val starSpacing = dimensionResource(R.dimen.review_star_spacing)
 
     Row(
-        modifier = Modifier.selectableGroup(),
+        modifier = Modifier
+            .selectableGroup()
+            .padding(dimensionResource(R.dimen.ui_elem_padding)),
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 1..maxStars) {

@@ -10,9 +10,10 @@
     <dimen name="list_elem_padding">4.dp</dimen>
     <dimen name="list_elem_fontsize">20.sp</dimen>
     <dimen name="card_text_padding">16.dp</dimen>
+    <dimen name="card_padding">16.dp</dimen>
     <dimen name="details_text_fontsize">22.sp</dimen>
     <dimen name="details_list_fontsize">18.sp</dimen>
-    <dimen name="details_text_padding">8.dp</dimen>
+    <dimen name="details_text_padding">16.dp</dimen>
     <dimen name="topbar_title_fontsize">26.sp</dimen>
     <dimen name="review_star_size">40.dp</dimen>
     <dimen name="review_star_spacing">8.dp</dimen>

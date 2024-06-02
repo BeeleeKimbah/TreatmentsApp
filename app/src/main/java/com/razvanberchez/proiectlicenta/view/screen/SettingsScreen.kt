@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -27,6 +25,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.SettingsScreenViewState
 
@@ -67,9 +66,13 @@ fun SettingsScreen(
         ) {
             item {
                 Text(
-                    modifier = modifier.padding(
-                        dimensionResource(R.dimen.details_text_padding)
-                    ),
+                    modifier = modifier
+                        .padding(
+                            horizontal = dimensionResource(R.dimen.details_text_padding)
+                        )
+                        .padding(
+                            top = dimensionResource(R.dimen.details_text_padding)
+                        ),
                     text = stringResource(R.string.text_header_notifications),
                     fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
                     fontWeight = FontWeight.Bold
@@ -79,11 +82,9 @@ fun SettingsScreen(
                 Card(
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(dimensionResource(R.dimen.list_elem_padding)),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                    )
+                        .padding(dimensionResource(R.dimen.card_padding)),
+                    colors = CardScheme.cardColors(),
+                    elevation = CardScheme.cardElevation()
                 ) {
                     Row(
                         modifier = modifier.padding(top = dimensionResource(R.dimen.details_text_padding)),

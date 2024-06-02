@@ -1,9 +1,9 @@
 package com.razvanberchez.proiectlicenta.view.viewstate
 
 sealed class AuthState {
-    data object Unknown: AuthState()
-    data object LoggedIn: AuthState()
-    data object NotLoggedIn: AuthState()
+    data object Unknown : AuthState()
+    data object LoggedIn : AuthState()
+    data object NotLoggedIn : AuthState()
 }
 
 data class LoginScreenViewState(

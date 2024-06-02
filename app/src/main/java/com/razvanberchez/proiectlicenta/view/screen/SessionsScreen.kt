@@ -16,11 +16,9 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +36,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.intent.SessionsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.SessionsScreenViewModel
+import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionDetailsScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
@@ -118,8 +117,10 @@ fun SessionsScreenContent(
                         Column(
                             modifier = Modifier
                                 .padding(
-                                    horizontal = dimensionResource(R.dimen.ui_elem_padding),
-                                    vertical = dimensionResource(R.dimen.list_elem_padding)
+                                    top = dimensionResource(R.dimen.card_padding)
+                                )
+                                .padding(
+                                    horizontal = dimensionResource(R.dimen.card_padding)
                                 )
                                 .clickable {
                                     navigator.navigate(
@@ -133,10 +134,8 @@ fun SessionsScreenContent(
                             Card(
                                 modifier = modifier
                                     .fillMaxWidth(),
-                                colors = CardDefaults.cardColors(
-                                    containerColor =
-                                    MaterialTheme.colorScheme.secondaryContainer
-                                )
+                                colors = CardScheme.cardColors(),
+                                elevation = CardScheme.cardElevation()
                             ) {
                                 Text(
                                     modifier = modifier.padding(

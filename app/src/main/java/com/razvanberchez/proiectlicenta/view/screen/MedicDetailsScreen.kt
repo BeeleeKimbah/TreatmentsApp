@@ -13,7 +13,6 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -39,6 +38,7 @@ import com.ramcosta.composedestinations.result.ResultRecipient
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.intent.MedicDetailsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.MedicDetailsScreenViewModel
+import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.AddReviewScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicDetailsScreenViewState
@@ -138,9 +138,13 @@ fun MedicDetailsScreenContent(
                 ) {
                     item {
                         Text(
-                            modifier = modifier.padding(
-                                dimensionResource(R.dimen.details_text_padding)
-                            ),
+                            modifier = modifier
+                                .padding(
+                                    top = dimensionResource(R.dimen.details_text_padding)
+                                )
+                                .padding(
+                                    horizontal = dimensionResource(R.dimen.details_text_padding)
+                                ),
                             text = stringResource(R.string.details_general_info),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
                             fontWeight = FontWeight.Bold
@@ -150,10 +154,9 @@ fun MedicDetailsScreenContent(
                         Card(
                             modifier = modifier
                                 .fillMaxWidth()
-                                .padding(dimensionResource(R.dimen.list_elem_padding)),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer
-                            )
+                                .padding(dimensionResource(R.dimen.card_padding)),
+                            colors = CardScheme.cardColors(),
+                            elevation = CardScheme.cardElevation()
                         ) {
                             Text(
                                 modifier = modifier.padding(
@@ -197,7 +200,7 @@ fun MedicDetailsScreenContent(
                     item {
                         Text(
                             modifier = modifier.padding(
-                                dimensionResource(R.dimen.details_text_padding)
+                                horizontal = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.medic_secondary_specialties),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
@@ -208,10 +211,9 @@ fun MedicDetailsScreenContent(
                         Card(
                             modifier = modifier
                                 .fillMaxWidth()
-                                .padding(dimensionResource(R.dimen.list_elem_padding)),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.secondaryContainer
-                            )
+                                .padding(dimensionResource(R.dimen.card_padding)),
+                            colors = CardScheme.cardColors(),
+                            elevation = CardScheme.cardElevation()
                         ) {
                             if (viewState.medic?.secondarySpecialties?.isNotEmpty() == true) {
                                 viewState.medic.secondarySpecialties.forEach { spec ->
@@ -243,7 +245,7 @@ fun MedicDetailsScreenContent(
                     item {
                         Text(
                             modifier = modifier.padding(
-                                dimensionResource(R.dimen.details_text_padding)
+                                horizontal = dimensionResource(R.dimen.details_text_padding)
                             ),
                             text = stringResource(R.string.medic_reviews),
                             fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
@@ -256,10 +258,10 @@ fun MedicDetailsScreenContent(
                             Card(
                                 modifier = modifier
                                     .fillMaxWidth()
-                                    .padding(dimensionResource(R.dimen.list_elem_padding)),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                                )
+                                    .padding(horizontal = dimensionResource(R.dimen.card_padding))
+                                    .padding(top = dimensionResource(R.dimen.card_padding)),
+                                colors = CardScheme.cardColors(),
+                                elevation = CardScheme.cardElevation()
                             ) {
                                 Text(
                                     modifier = modifier.padding(

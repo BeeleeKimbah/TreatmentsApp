@@ -100,6 +100,7 @@ fun LoginScreenContent(
                 )
             }
         }
+
         is AuthState.LoggedIn -> {
             navigator.navigate(
                 direction = SessionsScreenDestination
@@ -109,6 +110,7 @@ fun LoginScreenContent(
                 }
             }
         }
+
         is AuthState.NotLoggedIn -> {
             Column(
                 modifier = modifier
@@ -170,8 +172,8 @@ fun LoginScreenContent(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = if (viewState.loginButtonEnabled)
-                                        ImeAction.Go
-                                    else ImeAction.None
+                            ImeAction.Go
+                        else ImeAction.None
                     ),
                     keyboardActions = KeyboardActions(
                         onGo = {

@@ -18,7 +18,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -43,6 +42,7 @@ import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.data.model.Score
 import com.razvanberchez.proiectlicenta.presentation.intent.AddReviewScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.AddReviewScreenViewModel
+import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.StarRatingBar
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.AddReviewScreenViewState
@@ -102,9 +102,13 @@ fun AddReviewScreenContent(
                     .fillMaxSize()
             ) {
                 Text(
-                    modifier = modifier.padding(
-                        dimensionResource(R.dimen.details_text_padding)
-                    ),
+                    modifier = modifier
+                        .padding(
+                            top = dimensionResource(R.dimen.details_text_padding)
+                        )
+                        .padding(
+                            horizontal = dimensionResource(R.dimen.details_text_padding)
+                        ),
                     text = stringResource(R.string.details_general_info),
                     fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
                     fontWeight = FontWeight.Bold
@@ -113,10 +117,9 @@ fun AddReviewScreenContent(
                 Card(
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(dimensionResource(R.dimen.list_elem_padding)),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
-                    )
+                        .padding(dimensionResource(R.dimen.card_padding)),
+                    colors = CardScheme.cardColors(),
+                    elevation = CardScheme.cardElevation()
                 ) {
                     Text(
                         modifier = modifier.padding(
@@ -159,7 +162,7 @@ fun AddReviewScreenContent(
 
                 Text(
                     modifier = modifier.padding(
-                        dimensionResource(R.dimen.details_text_padding)
+                        horizontal = dimensionResource(R.dimen.details_text_padding)
                     ),
                     text = stringResource(R.string.text_header_score),
                     fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
@@ -179,7 +182,7 @@ fun AddReviewScreenContent(
 
                 Text(
                     modifier = modifier.padding(
-                        dimensionResource(R.dimen.details_text_padding)
+                        horizontal = dimensionResource(R.dimen.details_text_padding)
                     ),
                     text = stringResource(R.string.text_header_review),
                     fontSize = dimensionResource(R.dimen.details_text_fontsize).value.sp,
@@ -188,8 +191,7 @@ fun AddReviewScreenContent(
 
                 BasicTextField(
                     modifier = modifier
-                        .padding(top = dimensionResource(R.dimen.ui_elem_padding))
-                        .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
+                        .padding(dimensionResource(R.dimen.ui_elem_padding))
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.secondaryContainer),
                     value = viewState.reviewBody,
@@ -226,8 +228,7 @@ fun AddReviewScreenContent(
 
                 Button(
                     modifier = modifier
-                        .padding(top = dimensionResource(R.dimen.ui_elem_padding))
-                        .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
+                        .padding(dimensionResource(R.dimen.ui_elem_padding))
                         .fillMaxWidth()
                         .height(dimensionResource(R.dimen.button_size)),
                     onClick = {
