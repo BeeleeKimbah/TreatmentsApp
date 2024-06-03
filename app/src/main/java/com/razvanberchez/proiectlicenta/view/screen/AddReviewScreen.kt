@@ -55,7 +55,7 @@ import com.razvanberchez.proiectlicenta.view.viewstate.AddReviewScreenViewState
 fun AddReviewScreen(
     navigator: DestinationsNavigator,
     resultNavigator: ResultBackNavigator<Boolean>,
-    medicId: Int
+    medicId: String
 ) {
     BackHandler {
         resultNavigator.navigateBack(result = false)

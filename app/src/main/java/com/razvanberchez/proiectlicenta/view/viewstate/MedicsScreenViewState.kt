@@ -1,8 +1,8 @@
 package com.razvanberchez.proiectlicenta.view.viewstate
 
-import com.razvanberchez.proiectlicenta.data.model.Medic
+import com.razvanberchez.proiectlicenta.data.model.MedicListItem
 
 data class MedicsScreenViewState(
-    val medics: List<Medic> = listOf(),
+    val medics: List<MedicListItem> = listOf(),
     val loading: Boolean = true
 )

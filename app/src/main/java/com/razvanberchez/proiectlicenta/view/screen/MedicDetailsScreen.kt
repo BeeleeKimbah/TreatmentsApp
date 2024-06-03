@@ -43,7 +43,7 @@ fun MedicDetailsScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     resultRecipient: ResultRecipient<AddReviewScreenDestination, Boolean>,
-    medicId: Int
+    medicId: String
 ) {
     val viewModel = hiltViewModel<MedicDetailsScreenViewModel, MedicDetailsScreenViewModel.Factory>(
         creationCallback = { factory ->
@@ -79,7 +79,7 @@ fun MedicDetailsScreenContent(
     navigator: DestinationsNavigator,
     viewState: MedicDetailsScreenViewState,
     onIntent: (MedicDetailsScreenIntent) -> Unit,
-    medicId: Int
+    medicId: String
 ) {
     Scaffold(
         modifier = modifier
