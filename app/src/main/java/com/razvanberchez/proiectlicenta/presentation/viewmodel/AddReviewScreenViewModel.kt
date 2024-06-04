@@ -37,7 +37,17 @@ class AddReviewScreenViewModel @AssistedInject constructor(
     }
 
     private fun addReview() {
-        // TODO: add to database
+        viewModelScope.launch {
+            repository.addReview(
+                medicId = medicId,
+                reviewBody = viewState.value.reviewBody,
+                score = viewState.value.score
+            )
+
+            _viewState.value = _viewState.value.copy(
+                reviewAdded = true
+            )
+        }
     }
 
     private fun modifyRating(newRating: Score) {

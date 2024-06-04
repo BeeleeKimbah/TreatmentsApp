@@ -1,6 +1,7 @@
 package com.razvanberchez.proiectlicenta.data.repository
 
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import com.razvanberchez.proiectlicenta.data.model.Medic
 import com.razvanberchez.proiectlicenta.data.model.MedicListItem
@@ -61,6 +62,16 @@ class Repository {
         }.await()
 
         return medic
+    }
+
+    suspend fun addReview(medicId: String, reviewBody: String, score: Score) {
+        db.collection("medics")
+            .document(medicId)
+            .update("reviews", FieldValue.arrayUnion(hashMapOf(
+                "body" to reviewBody,
+                "score" to score.value
+            )))
+            .await()
     }
 
     suspend fun getSessions(): List<Session> {

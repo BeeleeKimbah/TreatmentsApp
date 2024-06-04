@@ -15,7 +15,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -77,7 +76,7 @@ fun AddReviewScreen(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddReviewScreenContent(
     modifier: Modifier = Modifier,
@@ -86,6 +85,10 @@ fun AddReviewScreenContent(
     viewState: AddReviewScreenViewState,
     onIntent: (AddReviewScreenIntent) -> Unit
 ) {
+    if (viewState.reviewAdded) {
+        resultNavigator.navigateBack(result = true)
+    }
+
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
@@ -212,8 +215,7 @@ fun AddReviewScreenContent(
                     ),
                     keyboardActions = KeyboardActions(
                         onGo = {
-                            /* TODO: add review to medic entity */
-                            resultNavigator.navigateBack(result = true)
+                            onIntent(AddReviewScreenIntent.AddReview)
                         }
                     )
                 ) { innerTextField ->
@@ -235,8 +237,7 @@ fun AddReviewScreenContent(
                         .fillMaxWidth()
                         .height(dimensionResource(R.dimen.button_size)),
                     onClick = {
-                        /* TODO: add review to medic entity */
-                        resultNavigator.navigateBack(result = true)
+                        onIntent(AddReviewScreenIntent.AddReview)
                     }
                 ) {
                     Text(

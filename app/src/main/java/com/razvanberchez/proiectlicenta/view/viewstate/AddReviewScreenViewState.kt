@@ -7,5 +7,6 @@ data class AddReviewScreenViewState(
     val medic: Medic? = null,
     val reviewBody: String = "",
     val score: Score = Score.ONE,
-    val loading: Boolean = true
+    val loading: Boolean = true,
+    val reviewAdded: Boolean = false
 )
