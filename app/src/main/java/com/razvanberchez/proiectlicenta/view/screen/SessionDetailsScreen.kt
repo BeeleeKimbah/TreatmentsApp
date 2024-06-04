@@ -41,7 +41,7 @@ import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewS
 fun SessionDetailsScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
-    sessionId: Int
+    sessionId: String
 ) {
     val viewModel =
         hiltViewModel<SessionDetailsScreenViewModel, SessionDetailsScreenViewModel.Factory>(

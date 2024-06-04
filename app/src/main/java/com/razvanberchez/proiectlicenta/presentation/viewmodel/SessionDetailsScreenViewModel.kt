@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = SessionDetailsScreenViewModel.Factory::class)
 class SessionDetailsScreenViewModel @AssistedInject constructor(
     private val repository: Repository,
-    @Assisted val sessionId: Int
+    @Assisted val sessionId: String
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(SessionDetailsScreenViewState())
     val viewState = _viewState.asStateFlow()
@@ -49,6 +49,6 @@ class SessionDetailsScreenViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(sessionId: Int): SessionDetailsScreenViewModel
+        fun create(sessionId: String): SessionDetailsScreenViewModel
     }
 }
