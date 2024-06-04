@@ -43,14 +43,13 @@ class Repository {
 
     suspend fun getMedic(medicId: String): Medic {
         var medic = Medic()
-        db.collection("medics").document(medicId).get().addOnSuccessListener {
-            document ->
+        db.collection("medics").document(medicId).get().addOnSuccessListener { document ->
             medic = Medic(
                 medicId = document.id,
                 name = document.get("name") as String,
                 mainSpecialty = document.get("mainSpecialty") as String,
                 secondarySpecialties =
-                    document.get("secondarySpecialties") as List<String>? ?: listOf(),
+                document.get("secondarySpecialties") as List<String>? ?: listOf(),
                 reviews = (document.get("reviews") as List<Map<String, Any>>?)?.map {
                     Review(
                         text = it["body"] as String,
@@ -71,10 +70,14 @@ class Repository {
     suspend fun addReview(medicId: String, reviewBody: String, score: Score) {
         db.collection("medics")
             .document(medicId)
-            .update("reviews", FieldValue.arrayUnion(hashMapOf(
-                "body" to reviewBody,
-                "score" to score.value
-            )))
+            .update(
+                "reviews", FieldValue.arrayUnion(
+                    hashMapOf(
+                        "body" to reviewBody,
+                        "score" to score.value
+                    )
+                )
+            )
             .await()
     }
 
@@ -83,17 +86,16 @@ class Repository {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             db.collection("users")
-                    .document(currentUser.uid)
-                    .collection("sessions")
-                    .get().addOnSuccessListener {
-                result ->
-                for (document in result) {
-                    sessions.add(Session(
-                        medicId = document.get("medicId") as String,
-                        medicName = document.get("medicName") as String,
-                        diagnostic = document.get("diagnostic") as String?,
-                        consultDate = (document.get("consultDate") as Timestamp).toDate(),
-                        treatmentScheme =
+                .document(currentUser.uid)
+                .collection("sessions")
+                .get().addOnSuccessListener { result ->
+                    for (document in result) {
+                        sessions.add(Session(
+                            medicId = document.get("medicId") as String,
+                            medicName = document.get("medicName") as String,
+                            diagnostic = document.get("diagnostic") as String?,
+                            consultDate = (document.get("consultDate") as Timestamp).toDate(),
+                            treatmentScheme =
                             (document.get("treatmentScheme") as List<Map<String, Any>>).map {
                                 Treatment(
                                     treatmentName = it["treatmentName"] as String,
@@ -103,11 +105,11 @@ class Repository {
                                     startDate = (it["startDate"] as Timestamp).toDate()
                                 )
                             }
-                    ))
-                }
-            }.addOnFailureListener {
-                println(it.stackTrace)
-            }.await()
+                        ))
+                    }
+                }.addOnFailureListener {
+                    println(it.stackTrace)
+                }.await()
         }
         return sessions
     }

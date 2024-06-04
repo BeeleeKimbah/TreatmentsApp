@@ -27,6 +27,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.presentation.format
 import com.razvanberchez.proiectlicenta.presentation.intent.SessionsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.SessionsScreenViewModel
 import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
@@ -140,7 +141,7 @@ fun SessionsScreenContent(
                                 ),
                                 text = stringResource(
                                     R.string.session_list_consultDate,
-                                    session.consultDate.toString()
+                                    session.consultDate.format()
                                 ),
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                             )
