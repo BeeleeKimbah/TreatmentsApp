@@ -1,10 +1,10 @@
 package com.razvanberchez.proiectlicenta.data.model
 
-import java.time.LocalDate
+import java.util.Date
 
 data class Treatment(
     val treatmentName: String,
-    val startDate: LocalDate,
+    val startDate: Date,
     val dose: Int,
     val frequency: Int,
     val applications: Int

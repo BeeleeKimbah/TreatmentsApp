@@ -140,7 +140,7 @@ fun SessionsScreenContent(
                                 ),
                                 text = stringResource(
                                     R.string.session_list_consultDate,
-                                    session.consultDate.toLocalDate().toString()
+                                    session.consultDate.toString()
                                 ),
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                             )
