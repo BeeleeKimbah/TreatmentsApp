@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -187,11 +188,27 @@ fun SessionDetailsScreenContent(
                     HorizontalDivider(
                         color = MaterialTheme.colorScheme.onSurface
                     )
+                    if (viewState.session?.treatmentScheme?.size == 0) {
+                        Text(
+                            modifier = modifier
+                                .padding(
+                                    horizontal = dimensionResource(R.dimen.details_text_padding),
+                                    vertical = dimensionResource(R.dimen.list_elem_padding)
+                                )
+                                .align(Alignment.CenterHorizontally),
+                            text = "-",
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                        )
+                        HorizontalDivider(
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
                     viewState.session?.treatmentScheme?.forEach { treatment ->
 
                         Text(
                             modifier = modifier.padding(
-                                horizontal = dimensionResource(R.dimen.details_text_padding)
+                                horizontal = dimensionResource(R.dimen.details_text_padding),
+                                vertical = dimensionResource(R.dimen.list_elem_padding)
                             ),
                             text = stringResource(
                                 R.string.treatment_scheme_item,
@@ -199,7 +216,7 @@ fun SessionDetailsScreenContent(
                                 treatment.dose,
                                 treatment.frequency
                             ),
-                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp,
                         )
                         HorizontalDivider(
                             color = MaterialTheme.colorScheme.onSecondary

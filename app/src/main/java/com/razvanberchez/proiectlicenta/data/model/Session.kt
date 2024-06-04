@@ -23,7 +23,7 @@ class Session(
                 diagnostic = doc.get("diagnostic") as String?,
                 medicId = doc.get("medicId") as String,
                 treatmentScheme =
-                (doc.get("treatmentScheme") as List<Map<String, Any>>).map {
+                (doc.get("treatmentScheme") as List<Map<String, Any>>?)?.map {
                     Treatment(
                         treatmentName = it["treatmentName"] as String,
                         dose = (it["dose"] as Long).toInt(),
@@ -31,7 +31,7 @@ class Session(
                         applications = (it["applications"] as Long).toInt(),
                         startDate = (it["startDate"] as Timestamp).toDate()
                     )
-                }
+                } ?: listOf()
             )
         }
     }

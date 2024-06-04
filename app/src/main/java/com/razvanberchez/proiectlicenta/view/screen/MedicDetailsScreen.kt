@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -205,7 +206,8 @@ fun MedicDetailsScreenContent(
                             viewState.medic.secondarySpecialties.forEach { spec ->
                                 Text(
                                     modifier = modifier.padding(
-                                        horizontal = dimensionResource(R.dimen.details_text_padding)
+                                        horizontal = dimensionResource(R.dimen.details_text_padding),
+                                        vertical = dimensionResource(R.dimen.list_elem_padding)
                                     ),
                                     text = spec,
                                     fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
@@ -217,8 +219,9 @@ fun MedicDetailsScreenContent(
                         } else {
                             Text(
                                 modifier = modifier.padding(
-                                    horizontal = dimensionResource(R.dimen.details_text_padding)
-                                ),
+                                    horizontal = dimensionResource(R.dimen.details_text_padding),
+                                    vertical = dimensionResource(R.dimen.list_elem_padding)
+                                ).align(Alignment.CenterHorizontally),
                                 text = "-",
                                 fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                             )
