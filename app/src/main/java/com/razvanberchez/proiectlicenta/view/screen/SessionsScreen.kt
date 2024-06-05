@@ -33,6 +33,7 @@ import com.razvanberchez.proiectlicenta.presentation.viewmodel.SessionsScreenVie
 import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.PullDownToRefreshBox
 import com.razvanberchez.proiectlicenta.view.components.TopBar
+import com.razvanberchez.proiectlicenta.view.screen.destinations.AddConsultScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionDetailsScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
 
@@ -77,7 +78,9 @@ fun SessionsScreenContent(
             if (!viewState.loading) {
                 ExtendedFloatingActionButton(
                     onClick = {
-                        /* TODO */
+                        navigator.navigate(
+                            direction = AddConsultScreenDestination()
+                        )
                     },
                     modifier = modifier
                         .height(dimensionResource(R.dimen.button_size))

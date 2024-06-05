@@ -218,10 +218,12 @@ fun MedicDetailsScreenContent(
                             }
                         } else {
                             Text(
-                                modifier = modifier.padding(
-                                    horizontal = dimensionResource(R.dimen.details_text_padding),
-                                    vertical = dimensionResource(R.dimen.list_elem_padding)
-                                ).align(Alignment.CenterHorizontally),
+                                modifier = modifier
+                                    .padding(
+                                        horizontal = dimensionResource(R.dimen.details_text_padding),
+                                        vertical = dimensionResource(R.dimen.list_elem_padding)
+                                    )
+                                    .align(Alignment.CenterHorizontally),
                                 text = "-",
                                 fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                             )
