@@ -122,15 +122,22 @@ fun AddConsultScreenContent(
                         modifier = modifier
                             .fillMaxWidth()
                             .menuAnchor(),
-                        placeholder = { Text(text = "Alegeți un medic") },
+                        placeholder = {
+                            Text(
+                                text = stringResource(R.string.medic_picker_placeholder)
+                            )
+                        },
                         value = viewState.selectedMedic?.let {
-                            viewState.selectedMedic.name +
-                                    ", " + viewState.selectedMedic.mainSpecialty
+                            stringResource(
+                                R.string.medic_picker_medicItem,
+                                viewState.selectedMedic.name,
+                                viewState.selectedMedic.mainSpecialty
+                            )
                         } ?: "",
                         onValueChange = {},
                         label = {
                             Text(
-                                text = "Medic",
+                                text = stringResource(R.string.medic_picker_label),
                                 fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
                             )
                         },
@@ -151,7 +158,13 @@ fun AddConsultScreenContent(
                                 modifier = modifier
                                     .background(MaterialTheme.colorScheme.secondaryContainer),
                                 text = {
-                                    Text(text = medic.name + ", " + medic.mainSpecialty)
+                                    Text(
+                                        text = stringResource(
+                                            R.string.medic_picker_medicItem,
+                                            medic.name,
+                                            medic.mainSpecialty
+                                        )
+                                    )
                                 },
                                 onClick = {
                                     onIntent(AddConsultScreenIntent.ModifyMedic(medic.medicId))
@@ -178,7 +191,7 @@ fun AddConsultScreenContent(
                     readOnly = true,
                     label = {
                         Text(
-                            text = "Dată consult",
+                            text = stringResource(R.string.date_picker_label),
                             fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
                         )
                     },
@@ -208,7 +221,7 @@ fun AddConsultScreenContent(
                                     datePickerOpen = false
                                 }
                             ) {
-                                Text(text = "Ok")
+                                Text(text = stringResource(R.string.date_picker_ok))
                             }
                         },
                         dismissButton = {
@@ -217,7 +230,7 @@ fun AddConsultScreenContent(
                                     datePickerOpen = false
                                 }
                             ) {
-                                Text(text = "Anulează")
+                                Text(text = stringResource(R.string.date_picker_dismiss))
                             }
                         }
                     ) {
@@ -228,7 +241,7 @@ fun AddConsultScreenContent(
                                     modifier = modifier.padding(
                                         dimensionResource(R.dimen.ui_elem_padding)
                                     ),
-                                    text = "Selectați o dată"
+                                    text = stringResource(R.string.date_picker_title)
                                 )
                             }
                         )

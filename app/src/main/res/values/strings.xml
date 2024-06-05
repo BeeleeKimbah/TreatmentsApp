@@ -39,4 +39,11 @@
     <string name="text_settings_enable_notifications">Permite notificări</string>
     <string name="text_settings_treatment_notifications">Notificări tratament</string>
     <string name="text_settings_consult_notifications">Notificări consulturi</string>
+    <string name="medic_picker_placeholder">Alegeți un medic</string>
+    <string name="medic_picker_label">Medic</string>
+    <string name="medic_picker_medicItem">%1$s, %2$s</string>
+    <string name="date_picker_label">Dată consult</string>
+    <string name="date_picker_ok">OK</string>
+    <string name="date_picker_dismiss">Anulează</string>
+    <string name="date_picker_title">Selectați o dată</string>
 </resources>
