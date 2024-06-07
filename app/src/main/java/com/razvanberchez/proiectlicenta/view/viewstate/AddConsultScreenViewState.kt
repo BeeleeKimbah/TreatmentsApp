@@ -10,5 +10,6 @@ data class AddConsultScreenViewState(
     val selectedMedic: Medic? = null,
     val intervalPickEnabled: Boolean = false,
     val selectedDate: Date = Date(),
-    val selectedTime: Pair<Int, Int> = Pair(8, 0)
+    val selectedTime: Pair<Int, Int> = Pair(8, 0),
+    val availableIntervals: List<Pair<Int, Int>> = listOf()
 )

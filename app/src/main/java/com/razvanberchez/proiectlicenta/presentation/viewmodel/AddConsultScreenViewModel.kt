@@ -2,6 +2,7 @@ package com.razvanberchez.proiectlicenta.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.razvanberchez.proiectlicenta.data.model.TimeSlot
 import com.razvanberchez.proiectlicenta.data.repository.Repository
 import com.razvanberchez.proiectlicenta.presentation.intent.AddConsultScreenIntent
 import com.razvanberchez.proiectlicenta.view.viewstate.AddConsultScreenViewState
@@ -56,22 +57,37 @@ class AddConsultScreenViewModel @AssistedInject constructor(
 
         viewModelScope.launch {
             val newMedic = repository.getMedic(newMedicId)
+            val slots = repository.getAvailableSlots(newMedicId, _viewState.value.selectedDate)
 
             _viewState.value = _viewState.value.copy(
+                availableIntervals = slots,
                 intervalPickEnabled = true,
                 selectedMedic = newMedic
             )
         }
     }
 
-    private fun modifyTime(newInterval: Pair<Int, Int>) {
-        throw NotImplementedError()
+    private fun modifyTime(newInterval: TimeSlot) {
+        _viewState.value = _viewState.value.copy(
+            selectedTime = newInterval
+        )
     }
 
     private fun modifyDate(newDate: Date) {
-        _viewState.value = _viewState.value.copy(
-            selectedDate = newDate
-        )
+        viewModelScope.launch {
+            _viewState.value = _viewState.value.copy(
+                selectedDate = newDate
+            )
+            viewState.value.selectedMedic?.let {
+                val slots = repository.getAvailableSlots(
+                    viewState.value.selectedMedic!!.medicId,
+                    viewState.value.selectedDate
+                )
+                _viewState.value = _viewState.value.copy(
+                    availableIntervals = slots
+                )
+            }
+        }
     }
 
     @AssistedFactory

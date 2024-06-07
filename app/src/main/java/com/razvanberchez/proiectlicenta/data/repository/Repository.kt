@@ -1,6 +1,7 @@
 package com.razvanberchez.proiectlicenta.data.repository
 
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
@@ -8,7 +9,11 @@ import com.razvanberchez.proiectlicenta.data.model.Medic
 import com.razvanberchez.proiectlicenta.data.model.MedicListItem
 import com.razvanberchez.proiectlicenta.data.model.Score
 import com.razvanberchez.proiectlicenta.data.model.Session
+import com.razvanberchez.proiectlicenta.data.model.TimeSlot
+import com.razvanberchez.proiectlicenta.data.model.allSlots
 import kotlinx.coroutines.tasks.await
+import java.util.Calendar
+import java.util.Date
 
 class Repository {
     private val db = Firebase.firestore
@@ -25,7 +30,7 @@ class Repository {
             println(it.stackTrace)
         }.await()
 
-        return medicList
+        return medicList.toList()
     }
 
     suspend fun getMedic(medicId: String): Medic {
@@ -54,7 +59,7 @@ class Repository {
             .await()
     }
 
-    suspend fun getSessions(): MutableList<Session> {
+    suspend fun getSessions(): List<Session> {
         val sessions = mutableListOf<Session>()
         val currentUser = auth.currentUser
 
@@ -71,7 +76,7 @@ class Repository {
                 }.await()
         }
 
-        return sessions
+        return sessions.toList()
     }
 
     suspend fun getSession(sessionId: String): Session {
@@ -91,5 +96,31 @@ class Repository {
         }
 
         return session
+    }
+
+    suspend fun getAvailableSlots(medicId: String, date: Date): List<TimeSlot> {
+        val slots = mutableSetOf<TimeSlot>()
+        allSlots.forEach { slots.add(it) }
+
+        db.collection("medics")
+            .document(medicId)
+            .collection("appointments")
+            .whereGreaterThanOrEqualTo("consultDate", date)
+            .whereLessThan("consultDate", Date(date.time + 86400000))
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+                    val consultDate = (document.get("consultDate") as Timestamp).toDate()
+                    val calendar = Calendar.getInstance()
+                    calendar.setTime(consultDate)
+                    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                    val minute = calendar.get(Calendar.MINUTE)
+
+                    slots.remove(TimeSlot(hour, minute))
+                }
+            }.addOnFailureListener {
+                println(it.stackTrace)
+            }.await()
+
+        return slots.toList()
     }
 }

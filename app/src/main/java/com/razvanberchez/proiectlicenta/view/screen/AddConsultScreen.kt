@@ -1,39 +1,22 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
@@ -43,9 +26,11 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
-import com.razvanberchez.proiectlicenta.presentation.format
 import com.razvanberchez.proiectlicenta.presentation.intent.AddConsultScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.AddConsultScreenViewModel
+import com.razvanberchez.proiectlicenta.view.components.ConsultDatePicker
+import com.razvanberchez.proiectlicenta.view.components.MedicSelectDropdown
+import com.razvanberchez.proiectlicenta.view.components.TimeSlotGrid
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.AddConsultScreenViewState
 import java.util.Date
@@ -93,162 +78,78 @@ fun AddConsultScreenContent(
         }
     ) { values ->
         if (!viewState.loading) {
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(values)
+            Box(
+                modifier = modifier.fillMaxSize()
             ) {
-
-                var datePickerOpen by remember {
-                    mutableStateOf(false)
-                }
-
-                var medicSelectExpanded by remember {
-                    mutableStateOf(false)
-                }
-
-                val state = rememberDatePickerState(
-                    initialSelectedDateMillis = viewState.selectedDate.time
-                )
-
-                ExposedDropdownMenuBox(
+                Column(
                     modifier = modifier
-                        .padding(dimensionResource(R.dimen.ui_elem_padding))
-                        .fillMaxWidth(),
-                    expanded = medicSelectExpanded,
-                    onExpandedChange = { medicSelectExpanded = it }
+                        .fillMaxSize()
+                        .padding(values)
                 ) {
-                    OutlinedTextField(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .menuAnchor(),
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.medic_picker_placeholder)
-                            )
-                        },
-                        value = viewState.selectedMedic?.let {
-                            stringResource(
-                                R.string.medic_picker_medicItem,
-                                viewState.selectedMedic.name,
-                                viewState.selectedMedic.mainSpecialty
-                            )
-                        } ?: "",
-                        onValueChange = {},
-                        label = {
-                            Text(
-                                text = stringResource(R.string.medic_picker_label),
-                                fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
-                            )
-                        },
-                        shape = ShapeDefaults.Medium,
-                        singleLine = true,
-                        readOnly = true,
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = medicSelectExpanded)
+                    MedicSelectDropdown(
+                        allMedics = viewState.medics,
+                        selectedMedic = viewState.selectedMedic,
+                        onSelectMedic = { newMedicId ->
+                            onIntent(AddConsultScreenIntent.ModifyMedic(newMedicId))
                         }
                     )
-                    ExposedDropdownMenu(
-                        expanded = medicSelectExpanded,
-                        onDismissRequest = { medicSelectExpanded = false },
-                        modifier = modifier.fillMaxWidth()
+
+                    ConsultDatePicker(
+                        selectedDate = viewState.selectedDate,
+                        onSelectDate = { newDateMillis ->
+                            onIntent(
+                                AddConsultScreenIntent.ModifyDate(Date(newDateMillis))
+                            )
+                        }
+                    )
+
+                    Column(
+                        modifier = modifier.fillMaxSize()
                     ) {
-                        viewState.medics.forEach { medic ->
-                            DropdownMenuItem(
+                        if (viewState.intervalPickEnabled) {
+                            TimeSlotGrid(
+                                availableIntervals = viewState.availableIntervals,
+                                selectedInterval = viewState.selectedTime,
+                                onIntervalSelected = { newTime ->
+                                    onIntent(AddConsultScreenIntent.ModifyTime(newTime))
+                                }
+                            )
+                        } else {
+                            Box(
                                 modifier = modifier
-                                    .background(MaterialTheme.colorScheme.secondaryContainer),
-                                text = {
-                                    Text(
-                                        text = stringResource(
-                                            R.string.medic_picker_medicItem,
-                                            medic.name,
-                                            medic.mainSpecialty
-                                        )
+                                    .fillMaxSize()
+                                    .padding(
+                                        bottom =
+                                        dimensionResource(R.dimen.timeslot_grid_bottom_padding)
+                                                + dimensionResource(R.dimen.ui_elem_padding)
                                     )
-                                },
-                                onClick = {
-                                    onIntent(AddConsultScreenIntent.ModifyMedic(medic.medicId))
-                                    medicSelectExpanded = false
-                                },
-                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                                colors = MenuDefaults.itemColors(
-                                    textColor = MaterialTheme.colorScheme.onSecondaryContainer
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.interval_pick_placeholder),
+                                    color = Color.Red,
+                                    fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
+                                    modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
                                 )
-                            )
-                            HorizontalDivider(
-                                color = MaterialTheme.colorScheme.onSecondary
-                            )
+                            }
                         }
                     }
                 }
 
-                OutlinedTextField(
+                Button(
                     modifier = modifier
                         .padding(dimensionResource(R.dimen.ui_elem_padding))
-                        .fillMaxWidth(),
-                    value = viewState.selectedDate.format(),
-                    onValueChange = {},
-                    readOnly = true,
-                    label = {
-                        Text(
-                            text = stringResource(R.string.date_picker_label),
-                            fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
-                        )
-                    },
-                    trailingIcon = {
-                        IconButton(onClick = { datePickerOpen = true }) {
-                            Icon(
-                                imageVector = Icons.Filled.CalendarMonth,
-                                contentDescription = null
-                            )
-                        }
-                    },
-                    shape = ShapeDefaults.Medium,
-                    singleLine = true
-                )
-
-                if (datePickerOpen) {
-                    DatePickerDialog(
-                        onDismissRequest = { datePickerOpen = false },
-                        confirmButton = {
-                            Button(
-                                onClick = {
-                                    onIntent(AddConsultScreenIntent.ModifyDate(
-                                        state.selectedDateMillis?.let {
-                                            Date(state.selectedDateMillis!!)
-                                        } ?: Date()
-                                    ))
-                                    datePickerOpen = false
-                                }
-                            ) {
-                                Text(text = stringResource(R.string.date_picker_ok))
-                            }
-                        },
-                        dismissButton = {
-                            Button(
-                                onClick = {
-                                    datePickerOpen = false
-                                }
-                            ) {
-                                Text(text = stringResource(R.string.date_picker_dismiss))
-                            }
-                        }
-                    ) {
-                        DatePicker(
-                            state = state,
-                            title = {
-                                Text(
-                                    modifier = modifier.padding(
-                                        dimensionResource(R.dimen.ui_elem_padding)
-                                    ),
-                                    text = stringResource(R.string.date_picker_title)
-                                )
-                            }
-                        )
+                        .fillMaxWidth()
+                        .height(dimensionResource(R.dimen.button_size))
+                        .align(Alignment.BottomCenter),
+                    onClick = {
+                        // TODO
                     }
+                ) {
+                    Text(
+                        text = stringResource(R.string.button_text_add_session),
+                        fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
+                    )
                 }
-
-                // TODO: Add input for time slot, containing only available intervals (live updates)
             }
         } else {
             Box(

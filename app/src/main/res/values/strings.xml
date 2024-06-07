@@ -46,4 +46,6 @@
     <string name="date_picker_ok">OK</string>
     <string name="date_picker_dismiss">Anulează</string>
     <string name="date_picker_title">Selectați o dată</string>
+    <string name="interval_pick_placeholder">Selectați un medic pentru a putea viziona intervalele disponibile</string>
+    <string name="button_text_add_session">Adaugă sesiune</string>
 </resources>
