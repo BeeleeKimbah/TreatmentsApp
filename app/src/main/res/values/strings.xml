@@ -48,4 +48,5 @@
     <string name="date_picker_title">Selectați o dată</string>
     <string name="interval_pick_placeholder">Selectați un medic pentru a putea viziona intervalele disponibile</string>
     <string name="button_text_add_session">Adaugă sesiune</string>
+    <string name="error_adding_session">Adăugarea sesiunii a eșuat. Vă rugăm să încercați din nou.</string>
 </resources>

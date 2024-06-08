@@ -7,4 +7,5 @@ sealed class AddConsultScreenIntent {
     data class ModifyMedic(val newMedicId: String) : AddConsultScreenIntent()
     data class ModifyDate(val newDate: Date) : AddConsultScreenIntent()
     data class ModifyTime(val newInterval: TimeSlot) : AddConsultScreenIntent()
+    data object AddSession : AddConsultScreenIntent()
 }

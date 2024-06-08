@@ -66,6 +66,10 @@ fun AddConsultScreenContent(
     navigator: DestinationsNavigator,
     onIntent: (AddConsultScreenIntent) -> Unit
 ) {
+    if (viewState.addedSession) {
+        navigator.navigateUp()
+    }
+
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
@@ -126,13 +130,21 @@ fun AddConsultScreenContent(
                             ) {
                                 Text(
                                     text = stringResource(R.string.interval_pick_placeholder),
-                                    color = Color.Red,
                                     fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
                                     modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
                                 )
                             }
                         }
                     }
+                }
+
+                if (viewState.showErrorAddingSession) {
+                    Text(
+                        text = stringResource(R.string.error_adding_session),
+                        fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
+                        color = Color.Red,
+                        modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
+                    )
                 }
 
                 Button(
@@ -142,7 +154,7 @@ fun AddConsultScreenContent(
                         .height(dimensionResource(R.dimen.button_size))
                         .align(Alignment.BottomCenter),
                     onClick = {
-                        // TODO
+                        onIntent(AddConsultScreenIntent.AddSession)
                     }
                 ) {
                     Text(

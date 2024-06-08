@@ -32,9 +32,7 @@ fun TimeSlotGrid(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(dimensionResource(R.dimen.ui_elem_padding))
             .padding(bottom = dimensionResource(R.dimen.timeslot_grid_bottom_padding))
-            .background(MaterialTheme.colorScheme.surface)
     ) {
         LazyVerticalGrid(
             modifier = modifier

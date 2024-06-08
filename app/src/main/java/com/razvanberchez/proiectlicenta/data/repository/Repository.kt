@@ -11,6 +11,9 @@ import com.razvanberchez.proiectlicenta.data.model.Score
 import com.razvanberchez.proiectlicenta.data.model.Session
 import com.razvanberchez.proiectlicenta.data.model.TimeSlot
 import com.razvanberchez.proiectlicenta.data.model.allSlots
+import com.razvanberchez.proiectlicenta.presentation.DAY_MILLIS
+import com.razvanberchez.proiectlicenta.presentation.addTimeSlot
+import com.razvanberchez.proiectlicenta.presentation.toUTC
 import kotlinx.coroutines.tasks.await
 import java.util.Calendar
 import java.util.Date
@@ -106,7 +109,7 @@ class Repository {
             .document(medicId)
             .collection("appointments")
             .whereGreaterThanOrEqualTo("consultDate", date)
-            .whereLessThan("consultDate", Date(date.time + 86400000))
+            .whereLessThan("consultDate", Date(date.time + DAY_MILLIS))
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     val consultDate = (document.get("consultDate") as Timestamp).toDate()
@@ -122,5 +125,47 @@ class Repository {
             }.await()
 
         return slots.toList()
+    }
+
+    suspend fun addSession(
+        selectedMedic: Medic,
+        selectedDate: Date,
+        selectedTime: TimeSlot
+    ): Boolean {
+        val currentUser = auth.currentUser
+
+        val availableSlots = getAvailableSlots(selectedMedic.medicId, selectedDate)
+        if (!availableSlots.contains(selectedTime))
+            return false
+
+        val datetime = Timestamp(selectedDate.addTimeSlot(selectedTime).toUTC())
+
+        var success = true
+        if (currentUser != null) {
+            db.collection("users")
+                .document(currentUser.uid)
+                .collection("sessions")
+                .add(
+                    hashMapOf(
+                        "consultDate" to datetime,
+                        "medicId" to selectedMedic.medicId,
+                        "medicName" to selectedMedic.name,
+                    )
+                ).addOnFailureListener {
+                    success = false
+                }.await()
+
+            db.collection("medics")
+                .document(selectedMedic.medicId)
+                .collection("appointments")
+                .add(
+                    hashMapOf(
+                        "consultDate" to datetime
+                    )
+                ).addOnFailureListener {
+                    success = false
+                }.await()
+        }
+        return success
     }
 }
