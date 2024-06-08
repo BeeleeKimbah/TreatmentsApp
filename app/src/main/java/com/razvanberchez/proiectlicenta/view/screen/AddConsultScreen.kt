@@ -1,14 +1,17 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
@@ -26,11 +29,12 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.data.model.allSlots
 import com.razvanberchez.proiectlicenta.presentation.intent.AddConsultScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.AddConsultScreenViewModel
 import com.razvanberchez.proiectlicenta.view.components.ConsultDatePicker
 import com.razvanberchez.proiectlicenta.view.components.MedicSelectDropdown
-import com.razvanberchez.proiectlicenta.view.components.TimeSlotGrid
+import com.razvanberchez.proiectlicenta.view.components.TimeSlotItem
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.AddConsultScreenViewState
 import java.util.Date
@@ -66,6 +70,8 @@ fun AddConsultScreenContent(
     navigator: DestinationsNavigator,
     onIntent: (AddConsultScreenIntent) -> Unit
 ) {
+    val slotsList = allSlots.toList()
+
     if (viewState.addedSession) {
         navigator.navigateUp()
     }
@@ -82,14 +88,12 @@ fun AddConsultScreenContent(
         }
     ) { values ->
         if (!viewState.loading) {
-            Box(
-                modifier = modifier.fillMaxSize()
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(values)
             ) {
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(values)
-                ) {
+                item {
                     MedicSelectDropdown(
                         allMedics = viewState.medics,
                         selectedMedic = viewState.selectedMedic,
@@ -97,7 +101,9 @@ fun AddConsultScreenContent(
                             onIntent(AddConsultScreenIntent.ModifyMedic(newMedicId))
                         }
                     )
+                }
 
+                item {
                     ConsultDatePicker(
                         selectedDate = viewState.selectedDate,
                         onSelectDate = { newDateMillis ->
@@ -106,61 +112,80 @@ fun AddConsultScreenContent(
                             )
                         }
                     )
+                }
 
-                    Column(
-                        modifier = modifier.fillMaxSize()
-                    ) {
-                        if (viewState.intervalPickEnabled) {
-                            TimeSlotGrid(
-                                availableIntervals = viewState.availableIntervals,
-                                selectedInterval = viewState.selectedTime,
-                                onIntervalSelected = { newTime ->
-                                    onIntent(AddConsultScreenIntent.ModifyTime(newTime))
-                                }
-                            )
-                        } else {
-                            Box(
+                if (viewState.intervalPickEnabled) {
+                    itemsIndexed(slotsList) { index, _ ->
+                        if (index % 2 == 0) {
+                            Row (
                                 modifier = modifier
                                     .fillMaxSize()
-                                    .padding(
-                                        bottom =
-                                        dimensionResource(R.dimen.timeslot_grid_bottom_padding)
-                                                + dimensionResource(R.dimen.ui_elem_padding)
-                                    )
+                                    .padding(dimensionResource(R.dimen.ui_elem_padding))
                             ) {
-                                Text(
-                                    text = stringResource(R.string.interval_pick_placeholder),
-                                    fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
-                                    modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
+                                TimeSlotItem(
+                                    modifier = Modifier.fillMaxWidth(0.5f),
+                                    availableIntervals = viewState.availableIntervals,
+                                    selectedInterval = viewState.selectedTime,
+                                    interval = slotsList[index],
+                                    onSelectInterval = {
+                                        onIntent(
+                                            AddConsultScreenIntent.ModifyTime(slotsList[index])
+                                        )
+                                    }
+                                )
+
+                                TimeSlotItem(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    availableIntervals = viewState.availableIntervals,
+                                    selectedInterval = viewState.selectedTime,
+                                    interval = slotsList[index + 1],
+                                    onSelectInterval = {
+                                        onIntent(
+                                            AddConsultScreenIntent.ModifyTime(slotsList[index + 1])
+                                        )
+                                    }
                                 )
                             }
                         }
                     }
+                } else {
+                    item {
+                        Text(
+                            text = stringResource(R.string.interval_pick_placeholder),
+                            fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
+                        )
+                    }
                 }
 
                 if (viewState.showErrorAddingSession) {
-                    Text(
-                        text = stringResource(R.string.error_adding_session),
-                        fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
-                        color = Color.Red,
-                        modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
-                    )
+                    item {
+                        Text(
+                            text = stringResource(R.string.error_adding_session),
+                            fontSize = dimensionResource(R.dimen.validation_error_fontsize).value.sp,
+                            color = Color.Red,
+                            modifier = modifier.padding(dimensionResource(R.dimen.ui_elem_padding))
+                        )
+                    }
                 }
 
-                Button(
-                    modifier = modifier
-                        .padding(dimensionResource(R.dimen.ui_elem_padding))
-                        .fillMaxWidth()
-                        .height(dimensionResource(R.dimen.button_size))
-                        .align(Alignment.BottomCenter),
-                    onClick = {
-                        onIntent(AddConsultScreenIntent.AddSession)
+                item {
+                    Button(
+                        enabled = viewState.addSessionEnabled,
+                        modifier = modifier
+                            .padding(dimensionResource(R.dimen.ui_elem_padding))
+                            .fillMaxWidth()
+                            .height(dimensionResource(R.dimen.button_size)),
+                        onClick = {
+                            onIntent(AddConsultScreenIntent.AddSession)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.button_text_add_session),
+                            fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
+                        )
                     }
-                ) {
-                    Text(
-                        text = stringResource(R.string.button_text_add_session),
-                        fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
-                    )
                 }
             }
         } else {

@@ -100,7 +100,17 @@ class AddConsultScreenViewModel @AssistedInject constructor(
                 selectedMedic = newMedic,
                 showErrorAddingSession = false,
                 availableIntervals = slots,
-                loading = false
+                loading = false,
+                selectedTime =
+                    if (_viewState.value.selectedMedic?.medicId != newMedicId)
+                        TimeSlot(0, 0)
+                    else
+                        _viewState.value.selectedTime,
+                addSessionEnabled =
+                    if (_viewState.value.selectedMedic?.medicId != newMedicId)
+                        false
+                    else
+                        _viewState.value.addSessionEnabled
             )
         }
     }
@@ -119,7 +129,8 @@ class AddConsultScreenViewModel @AssistedInject constructor(
             _viewState.value = _viewState.value.copy(
                 selectedTime = newInterval,
                 showErrorAddingSession = false,
-                availableIntervals = slots
+                availableIntervals = slots,
+                addSessionEnabled = true
             )
         }
     }
@@ -140,10 +151,15 @@ class AddConsultScreenViewModel @AssistedInject constructor(
                 showErrorAddingSession = false,
                 availableIntervals = slots,
                 selectedTime =
-                if (_viewState.value.selectedDate != newDate)
-                    TimeSlot(0, 0)
-                else
-                    _viewState.value.selectedTime
+                    if (_viewState.value.selectedDate != newDate)
+                        TimeSlot(0, 0)
+                    else
+                        _viewState.value.selectedTime,
+                addSessionEnabled =
+                    if (_viewState.value.selectedDate != newDate)
+                        false
+                    else
+                        _viewState.value.addSessionEnabled
             )
         }
     }

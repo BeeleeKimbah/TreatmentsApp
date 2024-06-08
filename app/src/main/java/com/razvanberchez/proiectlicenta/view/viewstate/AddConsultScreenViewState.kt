@@ -15,5 +15,6 @@ data class AddConsultScreenViewState(
     val selectedTime: TimeSlot = TimeSlot(0, 0),
     val availableIntervals: List<TimeSlot> = listOf(),
     val addedSession: Boolean = false,
-    val showErrorAddingSession: Boolean = false
+    val showErrorAddingSession: Boolean = false,
+    val addSessionEnabled: Boolean = false
 )
