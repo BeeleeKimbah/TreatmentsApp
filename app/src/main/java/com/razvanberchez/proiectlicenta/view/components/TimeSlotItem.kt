@@ -4,18 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.sp
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.data.model.TimeSlot
 import com.razvanberchez.proiectlicenta.data.model.format
+import com.razvanberchez.proiectlicenta.ui.theme.TimeSlotItemColors
+import com.razvanberchez.proiectlicenta.ui.theme.TimeSlotItemDefaults
 
 @Composable
 fun TimeSlotItem(
@@ -23,7 +23,8 @@ fun TimeSlotItem(
     availableIntervals: List<TimeSlot>,
     selectedInterval: TimeSlot,
     interval: TimeSlot,
-    onSelectInterval: () -> Unit
+    onSelectInterval: () -> Unit,
+    colors: TimeSlotItemColors = TimeSlotItemDefaults.timeSlotItemColors()
 ) {
     Box(
         modifier = modifier
@@ -31,11 +32,11 @@ fun TimeSlotItem(
             .background(
                 if (availableIntervals.contains(interval))
                     if (selectedInterval == interval)
-                        MaterialTheme.colorScheme.primaryContainer
+                        colors.selectedContainerColor
                     else
-                        MaterialTheme.colorScheme.secondaryContainer
+                        colors.enabledContainerColor
                 else
-                    Color.Gray,
+                    colors.disabledContainerColor,
                 shape = ShapeDefaults.Small
             )
             .clickable {
@@ -49,11 +50,11 @@ fun TimeSlotItem(
             text = interval.format(),
             color = if (availableIntervals.contains(interval))
                         if (selectedInterval == interval)
-                            MaterialTheme.colorScheme.onPrimaryContainer
+                            colors.selectedTextColor
                         else
-                            MaterialTheme.colorScheme.onSecondaryContainer
+                            colors.enabledTextColor
                     else
-                        Color.Black,
+                        colors.disabledTextColor,
             fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
         )
     }

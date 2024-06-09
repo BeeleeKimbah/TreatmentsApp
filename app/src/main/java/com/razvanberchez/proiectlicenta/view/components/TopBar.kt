@@ -6,10 +6,9 @@ import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,6 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.ui.theme.TopBarScheme
 import com.razvanberchez.proiectlicenta.view.screen.NavGraphs
 import com.razvanberchez.proiectlicenta.view.screen.destinations.LoginScreenDestination
 
@@ -27,15 +27,11 @@ fun TopBar(
     title: String,
     hasBackButton: Boolean = false,
     navigator: DestinationsNavigator,
-    hasLogoutButton: Boolean = true
+    hasLogoutButton: Boolean = true,
+    colors: TopAppBarColors = TopBarScheme.topBarColors()
 ) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-        ),
+        colors = colors,
         title = {
             Text(
                 text = title,
