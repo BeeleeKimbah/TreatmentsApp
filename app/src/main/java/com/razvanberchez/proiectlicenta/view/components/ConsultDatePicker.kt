@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
@@ -25,7 +26,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.format
+import com.razvanberchez.proiectlicenta.presentation.getDateWithoutTime
+import com.razvanberchez.proiectlicenta.presentation.getNextDay
+import com.razvanberchez.proiectlicenta.presentation.getYearOfNextDay
 import java.util.Date
+
+@OptIn(ExperimentalMaterial3Api::class)
+class SelectableConsultDates: SelectableDates {
+    override fun isSelectableYear(year: Int): Boolean {
+        return year >= Date().getYearOfNextDay()
+    }
+
+    override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+        return utcTimeMillis >= Date().getNextDay().getDateWithoutTime().time
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +54,8 @@ fun ConsultDatePicker(
     }
 
     val state = rememberDatePickerState(
-        initialSelectedDateMillis = selectedDate.time
+        initialSelectedDateMillis = selectedDate.time,
+        selectableDates = SelectableConsultDates()
     )
 
     OutlinedTextField(

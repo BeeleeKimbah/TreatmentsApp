@@ -4,6 +4,7 @@ import com.razvanberchez.proiectlicenta.data.model.Medic
 import com.razvanberchez.proiectlicenta.data.model.MedicListItem
 import com.razvanberchez.proiectlicenta.data.model.TimeSlot
 import com.razvanberchez.proiectlicenta.presentation.getDateWithoutTime
+import com.razvanberchez.proiectlicenta.presentation.getNextDay
 import java.util.Date
 
 data class AddConsultScreenViewState(
@@ -11,7 +12,7 @@ data class AddConsultScreenViewState(
     val loading: Boolean = true,
     val selectedMedic: Medic? = null,
     val intervalPickEnabled: Boolean = false,
-    val selectedDate: Date = Date().getDateWithoutTime(),
+    val selectedDate: Date = Date().getNextDay().getDateWithoutTime(),
     val selectedTime: TimeSlot = TimeSlot(0, 0),
     val availableIntervals: List<TimeSlot> = listOf(),
     val addedSession: Boolean = false,

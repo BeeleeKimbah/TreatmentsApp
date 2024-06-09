@@ -43,3 +43,16 @@ fun Date.getDateWithoutTime(): Date {
     cal.set(Calendar.MILLISECOND, 0)
     return Date(cal.time.time + timeZoneOffset())
 }
+
+fun Date.getNextDay(): Date {
+    val cal = GregorianCalendar()
+    cal.time = Date(this.time)
+    cal.add(Calendar.DATE, 1)
+    return Date(cal.time.time + timeZoneOffset())
+}
+
+fun Date.getYearOfNextDay(): Int {
+    val cal = GregorianCalendar()
+    cal.time = this.getNextDay()
+    return cal.get(Calendar.YEAR)
+}
