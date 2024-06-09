@@ -102,6 +102,7 @@ fun LoginScreenContent(
         }
 
         is AuthState.LoggedIn -> {
+            onIntent(LoginScreenIntent.SetAppTheme)
             navigator.navigate(
                 direction = SessionsScreenDestination
             ) {

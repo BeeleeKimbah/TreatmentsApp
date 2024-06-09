@@ -1,7 +1,6 @@
 package com.razvanberchez.proiectlicenta.ui.theme
 
 import android.app.Activity
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -213,7 +212,7 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = ThemeSelector.selectTheme(),
     // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
 ) {

@@ -17,6 +17,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
+import com.razvanberchez.proiectlicenta.presentation.intent.AppTheme
+import com.razvanberchez.proiectlicenta.ui.theme.ThemeSelector
 import com.razvanberchez.proiectlicenta.ui.theme.TopBarScheme
 import com.razvanberchez.proiectlicenta.view.screen.NavGraphs
 import com.razvanberchez.proiectlicenta.view.screen.destinations.LoginScreenDestination
@@ -57,6 +59,7 @@ fun TopBar(
                 IconButton(
                     onClick = {
                         Firebase.auth.signOut()
+                        ThemeSelector.setTheme(AppTheme.SYSTEM)
                         navigator.navigate(direction = LoginScreenDestination) {
                             popUpTo(route = NavGraphs.root.route) {
                                 inclusive = true

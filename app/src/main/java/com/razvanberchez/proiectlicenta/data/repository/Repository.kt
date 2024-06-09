@@ -1,5 +1,7 @@
 package com.razvanberchez.proiectlicenta.data.repository
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.auth
@@ -31,7 +33,7 @@ class Repository {
                 medicList.add(MedicListItem.fromDocumentSnapshot(document))
             }
         }.addOnFailureListener {
-            println(it.stackTrace)
+            Log.w(TAG, "Error fetching medic list")
         }.await()
 
         return medicList.toList()
@@ -43,7 +45,7 @@ class Repository {
         db.collection("medics").document(medicId).get().addOnSuccessListener { document ->
             medic = Medic.fromDocumentSnapshot(document)
         }.addOnFailureListener {
-            println(it.stackTrace)
+            Log.w(TAG, "Error fetching medic details")
         }.await()
 
         return medic
@@ -59,7 +61,9 @@ class Repository {
                         "score" to score.value
                     )
                 )
-            )
+            ).addOnFailureListener {
+                Log.w(TAG, "Error adding review")
+            }
             .await()
     }
 
@@ -76,7 +80,7 @@ class Repository {
                         sessions.add(Session.fromDocumentSnapshot(document))
                     }
                 }.addOnFailureListener {
-                    println(it.stackTrace)
+                    Log.w(TAG, "Error fetching session list")
                 }.await()
         }
 
@@ -95,7 +99,7 @@ class Repository {
                 .get().addOnSuccessListener { result ->
                     session = Session.fromDocumentSnapshot(result)
                 }.addOnFailureListener {
-                    println(it.stackTrace)
+                    Log.w(TAG, "Error fetching session details")
                 }.await()
         }
 
@@ -122,7 +126,7 @@ class Repository {
                     slots.remove(TimeSlot(hour, minute))
                 }
             }.addOnFailureListener {
-                println(it.stackTrace)
+                Log.w(TAG, "Error fetching timeslots")
             }.await()
 
         return slots.toList()
@@ -165,6 +169,7 @@ class Repository {
                     )
                 ).addOnFailureListener {
                     success = false
+                    Log.w(TAG, "Error adding session")
                 }.await()
         }
         return success
@@ -179,5 +184,40 @@ class Repository {
                 "theme" to AppTheme.SYSTEM
             )
         ).await()
+    }
+
+    suspend fun getUserSettings(): Map<String, Any> {
+        val currentUser = auth.currentUser
+        var settings: Map<String, Any> = hashMapOf()
+
+        if (currentUser != null) {
+            db.collection("users")
+                .document(currentUser.uid)
+                .get().addOnSuccessListener {
+                    settings = hashMapOf(
+                        "notifications" to (it.get("notifications") as Boolean),
+                        "treatmentNotifications" to (it.get("treatmentNotifications") as Boolean),
+                        "appointmentNotifications" to (it.get("appointmentNotifications") as Boolean),
+                        "theme" to (AppTheme.fromString(it.get("theme") as String))
+                    )
+                }.addOnFailureListener {
+                    Log.w(TAG, "Error fetching user settings")
+                }.await()
+        }
+
+        return settings
+    }
+
+    suspend fun updateUserSettings(newSettings: Map<String, Any>){
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) {
+            db.collection("users")
+                .document(currentUser.uid)
+                .update(newSettings)
+                .await()
+
+            Log.d(TAG, "UPDATED SETTINGS WITH $newSettings")
+        }
     }
 }

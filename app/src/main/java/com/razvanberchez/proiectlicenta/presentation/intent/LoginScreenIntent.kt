@@ -7,4 +7,5 @@ sealed class LoginScreenIntent {
     data class SetLoggedIn(val authState: AuthState) : LoginScreenIntent()
     data class ModifyEmail(val newEmail: String) : LoginScreenIntent()
     data class ModifyPassword(val newPassword: String) : LoginScreenIntent()
+    data object SetAppTheme : LoginScreenIntent()
 }
