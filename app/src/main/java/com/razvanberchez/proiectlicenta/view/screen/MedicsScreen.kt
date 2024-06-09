@@ -83,12 +83,7 @@ fun MedicsScreenContent(
                 items(viewState.medics) { medic ->
                     Column(
                         modifier = Modifier
-                            .padding(
-                                top = dimensionResource(R.dimen.card_padding)
-                            )
-                            .padding(
-                                horizontal = dimensionResource(R.dimen.card_padding)
-                            )
+                            .padding(dimensionResource(R.dimen.card_padding))
                             .clickable {
                                 navigator.navigate(
                                     direction = MedicDetailsScreenDestination(

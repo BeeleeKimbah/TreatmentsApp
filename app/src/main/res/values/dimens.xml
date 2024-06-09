@@ -20,5 +20,4 @@
     <dimen name="circular_progress_indicator_size">80.dp</dimen>
     <dimen name="validation_error_fontsize">14.sp</dimen>
     <dimen name="timeslot_padding">8.dp</dimen>
-    <dimen name="timeslot_grid_bottom_padding">112.dp</dimen>
 </resources>

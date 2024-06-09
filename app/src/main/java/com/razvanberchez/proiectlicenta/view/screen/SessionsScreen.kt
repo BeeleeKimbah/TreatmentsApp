@@ -3,6 +3,7 @@ package com.razvanberchez.proiectlicenta.view.screen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -107,12 +108,7 @@ fun SessionsScreenContent(
                 items(viewState.sessions) { session ->
                     Column(
                         modifier = Modifier
-                            .padding(
-                                top = dimensionResource(R.dimen.card_padding)
-                            )
-                            .padding(
-                                horizontal = dimensionResource(R.dimen.card_padding)
-                            )
+                            .padding(dimensionResource(R.dimen.card_padding))
                             .clickable {
                                 navigator.navigate(
                                     direction = SessionDetailsScreenDestination(
@@ -162,6 +158,15 @@ fun SessionsScreenContent(
                             }
                         }
                     }
+                }
+
+                item {
+                    Spacer(
+                        modifier = modifier.height(
+                            dimensionResource(R.dimen.button_size)
+                            + dimensionResource(R.dimen.ui_elem_padding)
+                        )
+                    )
                 }
             }
         }

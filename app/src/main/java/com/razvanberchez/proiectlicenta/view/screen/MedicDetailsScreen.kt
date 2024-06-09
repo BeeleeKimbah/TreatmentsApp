@@ -1,5 +1,6 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -249,8 +250,7 @@ fun MedicDetailsScreenContent(
                         Card(
                             modifier = modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = dimensionResource(R.dimen.card_padding))
-                                .padding(top = dimensionResource(R.dimen.card_padding)),
+                                .padding(dimensionResource(R.dimen.card_padding)),
                             colors = CardScheme.cardColors(),
                             elevation = CardScheme.cardElevation()
                         ) {
@@ -271,6 +271,15 @@ fun MedicDetailsScreenContent(
                             )
                         }
                     }
+                }
+
+                item {
+                    Spacer(
+                        modifier = modifier.height(
+                            dimensionResource(R.dimen.button_size)
+                            + dimensionResource(R.dimen.ui_elem_padding)
+                        )
+                    )
                 }
             }
         }
