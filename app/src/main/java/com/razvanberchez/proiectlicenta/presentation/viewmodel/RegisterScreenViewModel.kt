@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.razvanberchez.proiectlicenta.data.repository.Repository
 import com.razvanberchez.proiectlicenta.presentation.intent.RegisterScreenIntent
 import com.razvanberchez.proiectlicenta.view.viewstate.RegisterScreenViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,10 +12,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterScreenViewModel @Inject constructor() : ViewModel() {
+class RegisterScreenViewModel @Inject constructor(
+    val repository: Repository
+) : ViewModel() {
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
     private val _confirmPassword = MutableStateFlow("")
@@ -71,6 +75,10 @@ class RegisterScreenViewModel @Inject constructor() : ViewModel() {
         auth.createUserWithEmailAndPassword(_email.value, _password.value)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    val userId = task.result.user?.uid!!
+                    viewModelScope.launch {
+                        repository.addUser(userId)
+                    }
                     _viewState.value = _viewState.value.copy(
                         registered = true
                     )

@@ -13,6 +13,7 @@ import com.razvanberchez.proiectlicenta.data.model.TimeSlot
 import com.razvanberchez.proiectlicenta.data.model.allSlots
 import com.razvanberchez.proiectlicenta.presentation.DAY_MILLIS
 import com.razvanberchez.proiectlicenta.presentation.addTimeSlot
+import com.razvanberchez.proiectlicenta.presentation.intent.AppTheme
 import com.razvanberchez.proiectlicenta.presentation.toUTC
 import kotlinx.coroutines.tasks.await
 import java.util.Calendar
@@ -167,5 +168,16 @@ class Repository {
                 }.await()
         }
         return success
+    }
+
+    suspend fun addUser(userId: String) {
+        db.collection("users").document(userId).set(
+            hashMapOf(
+                "notifications" to true,
+                "treatmentNotifications" to true,
+                "appointmentNotifications" to true,
+                "theme" to AppTheme.SYSTEM
+            )
+        ).await()
     }
 }
