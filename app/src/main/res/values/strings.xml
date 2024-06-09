@@ -3,7 +3,7 @@
     <string name="menu_item_MySessions">Sesiuni</string>
     <string name="menu_item_Medics">Medici</string>
     <string name="menu_item_Settings">Setări</string>
-    <string name="menu_item_Logout">Deconectare</string>
+    <string name="button_text_logout">Deconectare</string>
     <string name="button_NewSession">Sesiune nouă</string>
     <string name="session_list_Medic">Medic: %1$s</string>
     <string name="session_list_consultDate">Dată consult: %1$s</string>
@@ -50,4 +50,7 @@
     <string name="button_text_add_session">Adaugă sesiune</string>
     <string name="error_adding_session">Adăugarea sesiunii a eșuat. Vă rugăm să încercați din nou.</string>
     <string name="settings_header_theme">Tema aplicației</string>
+    <string name="theme_select_light">Luminos</string>
+    <string name="theme_select_dark">Întunecat</string>
+    <string name="theme_select_system">Implicit</string>
 </resources>

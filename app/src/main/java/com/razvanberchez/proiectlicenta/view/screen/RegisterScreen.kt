@@ -85,8 +85,7 @@ fun RegisterScreenContent(
             TopBar(
                 title = stringResource(R.string.button_text_register),
                 hasBackButton = true,
-                navigator = navigator,
-                hasLogoutButton = false
+                navigator = navigator
             )
         }
     ) { values ->
