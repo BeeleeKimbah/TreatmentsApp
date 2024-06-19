@@ -41,6 +41,7 @@ import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.PullDownToRefreshBox
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.AddConsultScreenDestination
+import com.razvanberchez.proiectlicenta.view.screen.destinations.AddTreatmentScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
 
 @RootNavGraph
@@ -93,11 +94,11 @@ fun SessionDetailsScreenContent(
                 if (medicSide) {
                     ExtendedFloatingActionButton(
                         onClick = {
-//                            navigator.navigate(
-//                                direction = AddConsultScreenDestination(
-//                                    medicId = viewState.session?.medicId
-//                                )
-//                            )
+                            navigator.navigate(
+                                direction = AddTreatmentScreenDestination(
+                                    sessionId = viewState.session?.sessionId ?: ""
+                                )
+                            )
                         },
                         modifier = modifier
                             .height(dimensionResource(R.dimen.button_size))
