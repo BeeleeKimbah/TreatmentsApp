@@ -5,9 +5,9 @@
     <string name="menu_item_Settings">Setări</string>
     <string name="button_text_logout">Deconectare</string>
     <string name="button_NewSession">Sesiune nouă</string>
-    <string name="session_list_Medic">Medic: %1$s</string>
-    <string name="session_list_consultDate">Dată consult: %1$s</string>
-    <string name="session_list_Diagnostic">Diagnostic: %1$s</string>
+    <string name="session_list_Medic">%1$s</string>
+    <string name="session_list_consultDate">%1$s</string>
+    <string name="session_list_Diagnostic">%1$s</string>
     <string name="text_welcome_back">Bine ai revenit!</string>
     <string name="text_login_message">Te rugăm să te autentifici</string>
     <string name="input_text_username">Nume utilizator</string>
@@ -53,4 +53,6 @@
     <string name="theme_select_light">Luminos</string>
     <string name="theme_select_dark">Întunecat</string>
     <string name="theme_select_system">Implicit</string>
+    <string name="register_full_name">Nume complet</string>
+    <string name="full_name_placeholder">ex. John Smith</string>
 </resources>

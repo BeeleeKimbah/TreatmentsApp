@@ -1,19 +1,25 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,7 +39,6 @@ import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.format
 import com.razvanberchez.proiectlicenta.presentation.intent.SessionsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.SessionsScreenViewModel
-import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.PullDownToRefreshBox
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.AddConsultScreenDestination
@@ -110,7 +116,6 @@ fun SessionsScreenContent(
                 items(viewState.sessions) { session ->
                     Column(
                         modifier = Modifier
-                            .padding(dimensionResource(R.dimen.card_padding))
                             .clickable {
                                 navigator.navigate(
                                     direction = SessionDetailsScreenDestination(
@@ -120,45 +125,45 @@ fun SessionsScreenContent(
                             }
                             .fillMaxWidth()
                     ) {
-                        Card(
-                            modifier = modifier
-                                .fillMaxWidth(),
-                            colors = CardScheme.cardColors(),
-                            elevation = CardScheme.cardElevation()
-                        ) {
-                            Text(
+                        ListItem(
+                            shadowElevation = 10.dp,
+                            tonalElevation = 10.dp,
+                            headlineContent = { Text(
                                 modifier = modifier.padding(
                                     horizontal = dimensionResource(R.dimen.card_text_padding)
                                 ),
-                                text = stringResource(
-                                    R.string.session_list_Medic,
-                                    session.medicName
-                                ),
+                                text = session.medicName,
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                            )
-                            Text(
+                            ) },
+                            overlineContent = { Text(
                                 modifier = modifier.padding(
                                     horizontal = dimensionResource(R.dimen.card_text_padding)
                                 ),
-                                text = stringResource(
-                                    R.string.session_list_consultDate,
-                                    session.consultDate.format()
-                                ),
+                                text = session.consultDate.format(),
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                            )
-                            if (session.diagnostic != null) {
+                            ) },
+                            supportingContent = { if (session.diagnostic != null) {
                                 Text(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = stringResource(
-                                        R.string.session_list_Diagnostic,
-                                        session.diagnostic
-                                    ),
+                                    text = session.diagnostic,
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
+                            } },
+                            trailingContent = {
+                                Column (
+                                    modifier = modifier.fillMaxHeight(),
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.ChevronRight,
+                                        contentDescription = null
+                                    )
+                                }
                             }
-                        }
+                        )
+                        HorizontalDivider()
                     }
                 }
 

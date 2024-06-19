@@ -20,7 +20,7 @@ import com.razvanberchez.proiectlicenta.R
 @Composable
 fun StarRatingBar(
     maxStars: Int = 5,
-    rating: Int,
+    score: Int,
     onRatingChanged: (Int) -> Unit
 ) {
     val starSize = dimensionResource(R.dimen.review_star_size)
@@ -33,9 +33,17 @@ fun StarRatingBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 1..maxStars) {
-            val isSelected = i <= rating
-            val icon = if (isSelected) Icons.Filled.Star else Icons.Default.Star
-            val iconTintColor = if (isSelected) Color(0xFFFFC700) else Color(0x2000FFFF)
+            val isSelected = i <= score
+            val icon =
+                if (isSelected)
+                    Icons.Filled.Star
+                else
+                    Icons.Default.Star
+            val iconTintColor =
+                if (isSelected)
+                    Color(0xFFFFC700)
+                else
+                    Color(0x2000FFFF)
             Icon(
                 imageVector = icon,
                 contentDescription = null,

@@ -12,7 +12,7 @@ object ThemeSelector {
     private val themeState = MutableStateFlow(AppTheme.SYSTEM)
     val theme = themeState.asStateFlow()
     @Composable
-    fun selectTheme(): Boolean {
+    fun isDarkTheme(): Boolean {
         val t by theme.collectAsStateWithLifecycle()
 
         return when (t) {

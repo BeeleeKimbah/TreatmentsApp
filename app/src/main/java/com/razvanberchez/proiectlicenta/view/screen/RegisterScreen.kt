@@ -123,6 +123,29 @@ fun RegisterScreenContent(
                 onValueChange = { onIntent(RegisterScreenIntent.ModifyEmail(it)) },
                 label = {
                     Text(
+                        text = stringResource(R.string.register_full_name),
+                        fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
+                    )
+                },
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.full_name_placeholder),
+                        fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
+                    )
+                },
+                shape = ShapeDefaults.Medium,
+                maxLines = 1,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+            )
+            OutlinedTextField(
+                modifier = modifier
+                    .padding(top = dimensionResource(R.dimen.ui_elem_padding))
+                    .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
+                    .fillMaxWidth(),
+                value = viewState.email,
+                onValueChange = { onIntent(RegisterScreenIntent.ModifyEmail(it)) },
+                label = {
+                    Text(
                         text = stringResource(R.string.input_text_email),
                         fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
                     )

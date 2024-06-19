@@ -6,6 +6,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.razvanberchez.proiectlicenta.data.model.Medic
 import com.razvanberchez.proiectlicenta.data.model.MedicListItem
@@ -28,7 +29,9 @@ class Repository {
     suspend fun getMedics(): List<MedicListItem> {
         val medicList = mutableListOf<MedicListItem>()
 
-        db.collection("medics").get().addOnSuccessListener { result ->
+        db.collection("medics")
+            .orderBy("mainSpecialty")
+            .get().addOnSuccessListener { result ->
             for (document in result) {
                 medicList.add(MedicListItem.fromDocumentSnapshot(document))
             }
@@ -42,11 +45,13 @@ class Repository {
     suspend fun getMedic(medicId: String): Medic {
         var medic = Medic()
 
-        db.collection("medics").document(medicId).get().addOnSuccessListener { document ->
-            medic = Medic.fromDocumentSnapshot(document)
-        }.addOnFailureListener {
-            Log.w(TAG, "Error fetching medic details")
-        }.await()
+        db.collection("medics")
+            .document(medicId)
+            .get().addOnSuccessListener { document ->
+                medic = Medic.fromDocumentSnapshot(document)
+            }.addOnFailureListener {
+                Log.w(TAG, "Error fetching medic details")
+            }.await()
 
         return medic
     }
@@ -75,6 +80,7 @@ class Repository {
             db.collection("users")
                 .document(currentUser.uid)
                 .collection("sessions")
+                .orderBy("consultDate", Query.Direction.DESCENDING)
                 .get().addOnSuccessListener { result ->
                     for (document in result) {
                         sessions.add(Session.fromDocumentSnapshot(document))
@@ -147,6 +153,16 @@ class Repository {
 
         var success = true
         if (currentUser != null) {
+            var patientName = ""
+
+            db.collection("users")
+                .document(currentUser.uid)
+                .get().addOnSuccessListener { document ->
+                    patientName = document.get("name") as String
+                }.addOnFailureListener {
+                    Log.w(TAG, "Error fetching user details")
+                }.await()
+
             db.collection("users")
                 .document(currentUser.uid)
                 .collection("sessions")
@@ -155,6 +171,8 @@ class Repository {
                         "consultDate" to datetime,
                         "medicId" to selectedMedic.medicId,
                         "medicName" to selectedMedic.name,
+                        "patientId" to currentUser.uid,
+                        "patientName" to patientName
                     )
                 ).addOnFailureListener {
                     success = false
@@ -175,13 +193,15 @@ class Repository {
         return success
     }
 
-    suspend fun addUser(userId: String) {
+    suspend fun addUser(userId: String, userName: String) {
         db.collection("users").document(userId).set(
             hashMapOf(
                 "notifications" to true,
                 "treatmentNotifications" to true,
                 "appointmentNotifications" to true,
-                "theme" to AppTheme.SYSTEM
+                "theme" to AppTheme.SYSTEM,
+                "isMedic" to false,
+                "name" to userName
             )
         ).await()
     }
@@ -216,8 +236,23 @@ class Repository {
                 .document(currentUser.uid)
                 .update(newSettings)
                 .await()
-
-            Log.d(TAG, "UPDATED SETTINGS WITH $newSettings")
         }
+    }
+
+    suspend fun isMedic(): Boolean {
+        val currentUser = auth.currentUser
+        var res = false
+
+        if (currentUser != null) {
+            db.collection("users")
+                .document(currentUser.uid)
+                .get().addOnSuccessListener { document ->
+                    res = document.get("isMedic") as Boolean
+                }.addOnFailureListener {
+                    Log.w(TAG, "Error fetching user details")
+                }.await()
+        }
+
+        return res
     }
 }

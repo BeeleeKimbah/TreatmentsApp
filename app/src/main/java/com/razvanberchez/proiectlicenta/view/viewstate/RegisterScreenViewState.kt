@@ -2,6 +2,7 @@ package com.razvanberchez.proiectlicenta.view.viewstate
 
 data class RegisterScreenViewState(
     val registerButtonEnabled: Boolean = false,
+    val name: String = "",
     val email: String = "",
     val validEmail: Boolean = false,
     val password: String = "",

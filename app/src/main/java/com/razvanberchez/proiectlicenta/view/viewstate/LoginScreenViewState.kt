@@ -2,7 +2,8 @@ package com.razvanberchez.proiectlicenta.view.viewstate
 
 sealed class AuthState {
     data object Unknown : AuthState()
-    data object LoggedIn : AuthState()
+    data object LoggedInPatient : AuthState()
+    data object LoggedInMedic : AuthState()
     data object NotLoggedIn : AuthState()
 }
 

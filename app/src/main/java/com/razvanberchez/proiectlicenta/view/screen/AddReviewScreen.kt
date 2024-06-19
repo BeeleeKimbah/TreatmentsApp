@@ -177,7 +177,7 @@ fun AddReviewScreenContent(
 
                 StarRatingBar(
                     maxStars = 5,
-                    rating = viewState.score.value,
+                    score = viewState.score.value,
                     onRatingChanged = {
                         onIntent(
                             AddReviewScreenIntent

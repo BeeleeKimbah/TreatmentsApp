@@ -6,6 +6,8 @@ import java.util.Date
 
 @Suppress("UNCHECKED_CAST")
 class Session(
+    val patientId: String = "",
+    val patientName: String = "",
     val sessionId: String = "",
     val consultDate: Date = Date(),
     val medicName: String = "",
@@ -31,7 +33,9 @@ class Session(
                         applications = (it["applications"] as Long).toInt(),
                         startDate = (it["startDate"] as Timestamp).toDate()
                     )
-                } ?: listOf()
+                } ?: listOf(),
+                patientId = doc.get("patientId") as String,
+                patientName = doc.get("patientName") as String
             )
         }
     }

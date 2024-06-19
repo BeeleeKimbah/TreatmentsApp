@@ -1,15 +1,21 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,7 +34,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.intent.MedicsScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.MedicsScreenViewModel
-import com.razvanberchez.proiectlicenta.ui.theme.CardScheme
 import com.razvanberchez.proiectlicenta.view.components.PullDownToRefreshBox
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicDetailsScreenDestination
@@ -85,7 +91,6 @@ fun MedicsScreenContent(
                 items(viewState.medics) { medic ->
                     Column(
                         modifier = Modifier
-                            .padding(dimensionResource(R.dimen.card_padding))
                             .clickable {
                                 navigator.navigate(
                                     direction = MedicDetailsScreenDestination(
@@ -95,33 +100,24 @@ fun MedicsScreenContent(
                             }
                             .fillMaxWidth()
                     ) {
-                        Card(
-                            modifier = modifier
-                                .fillMaxWidth(),
-                            colors = CardScheme.cardColors(),
-                            elevation = CardScheme.cardElevation()
-                        ) {
-                            Text(
+                        ListItem(
+                            shadowElevation = 10.dp,
+                            tonalElevation = 10.dp,
+                            headlineContent = { Text(
                                 modifier = modifier.padding(
                                     horizontal = dimensionResource(R.dimen.card_text_padding)
                                 ),
-                                text = stringResource(
-                                    R.string.medic_details_name,
-                                    medic.name
-                                ),
+                                text = medic.name,
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                            )
-                            Text(
+                            ) },
+                            overlineContent = { Text(
                                 modifier = modifier.padding(
                                     horizontal = dimensionResource(R.dimen.card_text_padding)
                                 ),
-                                text = stringResource(
-                                    R.string.medic_list_main_specialty,
-                                    medic.mainSpecialty
-                                ),
+                                text = medic.mainSpecialty,
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                            )
-                            Text(
+                            ) },
+                            supportingContent = { Text(
                                 modifier = modifier.padding(
                                     horizontal = dimensionResource(R.dimen.card_text_padding)
                                 ),
@@ -133,8 +129,20 @@ fun MedicsScreenContent(
                                         "-"
                                 ),
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
-                            )
-                        }
+                            ) },
+                            trailingContent = {
+                                Column (
+                                    modifier = modifier.fillMaxHeight(),
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.ChevronRight,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                        )
+                        HorizontalDivider()
                     }
                 }
             }

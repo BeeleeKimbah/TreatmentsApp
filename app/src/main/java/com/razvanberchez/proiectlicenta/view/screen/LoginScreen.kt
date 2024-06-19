@@ -65,7 +65,7 @@ fun LoginScreen(
 ) {
     Firebase.auth.addAuthStateListener {
         if (it.currentUser != null) {
-            viewModel.onIntent(LoginScreenIntent.SetLoggedIn(AuthState.LoggedIn))
+            viewModel.onIntent(LoginScreenIntent.SetLoggedIn())
         } else {
             viewModel.onIntent(LoginScreenIntent.SetLoggedIn(AuthState.NotLoggedIn))
         }
@@ -101,7 +101,7 @@ fun LoginScreenContent(
             }
         }
 
-        is AuthState.LoggedIn -> {
+        is AuthState.LoggedInPatient -> {
             onIntent(LoginScreenIntent.SetAppTheme)
             navigator.navigate(
                 direction = SessionsScreenDestination
@@ -110,6 +110,10 @@ fun LoginScreenContent(
                     inclusive = true
                 }
             }
+        }
+
+        is AuthState.LoggedInMedic -> {
+            Firebase.auth.signOut()
         }
 
         is AuthState.NotLoggedIn -> {

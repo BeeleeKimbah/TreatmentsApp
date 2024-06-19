@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.razvanberchez.proiectlicenta.data.repository.Repository
+import com.razvanberchez.proiectlicenta.presentation.EmailValidator
 import com.razvanberchez.proiectlicenta.presentation.intent.AppTheme
 import com.razvanberchez.proiectlicenta.presentation.intent.LoginScreenIntent
 import com.razvanberchez.proiectlicenta.ui.theme.ThemeSelector
@@ -31,8 +32,7 @@ class LoginScreenViewModel @Inject constructor(
 
     init {
         combine(_email, _password) { email, password ->
-            // TODO: validate email properly
-            val validEmail = email.length >= 8
+            val validEmail = EmailValidator.isValidEmail(email)
             val validPassword = password.length >= 8
             _viewState.value = _viewState.value.copy(
                 validUsername = validEmail,
@@ -42,7 +42,7 @@ class LoginScreenViewModel @Inject constructor(
                 password = password,
                 // TODO: Extract string resources for error messages
                 errorMessage = if (!validEmail) "Adresa de email nu este validă"
-                else if (!validPassword) "Parola trebuie să conțină cel puțin 8 caractere, o literă și o cifră"
+                else if (!validPassword) "Parola este prea scurtă"
                 else null
             )
         }.launchIn(viewModelScope)
@@ -65,19 +65,31 @@ class LoginScreenViewModel @Inject constructor(
         }
     }
 
-    private fun setLoggedIn(authState: AuthState) {
-        _viewState.value = _viewState.value.copy(
-            authState = authState
-        )
+    private fun setLoggedIn(authState: AuthState? = null) {
+        if (authState != null) {
+            _viewState.value = _viewState.value.copy(
+                authState = authState
+            )
+        } else {
+            viewModelScope.launch {
+                if (repository.isMedic()) {
+                    _viewState.value = _viewState.value.copy(
+                        authState = AuthState.LoggedInMedic
+                    )
+                } else {
+                    _viewState.value = _viewState.value.copy(
+                        authState = AuthState.LoggedInPatient
+                    )
+                }
+            }
+        }
     }
 
     private fun login() {
         auth.signInWithEmailAndPassword(_email.value, _password.value)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    _viewState.value = _viewState.value.copy(
-                        authState = AuthState.LoggedIn
-                    )
+                    setLoggedIn()
                 } else {
                     _viewState.value = _viewState.value.copy(
                         errorMessage = "Autentificare eșuată"

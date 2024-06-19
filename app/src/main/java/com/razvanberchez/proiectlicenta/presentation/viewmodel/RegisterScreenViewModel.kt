@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.razvanberchez.proiectlicenta.data.repository.Repository
+import com.razvanberchez.proiectlicenta.presentation.EmailValidator
 import com.razvanberchez.proiectlicenta.presentation.intent.RegisterScreenIntent
 import com.razvanberchez.proiectlicenta.view.viewstate.RegisterScreenViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class RegisterScreenViewModel @Inject constructor(
     val repository: Repository
 ) : ViewModel() {
+    private val _name = MutableStateFlow("")
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
     private val _confirmPassword = MutableStateFlow("")
@@ -29,15 +31,16 @@ class RegisterScreenViewModel @Inject constructor(
 
     init {
         combine(
+            _name,
             _email,
             _password,
             _confirmPassword
-        ) { email, password, confirmPassword ->
-            // TODO: proper validations
+        ) { name, email, password, confirmPassword ->
             val validPassword = password.length >= 8
-            val validEmail = email.length >= 8
+            val validEmail = EmailValidator.isValidEmail(email)
             val passwordsMatch = password == confirmPassword
             _viewState.value = _viewState.value.copy(
+                name = name,
                 email = email,
                 password = password,
                 confirmPassword = confirmPassword,
@@ -45,11 +48,12 @@ class RegisterScreenViewModel @Inject constructor(
                 validEmail = validEmail,
                 passwordsMatch = passwordsMatch,
                 registerButtonEnabled =
-                validPassword && passwordsMatch && validEmail,
+                validPassword && passwordsMatch && validEmail && name.isNotEmpty(),
                 errorMessage =
                 if (!validEmail) "Adresa de email nu este validă"
-                else if (!validPassword) "Parola trebuie să conțină cel puțin 8 caractere, o literă și o cifră"
+                else if (!validPassword) "Parola este prea scurtă"
                 else if (!passwordsMatch) "Parolele nu se potrivesc"
+                else if (name.isEmpty()) "Introduceți numele"
                 else null
             )
         }.launchIn(viewModelScope)
@@ -68,7 +72,14 @@ class RegisterScreenViewModel @Inject constructor(
 
             is RegisterScreenIntent.Register ->
                 register()
+
+            is RegisterScreenIntent.ModifyName ->
+                modifyName(intent.newName)
         }
+    }
+
+    private fun modifyName(newName: String) {
+        _name.value = newName
     }
 
     private fun register() {
@@ -77,7 +88,7 @@ class RegisterScreenViewModel @Inject constructor(
                 if (task.isSuccessful) {
                     val userId = task.result.user?.uid!!
                     viewModelScope.launch {
-                        repository.addUser(userId)
+                        repository.addUser(userId, _name.value)
                     }
                     _viewState.value = _viewState.value.copy(
                         registered = true
