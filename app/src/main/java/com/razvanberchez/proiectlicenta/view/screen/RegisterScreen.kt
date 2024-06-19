@@ -119,8 +119,8 @@ fun RegisterScreenContent(
                     .padding(top = dimensionResource(R.dimen.ui_elem_padding))
                     .padding(horizontal = dimensionResource(R.dimen.ui_elem_padding))
                     .fillMaxWidth(),
-                value = viewState.email,
-                onValueChange = { onIntent(RegisterScreenIntent.ModifyEmail(it)) },
+                value = viewState.name,
+                onValueChange = { onIntent(RegisterScreenIntent.ModifyName(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.register_full_name),

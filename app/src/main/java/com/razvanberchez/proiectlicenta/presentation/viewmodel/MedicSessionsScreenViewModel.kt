@@ -3,8 +3,8 @@ package com.razvanberchez.proiectlicenta.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.razvanberchez.proiectlicenta.data.repository.Repository
-import com.razvanberchez.proiectlicenta.presentation.intent.SessionsScreenIntent
-import com.razvanberchez.proiectlicenta.view.viewstate.SessionsScreenViewState
+import com.razvanberchez.proiectlicenta.presentation.intent.MedicSessionsScreenIntent
+import com.razvanberchez.proiectlicenta.view.viewstate.MedicSessionsScreenViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SessionsScreenViewModel @Inject constructor(
+class MedicSessionsScreenViewModel@Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    private val _viewState = MutableStateFlow(SessionsScreenViewState())
+    private val _viewState = MutableStateFlow(MedicSessionsScreenViewState())
     val viewState = _viewState.asStateFlow()
 
     init {
@@ -24,9 +24,9 @@ class SessionsScreenViewModel @Inject constructor(
         }
     }
 
-    fun onIntent(intent: SessionsScreenIntent) {
+    fun onIntent(intent: MedicSessionsScreenIntent) {
         when (intent) {
-            is SessionsScreenIntent.Refresh -> loadSessions()
+            is MedicSessionsScreenIntent.Refresh -> loadSessions()
         }
     }
 
@@ -35,7 +35,7 @@ class SessionsScreenViewModel @Inject constructor(
             loading = true
         )
         viewModelScope.launch {
-            val sessions = repository.getSessions(false)
+            val sessions = repository.getSessions(true)
 
             _viewState.value = _viewState.value.copy(
                 sessions = sessions,

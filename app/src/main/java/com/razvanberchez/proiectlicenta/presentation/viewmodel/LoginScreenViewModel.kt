@@ -6,7 +6,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.razvanberchez.proiectlicenta.data.repository.Repository
 import com.razvanberchez.proiectlicenta.presentation.EmailValidator
-import com.razvanberchez.proiectlicenta.presentation.intent.AppTheme
 import com.razvanberchez.proiectlicenta.presentation.intent.LoginScreenIntent
 import com.razvanberchez.proiectlicenta.ui.theme.ThemeSelector
 import com.razvanberchez.proiectlicenta.view.viewstate.AuthState
@@ -60,7 +59,7 @@ class LoginScreenViewModel @Inject constructor(
 
     private fun setAppTheme() {
         viewModelScope.launch {
-            val theme = repository.getUserSettings()["theme"] as AppTheme
+            val theme = repository.getUserTheme()
             ThemeSelector.setTheme(theme)
         }
     }

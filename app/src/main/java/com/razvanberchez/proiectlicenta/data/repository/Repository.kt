@@ -72,22 +72,36 @@ class Repository {
             .await()
     }
 
-    suspend fun getSessions(): List<Session> {
+    suspend fun getSessions(isMedic: Boolean): List<Session> {
         val sessions = mutableListOf<Session>()
         val currentUser = auth.currentUser
 
         if (currentUser != null) {
-            db.collection("users")
-                .document(currentUser.uid)
-                .collection("sessions")
-                .orderBy("consultDate", Query.Direction.DESCENDING)
-                .get().addOnSuccessListener { result ->
-                    for (document in result) {
-                        sessions.add(Session.fromDocumentSnapshot(document))
-                    }
-                }.addOnFailureListener {
-                    Log.w(TAG, "Error fetching session list")
-                }.await()
+            if (isMedic) {
+                db.collection("medics")
+                    .document(currentUser.uid)
+                    .collection("sessions")
+                    .orderBy("consultDate", Query.Direction.DESCENDING)
+                    .get().addOnSuccessListener { result ->
+                        for (document in result) {
+                            sessions.add(Session.fromDocumentSnapshot(document))
+                        }
+                    }.addOnFailureListener {
+                        Log.w(TAG, "Error fetching session list")
+                    }.await()
+            } else {
+                db.collection("users")
+                    .document(currentUser.uid)
+                    .collection("sessions")
+                    .orderBy("consultDate", Query.Direction.DESCENDING)
+                    .get().addOnSuccessListener { result ->
+                        for (document in result) {
+                            sessions.add(Session.fromDocumentSnapshot(document))
+                        }
+                    }.addOnFailureListener {
+                        Log.w(TAG, "Error fetching session list")
+                    }.await()
+            }
         }
 
         return sessions.toList()
@@ -160,6 +174,7 @@ class Repository {
                 .get().addOnSuccessListener { document ->
                     patientName = document.get("name") as String
                 }.addOnFailureListener {
+                    success = false
                     Log.w(TAG, "Error fetching user details")
                 }.await()
 
@@ -176,6 +191,23 @@ class Repository {
                     )
                 ).addOnFailureListener {
                     success = false
+                    Log.w(TAG, "Error adding session")
+                }.await()
+
+            db.collection("medics")
+                .document(selectedMedic.medicId)
+                .collection("sessions")
+                .add(
+                    hashMapOf(
+                        "consultDate" to datetime,
+                        "medicId" to selectedMedic.medicId,
+                        "medicName" to selectedMedic.name,
+                        "patientId" to currentUser.uid,
+                        "patientName" to patientName
+                    )
+                ).addOnFailureListener {
+                    success = false
+                    Log.w(TAG, "Error adding session")
                 }.await()
 
             db.collection("medics")
@@ -204,6 +236,23 @@ class Repository {
                 "name" to userName
             )
         ).await()
+    }
+
+    suspend fun getUserTheme(): AppTheme {
+        val currentUser = auth.currentUser
+        var theme = AppTheme.SYSTEM
+
+        if (currentUser != null) {
+            db.collection("users")
+                .document(currentUser.uid)
+                .get().addOnSuccessListener {
+                    theme = (AppTheme.fromString(it.get("theme") as String))
+                }.addOnFailureListener {
+                    Log.w(TAG, "Error fetching user theme")
+                }.await()
+        }
+
+        return theme
     }
 
     suspend fun getUserSettings(): Map<String, Any> {

@@ -11,10 +11,12 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.razvanberchez.proiectlicenta.ui.theme.AppTheme
 import com.razvanberchez.proiectlicenta.view.components.BottomBar
+import com.razvanberchez.proiectlicenta.view.screen.MedicSessionsScreen
 import com.razvanberchez.proiectlicenta.view.screen.MedicsScreen
 import com.razvanberchez.proiectlicenta.view.screen.NavGraphs
 import com.razvanberchez.proiectlicenta.view.screen.SessionsScreen
 import com.razvanberchez.proiectlicenta.view.screen.SettingsScreen
+import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicSessionsScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicsScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SettingsScreenDestination
@@ -53,6 +55,12 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(SettingsScreenDestination) {
                                 SettingsScreen(
+                                    bottomBarPaddingValues = values,
+                                    navigator = destinationsNavigator
+                                )
+                            }
+                            composable(MedicSessionsScreenDestination) {
+                                MedicSessionsScreen(
                                     bottomBarPaddingValues = values,
                                     navigator = destinationsNavigator
                                 )

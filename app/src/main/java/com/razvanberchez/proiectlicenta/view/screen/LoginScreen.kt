@@ -50,6 +50,7 @@ import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.intent.LoginScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.LoginScreenViewModel
 import com.razvanberchez.proiectlicenta.view.screen.destinations.LoginScreenDestination
+import com.razvanberchez.proiectlicenta.view.screen.destinations.MedicSessionsScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.RegisterScreenDestination
 import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionsScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.AuthState
@@ -113,7 +114,14 @@ fun LoginScreenContent(
         }
 
         is AuthState.LoggedInMedic -> {
-            Firebase.auth.signOut()
+            onIntent(LoginScreenIntent.SetAppTheme)
+            navigator.navigate(
+                direction = MedicSessionsScreenDestination
+            ) {
+                popUpTo(route = LoginScreenDestination.route) {
+                    inclusive = true
+                }
+            }
         }
 
         is AuthState.NotLoggedIn -> {
