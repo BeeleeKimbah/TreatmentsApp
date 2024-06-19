@@ -46,6 +46,7 @@ import com.razvanberchez.proiectlicenta.ui.theme.ThemeSelector
 import com.razvanberchez.proiectlicenta.view.components.PullDownToRefreshBox
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.screen.destinations.LoginScreenDestination
+import com.razvanberchez.proiectlicenta.view.screen.destinations.SessionDetailsScreenDestination
 import com.razvanberchez.proiectlicenta.view.viewstate.MedicSessionsScreenViewState
 
 @RootNavGraph
@@ -101,11 +102,12 @@ fun MedicSessionsScreenContent(
                     Column(
                         modifier = Modifier
                             .clickable {
-//                                navigator.navigate(
-//                                    direction = SessionDetailsScreenDestination(
-//                                        sessionId = session.sessionId
-//                                    )
-//                                )
+                                navigator.navigate(
+                                    direction = SessionDetailsScreenDestination(
+                                        sessionId = session.sessionId,
+                                        medicSide = true
+                                    )
+                                )
                             }
                             .fillMaxWidth()
                     ) {

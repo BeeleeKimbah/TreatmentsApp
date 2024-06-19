@@ -2,6 +2,7 @@ package com.razvanberchez.proiectlicenta.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.razvanberchez.proiectlicenta.data.model.Treatment
 import com.razvanberchez.proiectlicenta.data.repository.Repository
 import com.razvanberchez.proiectlicenta.presentation.intent.SessionDetailsScreenIntent
 import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewState
@@ -30,6 +31,30 @@ class SessionDetailsScreenViewModel @AssistedInject constructor(
     fun onIntent(intent: SessionDetailsScreenIntent) {
         when (intent) {
             is SessionDetailsScreenIntent.Refresh -> loadSessionDetails()
+            is SessionDetailsScreenIntent.RemoveTreatment -> removeTreatment(intent.treatment)
+        }
+    }
+
+    private fun removeTreatment(treatment: Treatment) {
+        _viewState.value = _viewState.value.copy(
+            loading = true
+        )
+        viewModelScope.launch {
+            repository.removeTreatment(
+                sessionId,
+                _viewState.value.session?.patientId ?: "",
+                treatment
+            )
+
+            val session = repository.getSession(
+                sessionId,
+                repository.isMedic()
+            )
+
+            _viewState.value = _viewState.value.copy(
+                session = session,
+                loading = false
+            )
         }
     }
 
@@ -38,7 +63,10 @@ class SessionDetailsScreenViewModel @AssistedInject constructor(
             loading = true
         )
         viewModelScope.launch {
-            val session = repository.getSession(sessionId)
+            val session = repository.getSession(
+                sessionId,
+                repository.isMedic()
+            )
 
             _viewState.value = _viewState.value.copy(
                 session = session,

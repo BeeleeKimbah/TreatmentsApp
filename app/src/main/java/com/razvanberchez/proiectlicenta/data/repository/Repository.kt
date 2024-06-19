@@ -13,6 +13,7 @@ import com.razvanberchez.proiectlicenta.data.model.MedicListItem
 import com.razvanberchez.proiectlicenta.data.model.Score
 import com.razvanberchez.proiectlicenta.data.model.Session
 import com.razvanberchez.proiectlicenta.data.model.TimeSlot
+import com.razvanberchez.proiectlicenta.data.model.Treatment
 import com.razvanberchez.proiectlicenta.data.model.allSlots
 import com.razvanberchez.proiectlicenta.presentation.DAY_MILLIS
 import com.razvanberchez.proiectlicenta.presentation.addTimeSlot
@@ -107,12 +108,12 @@ class Repository {
         return sessions.toList()
     }
 
-    suspend fun getSession(sessionId: String): Session {
+    suspend fun getSession(sessionId: String, forMedic: Boolean = false): Session {
         var session = Session()
         val currentUser = auth.currentUser
 
         if (currentUser != null) {
-            db.collection("users")
+            db.collection(if (forMedic) "medics" else "users")
                 .document(currentUser.uid)
                 .collection("sessions")
                 .document(sessionId)
@@ -178,6 +179,7 @@ class Repository {
                     Log.w(TAG, "Error fetching user details")
                 }.await()
 
+            var sessionId = ""
             db.collection("users")
                 .document(currentUser.uid)
                 .collection("sessions")
@@ -189,7 +191,9 @@ class Repository {
                         "patientId" to currentUser.uid,
                         "patientName" to patientName
                     )
-                ).addOnFailureListener {
+                ).addOnSuccessListener { document ->
+                    sessionId = document.id
+                }.addOnFailureListener {
                     success = false
                     Log.w(TAG, "Error adding session")
                 }.await()
@@ -197,7 +201,8 @@ class Repository {
             db.collection("medics")
                 .document(selectedMedic.medicId)
                 .collection("sessions")
-                .add(
+                .document(sessionId)
+                .set(
                     hashMapOf(
                         "consultDate" to datetime,
                         "medicId" to selectedMedic.medicId,
@@ -303,5 +308,73 @@ class Repository {
         }
 
         return res
+    }
+
+    suspend fun addTreatment(sessionId: String, patientId: String, newTreat: Treatment) {
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) {
+            db.collection("medics")
+                .document(currentUser.uid)
+                .collection("sessions")
+                .document(sessionId)
+                .update("treatmentScheme", FieldValue.arrayUnion(
+                    hashMapOf(
+                        "treatmentName" to newTreat.treatmentName,
+                        "startDate" to newTreat.startDate,
+                        "frequency" to newTreat.frequency,
+                        "dose" to newTreat.dose,
+                        "applications" to newTreat.applications
+                    )
+                )).await()
+
+            db.collection("users")
+                .document(patientId)
+                .collection("sessions")
+                .document(sessionId)
+                .update("treatmentScheme", FieldValue.arrayUnion(
+                    hashMapOf(
+                        "treatmentName" to newTreat.treatmentName,
+                        "startDate" to newTreat.startDate,
+                        "frequency" to newTreat.frequency,
+                        "dose" to newTreat.dose,
+                        "applications" to newTreat.applications
+                    )
+                )).await()
+        }
+    }
+
+    suspend fun removeTreatment(sessionId: String, patientId: String, treatment: Treatment) {
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) {
+            db.collection("medics")
+                .document(currentUser.uid)
+                .collection("sessions")
+                .document(sessionId)
+                .update("treatmentScheme", FieldValue.arrayRemove(
+                    hashMapOf(
+                        "treatmentName" to treatment.treatmentName,
+                        "startDate" to treatment.startDate,
+                        "frequency" to treatment.frequency,
+                        "dose" to treatment.dose,
+                        "applications" to treatment.applications
+                    )
+                )).await()
+
+            db.collection("users")
+                .document(patientId)
+                .collection("sessions")
+                .document(sessionId)
+                .update("treatmentScheme", FieldValue.arrayRemove(
+                    hashMapOf(
+                        "treatmentName" to treatment.treatmentName,
+                        "startDate" to treatment.startDate,
+                        "frequency" to treatment.frequency,
+                        "dose" to treatment.dose,
+                        "applications" to treatment.applications
+                    )
+                )).await()
+        }
     }
 }

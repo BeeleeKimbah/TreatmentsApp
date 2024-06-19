@@ -1,17 +1,22 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -44,7 +49,8 @@ import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewS
 fun SessionDetailsScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
-    sessionId: String
+    sessionId: String,
+    medicSide: Boolean = false
 ) {
     val viewModel =
         hiltViewModel<SessionDetailsScreenViewModel, SessionDetailsScreenViewModel.Factory>(
@@ -58,7 +64,8 @@ fun SessionDetailsScreen(
     SessionDetailsScreenContent(
         navigator = navigator,
         viewState = state,
-        onIntent = viewModel::onIntent
+        onIntent = viewModel::onIntent,
+        medicSide = medicSide
     )
 }
 
@@ -68,7 +75,8 @@ fun SessionDetailsScreenContent(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
     viewState: SessionDetailsScreenViewState,
-    onIntent: (SessionDetailsScreenIntent) -> Unit
+    onIntent: (SessionDetailsScreenIntent) -> Unit,
+    medicSide: Boolean
 ) {
     Scaffold(
         modifier = modifier
@@ -82,21 +90,40 @@ fun SessionDetailsScreenContent(
         },
         floatingActionButton = {
             if (!viewState.loading) {
-                ExtendedFloatingActionButton(
-                    onClick = {
-                        navigator.navigate(
-                            direction = AddConsultScreenDestination(
-                                medicId = viewState.session?.medicId
-                            )
+                if (medicSide) {
+                    ExtendedFloatingActionButton(
+                        onClick = {
+//                            navigator.navigate(
+//                                direction = AddConsultScreenDestination(
+//                                    medicId = viewState.session?.medicId
+//                                )
+//                            )
+                        },
+                        modifier = modifier
+                            .height(dimensionResource(R.dimen.button_size))
+                    ) {
+                        Text(
+                            text = stringResource(R.string.button_text_add_treatment),
+                            fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
                         )
-                    },
-                    modifier = modifier
-                        .height(dimensionResource(R.dimen.button_size))
-                ) {
-                    Text(
-                        text = stringResource(R.string.button_NewSession),
-                        fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
-                    )
+                    }
+                } else {
+                    ExtendedFloatingActionButton(
+                        onClick = {
+                            navigator.navigate(
+                                direction = AddConsultScreenDestination(
+                                    medicId = viewState.session?.medicId
+                                )
+                            )
+                        },
+                        modifier = modifier
+                            .height(dimensionResource(R.dimen.button_size))
+                    ) {
+                        Text(
+                            text = stringResource(R.string.button_NewSession),
+                            fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
+                        )
+                    }
                 }
             }
         },
@@ -137,10 +164,8 @@ fun SessionDetailsScreenContent(
                             top = dimensionResource(R.dimen.details_text_padding),
                             start = dimensionResource(R.dimen.details_text_padding)
                         ),
-                        text = stringResource(
-                            R.string.session_list_Medic,
-                            viewState.session?.medicName ?: ""
-                        ),
+                        text = if (medicSide) viewState.session?.patientName ?: ""
+                            else viewState.session?.medicName ?: "",
                         fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                     )
                     Text(
@@ -148,10 +173,7 @@ fun SessionDetailsScreenContent(
                             top = dimensionResource(R.dimen.details_text_padding),
                             start = dimensionResource(R.dimen.details_text_padding)
                         ),
-                        text = stringResource(
-                            R.string.session_list_consultDate,
-                            viewState.session?.consultDate?.format() ?: " - "
-                        ),
+                        text = viewState.session?.consultDate?.format() ?: " - ",
                         fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                     )
                     Text(
@@ -160,10 +182,7 @@ fun SessionDetailsScreenContent(
                             start = dimensionResource(R.dimen.details_text_padding),
                             bottom = dimensionResource(R.dimen.details_text_padding)
                         ),
-                        text = stringResource(
-                            R.string.session_list_Diagnostic,
-                            (viewState.session?.diagnostic ?: "-")
-                        ),
+                        text = viewState.session?.diagnostic ?: "-",
                         fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                     )
                 }
@@ -211,20 +230,40 @@ fun SessionDetailsScreenContent(
                         )
                     }
                     viewState.session?.treatmentScheme?.forEach { treatment ->
-
-                        Text(
-                            modifier = modifier.padding(
-                                horizontal = dimensionResource(R.dimen.details_text_padding),
-                                vertical = dimensionResource(R.dimen.list_elem_padding)
-                            ),
-                            text = stringResource(
-                                R.string.treatment_scheme_item,
-                                treatment.treatmentName,
-                                treatment.dose,
-                                treatment.frequency
-                            ),
-                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp,
-                        )
+                        Row (
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = dimensionResource(R.dimen.details_text_padding),
+                                    vertical = dimensionResource(R.dimen.list_elem_padding)
+                                )
+                        ) {
+                            Text(
+                                text = stringResource(
+                                    R.string.treatment_scheme_item,
+                                    treatment.treatmentName,
+                                    treatment.dose,
+                                    treatment.frequency
+                                ),
+                                fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp,
+                            )
+                            if (medicSide) {
+                                IconButton(
+                                    onClick = {
+                                        onIntent(
+                                            SessionDetailsScreenIntent.RemoveTreatment(
+                                                treatment
+                                            )
+                                        )
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Delete,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                        }
                         HorizontalDivider(
                             color = MaterialTheme.colorScheme.onSecondary
                         )
