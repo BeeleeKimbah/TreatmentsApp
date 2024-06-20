@@ -21,9 +21,9 @@ class AddTreatmentScreenViewModel @AssistedInject constructor(
     @Assisted val sessionId: String
 ) : ViewModel() {
     private val _treatment = MutableStateFlow("")
-    private val _dose = MutableStateFlow(0)
-    private val _frequency = MutableStateFlow(0)
-    private val _applications = MutableStateFlow(0)
+    private val _dose: MutableStateFlow<Int?> = MutableStateFlow(0)
+    private val _frequency: MutableStateFlow<Int?>  = MutableStateFlow(0)
+    private val _applications: MutableStateFlow<Int?>  = MutableStateFlow(0)
     private val _startDate = MutableStateFlow(Date())
     private val _viewState = MutableStateFlow(AddTreatmentScreenViewState())
     val viewState = _viewState.asStateFlow()
@@ -38,9 +38,9 @@ class AddTreatmentScreenViewModel @AssistedInject constructor(
                 frequency = frequency,
                 applications = applications,
                 addButtonEnabled = treatment.isNotEmpty()
-                                && dose > 0
-                                && frequency > 0
-                                && applications > 0
+                                && dose != null && dose > 0
+                                && frequency != null && frequency > 0
+                                && applications != null && applications > 0
             )
         }.launchIn(viewModelScope)
     }
@@ -76,15 +76,15 @@ class AddTreatmentScreenViewModel @AssistedInject constructor(
         _startDate.value = newDate
     }
 
-    private fun modifyFrequency(newFrequency: Int) {
+    private fun modifyFrequency(newFrequency: Int?) {
         _frequency.value = newFrequency
     }
 
-    private fun modifyDose(newDose: Int) {
+    private fun modifyDose(newDose: Int?) {
         _dose.value = newDose
     }
 
-    private fun modifyApplications(newApplications: Int) {
+    private fun modifyApplications(newApplications: Int?) {
         _applications.value = newApplications
     }
 

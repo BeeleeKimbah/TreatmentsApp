@@ -56,4 +56,8 @@
     <string name="register_full_name">Nume complet</string>
     <string name="full_name_placeholder">ex. John Smith</string>
     <string name="button_text_add_treatment">Adaugă tratament</string>
+    <string name="treatment_name_field">Nume medicament</string>
+    <string name="text_dose_add">Număr doze</string>
+    <string name="frequency_text_add">Frecvență (ore)</string>
+    <string name="applications_text_add">Număr administrări</string>
 </resources>
