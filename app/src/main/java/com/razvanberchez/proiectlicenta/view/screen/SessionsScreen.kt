@@ -142,15 +142,15 @@ fun SessionsScreenContent(
                                 text = session.consultDate.format(),
                                 fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                             ) },
-                            supportingContent = { if (session.diagnostic != null) {
+                            supportingContent = {
                                 Text(
                                     modifier = modifier.padding(
                                         horizontal = dimensionResource(R.dimen.card_text_padding)
                                     ),
-                                    text = session.diagnostic,
+                                    text = session.diagnostic ?: "",
                                     fontSize = dimensionResource(R.dimen.list_elem_fontsize).value.sp
                                 )
-                            } },
+                            },
                             trailingContent = {
                                 Column (
                                     modifier = modifier.fillMaxHeight(),

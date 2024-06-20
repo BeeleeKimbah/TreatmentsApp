@@ -62,4 +62,5 @@
     <string name="applications_text_add">Număr administrări</string>
     <string name="treat_start_date_label">Dată început</string>
     <string name="start_time_label">Timp început</string>
+    <string name="diagnostic_input_label">Diagnostic</string>
 </resources>

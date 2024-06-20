@@ -30,9 +30,36 @@ class SessionDetailsScreenViewModel @AssistedInject constructor(
 
     fun onIntent(intent: SessionDetailsScreenIntent) {
         when (intent) {
-            is SessionDetailsScreenIntent.Refresh -> loadSessionDetails()
-            is SessionDetailsScreenIntent.RemoveTreatment -> removeTreatment(intent.treatment)
+            is SessionDetailsScreenIntent.Refresh ->
+                loadSessionDetails()
+
+            is SessionDetailsScreenIntent.RemoveTreatment ->
+                removeTreatment(intent.treatment)
+
+            is SessionDetailsScreenIntent.ModifyDiagnostic ->
+                modifyDiagnostic(intent.newDiagnostic)
+
+            SessionDetailsScreenIntent.SaveDiagnostic ->
+                saveDiagnostic()
         }
+    }
+
+    private fun saveDiagnostic() {
+        viewModelScope.launch {
+            repository.updateDiagnostic(
+                diagnostic = viewState.value.diagnosticEdit,
+                sessionId = sessionId,
+                patientId = viewState.value.session?.patientId!!
+            )
+        }
+        loadSessionDetails()
+    }
+
+    private fun modifyDiagnostic(newDiagnostic: String) {
+        _viewState.value = _viewState.value.copy(
+            diagnosticEdit = newDiagnostic,
+            diagnosticEditEnabled = newDiagnostic != _viewState.value.session?.diagnostic
+        )
     }
 
     private fun removeTreatment(treatment: Treatment) {
@@ -53,6 +80,8 @@ class SessionDetailsScreenViewModel @AssistedInject constructor(
 
             _viewState.value = _viewState.value.copy(
                 session = session,
+                diagnosticEdit = session.diagnostic ?: "",
+                diagnosticEditEnabled = false,
                 loading = false
             )
         }
@@ -70,6 +99,8 @@ class SessionDetailsScreenViewModel @AssistedInject constructor(
 
             _viewState.value = _viewState.value.copy(
                 session = session,
+                diagnosticEdit = session.diagnostic ?: "",
+                diagnosticEditEnabled = false,
                 loading = false
             )
         }

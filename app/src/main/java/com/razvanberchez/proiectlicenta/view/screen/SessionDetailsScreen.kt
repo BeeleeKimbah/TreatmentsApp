@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -18,13 +20,18 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -193,15 +200,89 @@ fun SessionDetailsScreenContent(
                         text = viewState.session?.consultDate?.format() ?: " - ",
                         fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
                     )
-                    Text(
-                        modifier = modifier.padding(
-                            top = dimensionResource(R.dimen.details_text_padding),
-                            start = dimensionResource(R.dimen.details_text_padding),
-                            bottom = dimensionResource(R.dimen.details_text_padding)
-                        ),
-                        text = viewState.session?.diagnostic ?: "-",
-                        fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
-                    )
+                    if (medicSide) {
+                        Row (
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    dimensionResource(R.dimen.details_text_padding)
+                                ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            OutlinedTextField(
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    unfocusedContainerColor =
+                                        MaterialTheme.colorScheme.secondaryContainer,
+                                    focusedContainerColor =
+                                        MaterialTheme.colorScheme.secondaryContainer,
+                                    focusedTextColor =
+                                        MaterialTheme.colorScheme.onSecondaryContainer,
+                                    unfocusedTextColor =
+                                        MaterialTheme.colorScheme.onSecondaryContainer,
+                                    focusedLabelColor =
+                                        MaterialTheme.colorScheme.onSecondaryContainer,
+                                    unfocusedLabelColor =
+                                        MaterialTheme.colorScheme.onSecondaryContainer,
+                                    focusedBorderColor =
+                                        MaterialTheme.colorScheme.onSecondaryContainer,
+                                    unfocusedBorderColor =
+                                        MaterialTheme.colorScheme.onSecondaryContainer
+                                ),
+                                modifier = modifier.fillMaxWidth(0.8f),
+                                value = viewState.diagnosticEdit,
+                                onValueChange = {
+                                    onIntent(SessionDetailsScreenIntent.ModifyDiagnostic(it))
+                                },
+                                singleLine = true,
+                                shape = ShapeDefaults.Medium,
+                                label = {
+                                    Text(
+                                        text = stringResource(R.string.diagnostic_input_label),
+                                        fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
+                                    )
+                                }
+                            )
+                            Box (
+                                modifier = modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.CenterEnd
+                            ) {
+                                IconButton(
+                                    modifier = modifier.size(
+                                        dimensionResource(R.dimen.button_size)
+                                    ),
+                                    colors = IconButtonDefaults.iconButtonColors(
+                                        containerColor =
+                                            MaterialTheme.colorScheme.secondary,
+                                        contentColor =
+                                            MaterialTheme.colorScheme.onSecondary,
+                                        disabledContentColor =
+                                            Color.Gray,
+                                        disabledContainerColor =
+                                            Color.LightGray
+                                    ),
+                                    enabled = viewState.diagnosticEditEnabled,
+                                    onClick = {
+                                        onIntent(SessionDetailsScreenIntent.SaveDiagnostic)
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Edit,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        Text(
+                            modifier = modifier.padding(
+                                top = dimensionResource(R.dimen.details_text_padding),
+                                start = dimensionResource(R.dimen.details_text_padding),
+                                bottom = dimensionResource(R.dimen.details_text_padding)
+                            ),
+                            text = viewState.session?.diagnostic ?: "-",
+                            fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp
+                        )
+                    }
                 }
 
                 Text(

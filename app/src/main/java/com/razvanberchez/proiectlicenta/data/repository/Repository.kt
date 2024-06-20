@@ -385,4 +385,22 @@ class Repository {
                 )).await()
         }
     }
+
+    suspend fun updateDiagnostic(diagnostic: String, sessionId: String, patientId: String) {
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) {
+            db.collection("medics")
+                .document(currentUser.uid)
+                .collection("sessions")
+                .document(sessionId)
+                .update("diagnostic", diagnostic).await()
+
+            db.collection("users")
+                .document(patientId)
+                .collection("sessions")
+                .document(sessionId)
+                .update("diagnostic", diagnostic).await()
+        }
+    }
 }
