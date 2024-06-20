@@ -32,7 +32,7 @@ import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.data.model.allSlots
 import com.razvanberchez.proiectlicenta.presentation.intent.AddConsultScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.AddConsultScreenViewModel
-import com.razvanberchez.proiectlicenta.view.components.ConsultDatePicker
+import com.razvanberchez.proiectlicenta.view.components.CustomDatePicker
 import com.razvanberchez.proiectlicenta.view.components.MedicSelectDropdown
 import com.razvanberchez.proiectlicenta.view.components.TimeSlotItem
 import com.razvanberchez.proiectlicenta.view.components.TopBar
@@ -104,13 +104,14 @@ fun AddConsultScreenContent(
                 }
 
                 item {
-                    ConsultDatePicker(
+                    CustomDatePicker(
                         selectedDate = viewState.selectedDate,
                         onSelectDate = { newDateMillis ->
                             onIntent(
                                 AddConsultScreenIntent.ModifyDate(Date(newDateMillis))
                             )
-                        }
+                        },
+                        title = R.string.date_picker_label
                     )
                 }
 

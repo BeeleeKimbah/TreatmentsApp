@@ -2,8 +2,12 @@ package com.razvanberchez.proiectlicenta.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.razvanberchez.proiectlicenta.data.model.TimeSlot
+import com.razvanberchez.proiectlicenta.data.model.Treatment
 import com.razvanberchez.proiectlicenta.data.repository.Repository
+import com.razvanberchez.proiectlicenta.presentation.addTimeSlot
 import com.razvanberchez.proiectlicenta.presentation.intent.AddTreatmentScreenIntent
+import com.razvanberchez.proiectlicenta.presentation.toUTC
 import com.razvanberchez.proiectlicenta.view.viewstate.AddTreatmentScreenViewState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -13,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 import java.util.Date
 
 @HiltViewModel(assistedFactory = AddTreatmentScreenViewModel.Factory::class)
@@ -24,16 +29,14 @@ class AddTreatmentScreenViewModel @AssistedInject constructor(
     private val _dose: MutableStateFlow<Int?> = MutableStateFlow(0)
     private val _frequency: MutableStateFlow<Int?>  = MutableStateFlow(0)
     private val _applications: MutableStateFlow<Int?>  = MutableStateFlow(0)
-    private val _startDate = MutableStateFlow(Date())
     private val _viewState = MutableStateFlow(AddTreatmentScreenViewState())
     val viewState = _viewState.asStateFlow()
 
     init {
-        combine(_treatment, _startDate, _dose, _frequency, _applications) {
-            treatment, startDate, dose, frequency, applications ->
+        combine(_treatment, _dose, _frequency, _applications) {
+            treatment, dose, frequency, applications ->
             _viewState.value = _viewState.value.copy(
                 treatmentName = treatment,
-                startDate = startDate,
                 dose = dose,
                 frequency = frequency,
                 applications = applications,
@@ -65,7 +68,16 @@ class AddTreatmentScreenViewModel @AssistedInject constructor(
 
             is AddTreatmentScreenIntent.ModifyTreatment ->
                 modifyTreatment(intent.newTreatment)
+
+            is AddTreatmentScreenIntent.ModifyStartTime ->
+                modifyStartTime(intent.newTime)
         }
+    }
+
+    private fun modifyStartTime(newTime: TimeSlot) {
+        _viewState.value = _viewState.value.copy(
+            startTime = newTime
+        )
     }
 
     private fun modifyTreatment(newTreatment: String) {
@@ -73,7 +85,9 @@ class AddTreatmentScreenViewModel @AssistedInject constructor(
     }
 
     private fun modifyStartDate(newDate: Date) {
-        _startDate.value = newDate
+        _viewState.value = _viewState.value.copy(
+            startDate = newDate
+        )
     }
 
     private fun modifyFrequency(newFrequency: Int?) {
@@ -89,7 +103,23 @@ class AddTreatmentScreenViewModel @AssistedInject constructor(
     }
 
     private fun addTreatment() {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            repository.addTreatment(
+                sessionId,
+                Treatment(
+                    treatmentName =  viewState.value.treatmentName,
+                    startDate = viewState.value.startDate
+                        .addTimeSlot(viewState.value.startTime).toUTC(),
+                    dose = viewState.value.dose!!,
+                    frequency = viewState.value.frequency!!,
+                    applications = viewState.value.applications!!
+                )
+            )
+
+            _viewState.value = _viewState.value.copy(
+                treatmentAdded = true
+            )
+        }
     }
 
     @AssistedFactory

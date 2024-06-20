@@ -2,6 +2,7 @@ package com.razvanberchez.proiectlicenta.view.screen
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,12 +30,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.intent.AddTreatmentScreenIntent
-import com.razvanberchez.proiectlicenta.presentation.intent.LoginScreenIntent
 import com.razvanberchez.proiectlicenta.presentation.viewmodel.AddTreatmentScreenViewModel
+import com.razvanberchez.proiectlicenta.view.components.CustomDatePicker
+import com.razvanberchez.proiectlicenta.view.components.CustomTimePicker
 import com.razvanberchez.proiectlicenta.view.components.TopBar
 import com.razvanberchez.proiectlicenta.view.viewstate.AddTreatmentScreenViewState
+import java.util.Date
 
 @RootNavGraph
 @Destination
@@ -42,8 +46,13 @@ import com.razvanberchez.proiectlicenta.view.viewstate.AddTreatmentScreenViewSta
 fun AddTreatmentScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
+    resultNavigator: ResultBackNavigator<Boolean>,
     sessionId: String
 ) {
+    BackHandler {
+        resultNavigator.navigateBack(result = false)
+    }
+
     val viewModel = hiltViewModel<AddTreatmentScreenViewModel, AddTreatmentScreenViewModel.Factory>(
         creationCallback = { factory ->
             factory.create(sessionId = sessionId)
@@ -54,6 +63,7 @@ fun AddTreatmentScreen(
     AddTreatmentScreenContent(
         viewState = state,
         navigator = navigator,
+        resultNavigator = resultNavigator,
         onIntent = viewModel::onIntent
     )
 }
@@ -63,9 +73,14 @@ fun AddTreatmentScreen(
 fun AddTreatmentScreenContent(
     modifier: Modifier = Modifier,
     viewState: AddTreatmentScreenViewState,
+    resultNavigator: ResultBackNavigator<Boolean>,
     navigator: DestinationsNavigator,
     onIntent: (AddTreatmentScreenIntent) -> Unit
 ) {
+    if (viewState.treatmentAdded) {
+        resultNavigator.navigateBack(result = true)
+    }
+
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
@@ -184,6 +199,23 @@ fun AddTreatmentScreenContent(
                 )
             )
 
+            CustomDatePicker(
+                selectedDate = viewState.startDate,
+                onSelectDate = { newDateMillis ->
+                    onIntent(
+                        AddTreatmentScreenIntent.ModifyStartDate(Date(newDateMillis))
+                    )
+                },
+                title = R.string.treat_start_date_label
+            )
+
+            CustomTimePicker(
+                selectedTime = viewState.startTime,
+                onSelectTime = { newTime ->
+                    onIntent(AddTreatmentScreenIntent.ModifyStartTime(newTime))
+                }
+            )
+
             FilledTonalButton(
                 modifier = modifier
                     .padding(dimensionResource(R.dimen.ui_elem_padding))
@@ -195,7 +227,7 @@ fun AddTreatmentScreenContent(
                 enabled = viewState.addButtonEnabled
             ) {
                 Text(
-                    text = "Adaugă tratament",
+                    text = stringResource(R.string.button_text_add_treatment),
                     fontSize = dimensionResource(R.dimen.button_text_fontsize).value.sp
                 )
             }

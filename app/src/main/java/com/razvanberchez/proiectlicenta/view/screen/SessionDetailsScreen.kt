@@ -1,5 +1,6 @@
 package com.razvanberchez.proiectlicenta.view.screen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +34,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.NavResult
+import com.ramcosta.composedestinations.result.ResultRecipient
 import com.razvanberchez.proiectlicenta.R
 import com.razvanberchez.proiectlicenta.presentation.format
 import com.razvanberchez.proiectlicenta.presentation.intent.SessionDetailsScreenIntent
@@ -50,6 +53,7 @@ import com.razvanberchez.proiectlicenta.view.viewstate.SessionDetailsScreenViewS
 fun SessionDetailsScreen(
     modifier: Modifier = Modifier,
     navigator: DestinationsNavigator,
+    resultRecipient: ResultRecipient<AddTreatmentScreenDestination, Boolean>,
     sessionId: String,
     medicSide: Boolean = false
 ) {
@@ -61,6 +65,18 @@ fun SessionDetailsScreen(
         )
 
     val state by viewModel.viewState.collectAsStateWithLifecycle()
+
+    resultRecipient.onNavResult {
+        when (it) {
+            is NavResult.Value -> {
+                if (it.value) {
+                    viewModel.onIntent(SessionDetailsScreenIntent.Refresh)
+                }
+            }
+
+            else -> Unit
+        }
+    }
 
     SessionDetailsScreenContent(
         navigator = navigator,
@@ -237,7 +253,8 @@ fun SessionDetailsScreenContent(
                                 .padding(
                                     horizontal = dimensionResource(R.dimen.details_text_padding),
                                     vertical = dimensionResource(R.dimen.list_elem_padding)
-                                )
+                                ),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
                                 text = stringResource(
@@ -249,19 +266,24 @@ fun SessionDetailsScreenContent(
                                 fontSize = dimensionResource(R.dimen.details_list_fontsize).value.sp,
                             )
                             if (medicSide) {
-                                IconButton(
-                                    onClick = {
-                                        onIntent(
-                                            SessionDetailsScreenIntent.RemoveTreatment(
-                                                treatment
+                                Box (
+                                    modifier = modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.CenterEnd
+                                ) {
+                                    IconButton(
+                                        onClick = {
+                                            onIntent(
+                                                SessionDetailsScreenIntent.RemoveTreatment(
+                                                    treatment
+                                                )
                                             )
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Delete,
+                                            contentDescription = null
                                         )
                                     }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Delete,
-                                        contentDescription = null
-                                    )
                                 }
                             }
                         }

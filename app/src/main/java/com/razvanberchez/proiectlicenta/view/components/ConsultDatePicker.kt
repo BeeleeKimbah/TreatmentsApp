@@ -1,5 +1,6 @@
 package com.razvanberchez.proiectlicenta.view.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -44,10 +45,11 @@ class SelectableConsultDates: SelectableDates {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConsultDatePicker(
+fun CustomDatePicker(
     modifier: Modifier = Modifier,
     selectedDate: Date,
-    onSelectDate: (Long) -> Unit
+    onSelectDate: (Long) -> Unit,
+    @StringRes title: Int
 ) {
     var datePickerOpen by remember {
         mutableStateOf(false)
@@ -67,7 +69,7 @@ fun ConsultDatePicker(
         readOnly = true,
         label = {
             Text(
-                text = stringResource(R.string.date_picker_label),
+                text = stringResource(title),
                 fontSize = dimensionResource(R.dimen.textfield_fontsize).value.sp
             )
         },

@@ -310,18 +310,26 @@ class Repository {
         return res
     }
 
-    suspend fun addTreatment(sessionId: String, patientId: String, newTreat: Treatment) {
+    suspend fun addTreatment(sessionId: String, newTreat: Treatment) {
         val currentUser = auth.currentUser
 
         if (currentUser != null) {
-            db.collection("medics")
+            var patientId = ""
+            val medicSession = db.collection("medics")
                 .document(currentUser.uid)
                 .collection("sessions")
                 .document(sessionId)
-                .update("treatmentScheme", FieldValue.arrayUnion(
+
+            medicSession.get().addOnSuccessListener { document ->
+                patientId = document.get("patientId") as String
+            }.addOnFailureListener {
+                Log.w(TAG, "Error fetching medic session")
+            }.await()
+
+            medicSession.update("treatmentScheme", FieldValue.arrayUnion(
                     hashMapOf(
                         "treatmentName" to newTreat.treatmentName,
-                        "startDate" to newTreat.startDate,
+                        "startDate" to Timestamp(newTreat.startDate),
                         "frequency" to newTreat.frequency,
                         "dose" to newTreat.dose,
                         "applications" to newTreat.applications
@@ -335,7 +343,7 @@ class Repository {
                 .update("treatmentScheme", FieldValue.arrayUnion(
                     hashMapOf(
                         "treatmentName" to newTreat.treatmentName,
-                        "startDate" to newTreat.startDate,
+                        "startDate" to Timestamp(newTreat.startDate),
                         "frequency" to newTreat.frequency,
                         "dose" to newTreat.dose,
                         "applications" to newTreat.applications
