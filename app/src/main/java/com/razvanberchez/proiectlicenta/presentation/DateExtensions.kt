@@ -35,7 +35,7 @@ fun Date.toUTC(): Date {
 }
 
 fun Date.getDateWithoutTime(): Date {
-    val cal = GregorianCalendar()
+    val cal = GregorianCalendar(TimeZone.getDefault())
     cal.time = Date(this.time)
     cal.set(Calendar.HOUR_OF_DAY, 0)
     cal.set(Calendar.MINUTE, 0)
@@ -45,14 +45,14 @@ fun Date.getDateWithoutTime(): Date {
 }
 
 fun Date.getNextDay(): Date {
-    val cal = GregorianCalendar()
+    val cal = GregorianCalendar(TimeZone.getDefault())
     cal.time = Date(this.time)
     cal.add(Calendar.DATE, 1)
     return Date(cal.time.time + timeZoneOffset())
 }
 
 fun Date.getYearOfNextDay(): Int {
-    val cal = GregorianCalendar()
+    val cal = GregorianCalendar(TimeZone.getDefault())
     cal.time = this.getNextDay()
     return cal.get(Calendar.YEAR)
 }
